@@ -25,6 +25,7 @@ namespace DrasticMaui.Sample
         {
             this.InitializeComponent();
             this.window = window;
+            this.HitTestViews.Add(this.ControlLayout);
         }
 
         /// <summary>

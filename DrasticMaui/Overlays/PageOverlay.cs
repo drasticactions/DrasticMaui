@@ -54,7 +54,7 @@ namespace DrasticMaui.Overlays
             {
                 return false;
             }
-#if IOS || WINDOWS || ANDROID
+#if IOS || WINDOWS || ANDROID || MACCATALYST
             this.AddNativeElements(view);
 #endif
             if (view is IHitTestView hittestView)
@@ -85,7 +85,7 @@ namespace DrasticMaui.Overlays
                 return false;
             }
 
-#if IOS || WINDOWS || ANDROID
+#if IOS || WINDOWS || ANDROID || MACCATALYST
             this.RemoveNativeElements(view);
 #endif
 
