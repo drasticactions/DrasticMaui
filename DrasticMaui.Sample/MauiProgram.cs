@@ -2,6 +2,9 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
+using DrasticMaui.Tray;
+using System.Reflection;
+
 namespace DrasticMaui.Sample;
 
 /// <summary>
@@ -15,6 +18,13 @@ public static class MauiProgram
     /// <returns>MauiApp.</returns>
     public static MauiApp CreateMauiApp()
     {
+        var stream = GetResourceFileContent("Icon.favicon.ico");
+        if (stream is not null)
+        {
+            var tray = new TrayService("DrasticMaui", stream);
+            tray.SetupTrayIcon();
+        }
+
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -24,5 +34,17 @@ public static class MauiProgram
             });
 
         return builder.Build();
+    }
+
+    private static Stream? GetResourceFileContent(string fileName)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceName = "DrasticMaui.Sample." + fileName;
+        if (assembly is null)
+        {
+            return null;
+        }
+
+        return assembly.GetManifestResourceStream(resourceName);
     }
 }

@@ -133,7 +133,7 @@ namespace DrasticMaui.Overlays
             }
 
             var nativeElements = this.HitTestElements.Select(n => n.GetNative(true));
-            this.element.IsHitTestVisible = nativeElements.Any(n => n.GetBoundingBox().Contains(new Point(pointerPoint.Position.X, pointerPoint.Position.Y)));
+            this.element.IsHitTestVisible = nativeElements.Any(n => n.GetBoundingBox().Contains(new Microsoft.Maui.Graphics.Point(pointerPoint.Position.X, pointerPoint.Position.Y)));
         }
     }
 }

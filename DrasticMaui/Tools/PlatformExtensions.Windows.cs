@@ -29,21 +29,21 @@ namespace DrasticMaui.Tools
             return view.Handler?.NativeView as FrameworkElement;
         }
 
-        internal static Rectangle GetBoundingBox(this IView view)
+        internal static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view)
             => view.GetNative(true).GetBoundingBox();
 
-        internal static Rectangle GetBoundingBox(this FrameworkElement? nativeView)
+        internal static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this FrameworkElement? nativeView)
         {
             if (nativeView == null)
-                return new Rectangle();
+                return new Microsoft.Maui.Graphics.Rectangle();
 
             var rootView = nativeView.XamlRoot.Content;
             if (nativeView == rootView)
             {
                 if (rootView is not FrameworkElement el)
-                    return new Rectangle();
+                    return new Microsoft.Maui.Graphics.Rectangle();
 
-                return new Rectangle(0, 0, el.ActualWidth, el.ActualHeight);
+                return new Microsoft.Maui.Graphics.Rectangle(0, 0, el.ActualWidth, el.ActualHeight);
             }
 
             var topLeft = nativeView.TransformToVisual(rootView).TransformPoint(new WinPoint());
@@ -55,7 +55,7 @@ namespace DrasticMaui.Tools
             var x2 = new[] { topLeft.X, topRight.X, bottomLeft.X, bottomRight.X }.Max();
             var y1 = new[] { topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y }.Min();
             var y2 = new[] { topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y }.Max();
-            return new Rectangle(x1, y1, x2 - x1, y2 - y1);
+            return new Microsoft.Maui.Graphics.Rectangle(x1, y1, x2 - x1, y2 - y1);
         }
     }
 }

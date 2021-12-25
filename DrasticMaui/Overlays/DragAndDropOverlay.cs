@@ -24,7 +24,7 @@ namespace DrasticMaui.Overlays
         /// <param name="window"><see cref="IWindow"/>.</param>
         /// <param name="dragOverColor">Optional color to show when draging an item over the window.</param>
         /// <param name="dragOverOverlayElement">Optional window element to show when draging an element over the window.</param>
-        public DragAndDropOverlay(IWindow window, Color? dragOverColor = null, IWindowOverlayElement? dragOverOverlayElement = null)
+        public DragAndDropOverlay(IWindow window, Microsoft.Maui.Graphics.Color? dragOverColor = null, IWindowOverlayElement? dragOverOverlayElement = null)
             : base(window)
         {
             this.dropElement = new DropElementOverlay();
@@ -63,13 +63,13 @@ namespace DrasticMaui.Overlays
 
             public bool IsDragging { get; set; }
 
-            public Color Color { get; set; } = Colors.Transparent;
+            public Microsoft.Maui.Graphics.Color Color { get; set; } = Microsoft.Maui.Graphics.Colors.Transparent;
 
             // We are not going to use Contains for this.
             // We're gonna set if it's invoked externally.
-            public bool Contains(Point point) => false;
+            public bool Contains(Microsoft.Maui.Graphics.Point point) => false;
 
-            public void Draw(ICanvas canvas, RectangleF dirtyRect)
+            public void Draw(ICanvas canvas, Microsoft.Maui.Graphics.RectangleF dirtyRect)
             {
                 if (!this.IsDragging)
                 {

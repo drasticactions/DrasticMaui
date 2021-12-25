@@ -25,4 +25,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\DrasticMaui.Contracts\DrasticMaui.Contracts.csproj" />
 	</ItemGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
 </Project>

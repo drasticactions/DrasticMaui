@@ -66,7 +66,7 @@ namespace DrasticMaui.Overlays
         }
 
         /// <inheritdoc/>
-        public virtual void Draw(ICanvas canvas, RectangleF dirtyRect)
+        public virtual void Draw(ICanvas canvas, Microsoft.Maui.Graphics.RectangleF dirtyRect)
         {
         }
 

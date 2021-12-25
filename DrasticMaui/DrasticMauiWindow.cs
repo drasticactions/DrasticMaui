@@ -31,6 +31,6 @@ namespace DrasticMaui
         }
 
         /// <inheritdoc/>
-        public IVisualTreeElement? GetVisualParent() => Application.Current;
+        public IVisualTreeElement? GetVisualParent() => Microsoft.Maui.Controls.Application.Current;
     }
 }
