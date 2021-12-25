@@ -20,11 +20,35 @@ namespace DrasticMaui.Tray
             this.notifyIcon.MouseClick += this.NotifyIcon_MouseClick;
         }
 
+        public void SetupPage(Microsoft.Maui.Controls.Page page)
+        {
+            this.trayWindow = new DrasticTrayWindow() { Page = page };
+        }
+
+        private void ToggleWindow()
+        {
+            if (this.trayWindow is null)
+            {
+                return;
+            }
+
+            if (this.trayWindow.IsVisible)
+            {
+                this.trayWindow.IsVisible = false;
+                Microsoft.Maui.Controls.Application.Current?.CloseWindow(this.trayWindow);
+            }
+            else
+            {
+                this.trayWindow.IsVisible = true;
+                Microsoft.Maui.Controls.Application.Current?.OpenWindow(this.trayWindow);
+            }
+        }
+
         private void NotifyIcon_MouseClick(object? sender, MouseEventArgs e)
         {
             if (e.Button is MouseButtons.Left)
             {
-
+                this.ToggleWindow();
             }
         }
     }

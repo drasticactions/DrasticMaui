@@ -42,6 +42,12 @@ public partial class MainPage : ContentPage
         this.window?.PageOverlay.AddView(this.sample);
     }
 
+    private void OnNewWindow(object sender, EventArgs e)
+    {
+        var newWindow = new DrasticMauiWindow() { Page = new MainPage() };
+        Application.Current?.OpenWindow(newWindow);
+    }
+
     private void OnCounterClicked(object sender, EventArgs e)
     {
     }

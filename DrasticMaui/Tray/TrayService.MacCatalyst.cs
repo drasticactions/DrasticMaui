@@ -11,5 +11,10 @@ namespace DrasticMaui.Tray
         public void SetupTrayIcon()
         {
         }
+
+        public void SetupPage(Microsoft.Maui.Controls.Page page)
+        {
+
+        }
     }
 }
