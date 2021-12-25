@@ -12,7 +12,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Tray\" />
+	</ItemGroup>
+	<ItemGroup>
 	  <None Include="DrasticMauiWindow.cs" />
 	</ItemGroup>
-	
+
+	<ItemGroup>
+	  <Folder Include="Tray\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\DrasticMaui.Contracts\DrasticMaui.Contracts.csproj" />
+	</ItemGroup>
 </Project>
