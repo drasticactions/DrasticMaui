@@ -100,7 +100,7 @@ namespace DrasticMaui.Overlays
             var element = pageHandler?.NativeView;
             if (element is not null)
             {
-                element.Touch += Element_Touch;
+                element.Touch += this.Element_Touch;
                 var layerCount = nativeLayer.ChildCount;
                 var childView = nativeLayer.GetChildAt(1);
                 nativeLayer.AddView(element, layerCount, new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MatchParent, CoordinatorLayout.LayoutParams.MatchParent));
@@ -123,6 +123,7 @@ namespace DrasticMaui.Overlays
             var element = pageHandler?.NativeView;
             if (element is not null)
             {
+                element.Touch -= this.Element_Touch;
                 this.nativeLayer.RemoveView(element);
             }
         }
