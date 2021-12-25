@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DrasticMaui.Tools;
 using Android.App;
 using Android.Views;
 using AndroidX.CoordinatorLayout.Widget;
+using DrasticMaui.Tools;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 
 namespace DrasticMaui.Overlays
 {
@@ -98,13 +99,13 @@ namespace DrasticMaui.Overlays
 
             var pageHandler = view.ToHandler(this.context);
             var element = pageHandler?.NativeView;
-            if (element is not null)
+            if (element is Android.Views.View aView)
             {
-                element.Touch += this.Element_Touch;
-                var layerCount = nativeLayer.ChildCount;
-                var childView = nativeLayer.GetChildAt(1);
-                nativeLayer.AddView(element, layerCount, new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MatchParent, CoordinatorLayout.LayoutParams.MatchParent));
-                element.BringToFront();
+                aView.Touch += this.Element_Touch;
+                var layerCount = this.nativeLayer.ChildCount;
+                var childView = this.nativeLayer.GetChildAt(1);
+                this.nativeLayer.AddView(aView, layerCount, new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MatchParent, CoordinatorLayout.LayoutParams.MatchParent));
+                aView.BringToFront();
             }
         }
 
@@ -121,10 +122,10 @@ namespace DrasticMaui.Overlays
 
             var pageHandler = view.ToHandler(this.context);
             var element = pageHandler?.NativeView;
-            if (element is not null)
+            if (element is Android.Views.View aView)
             {
-                element.Touch -= this.Element_Touch;
-                this.nativeLayer.RemoveView(element);
+                aView.Touch -= this.Element_Touch;
+                this.nativeLayer.RemoveView(aView);
             }
         }
 

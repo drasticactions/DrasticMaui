@@ -15,7 +15,6 @@ public static class MauiProgram
     /// <returns>MauiApp.</returns>
     public static MauiApp CreateMauiApp()
     {
-        var trayService = new DrasticMaui.Tray.TrayService();
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
