@@ -19,12 +19,11 @@ public partial class App : Application
     public App()
     {
         this.InitializeComponent();
+        this.HandlerChanged += App_HandlerChanged;
     }
 
-    /// <inheritdoc/>
-    protected override void OnStart()
+    private void App_HandlerChanged(object? sender, EventArgs e)
     {
-        base.OnStart();
         var handler = this.Handler.MauiContext;
         var stream = MauiProgram.GetResourceFileContent("Icon.favicon.ico");
         if (stream is not null && handler is not null)
@@ -33,6 +32,12 @@ public partial class App : Application
             this.tray.SetupPage(new TraySample());
             this.tray.SetupTrayIcon();
         }
+    }
+
+    /// <inheritdoc/>
+    protected override void OnStart()
+    {
+        base.OnStart();
     }
 
     /// <inheritdoc/>
