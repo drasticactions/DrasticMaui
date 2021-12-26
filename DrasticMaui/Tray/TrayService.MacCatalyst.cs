@@ -1,8 +1,8 @@
 ﻿// <copyright file="TrayService.MacCatalyst.cs" company="Drastic Actions">
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
-
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using CoreFoundation;
 using Foundation;
@@ -18,6 +18,8 @@ namespace DrasticMaui.Tray
         private NSObject? statusBarButton;
         private NSObject? statusBarImage;
         private NSObject? popoverObj;
+        private NSObject? nsViewControllerObj;
+        private NSObject? nsViewController;
 
         public Action? ClickHandler { get; set; }
 
@@ -29,8 +31,14 @@ namespace DrasticMaui.Tray
                 return;
             }
 
-            this.popoverObj = Runtime.GetNSObject(Class.GetHandle("NSPopover"));
+            this.popoverObj = Runtime.GetNSObject(IntPtr_objc_msgSend(ObjCRuntime.Class.GetHandle("NSPopover"), Selector.GetHandle("alloc")));
             if (this.popoverObj is null)
+            {
+                return;
+            }
+
+            this.nsViewControllerObj = Runtime.GetNSObject(IntPtr_objc_msgSend(ObjCRuntime.Class.GetHandle("NSViewController"), Selector.GetHandle("alloc")));
+            if (this.nsViewControllerObj is null)
             {
                 return;
             }
@@ -55,10 +63,13 @@ namespace DrasticMaui.Tray
                 return;
             }
 
-            var imgPath = System.IO.Path.Combine(NSBundle.MainBundle.BundlePath, "Contents", "Resources", "MacCatalyst", "trayicon.png");
-            var imageFileStr = CFString.CreateNative(imgPath);
-            var nsImagePtr = IntPtr_objc_msgSend_IntPtr(this.statusBarImage.Handle, Selector.GetHandle("initWithContentsOfFile:"), imageFileStr);
+            var imageStream = Foundation.NSData.FromStream(this.iconStream);
+            if (imageStream is null)
+            {
+                return;
+            }
 
+            var nsImagePtr = IntPtr_objc_msgSend_IntPtr(this.statusBarImage.Handle, Selector.GetHandle("initWithData:"), imageStream.Handle);
             void_objc_msgSend_IntPtr(this.statusBarButton.Handle, Selector.GetHandle("setImage:"), this.statusBarImage.Handle);
             void_objc_msgSend_bool(nsImagePtr, Selector.GetHandle("setTemplate:"), true);
 

@@ -30,7 +30,7 @@ public partial class App : Application
         {
             this.tray = new TrayService("DrasticMaui", stream, handler);
             this.tray.SetupPage(new TraySample());
-            this.tray.SetupTrayIcon();
+            this.Dispatcher.Dispatch(this.tray.SetupTrayIcon);
         }
     }
 
