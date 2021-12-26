@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using CoreFoundation;
 using Foundation;
+using Microsoft.Maui.Platform;
 using ObjCRuntime;
 
 namespace DrasticMaui.Tray
@@ -16,7 +17,7 @@ namespace DrasticMaui.Tray
         private NSObject? statusBarObj;
         private NSObject? statusBarItem;
         private NSObject? statusBarButton;
-        private NSObject? statusBarImage;
+        private AppKit.NSImage? statusBarImage;
         private NSObject? popoverObj;
         private NSObject? nsViewControllerObj;
         private NSObject? nsViewController;
@@ -51,7 +52,7 @@ namespace DrasticMaui.Tray
             }
 
             this.statusBarButton = Runtime.GetNSObject(IntPtr_objc_msgSend(this.statusBarItem.Handle, Selector.GetHandle("button")));
-            this.statusBarImage = Runtime.GetNSObject(IntPtr_objc_msgSend(ObjCRuntime.Class.GetHandle("NSImage"), Selector.GetHandle("alloc")));
+            this.statusBarImage = Runtime.GetNSObject<AppKit.NSImage>(IntPtr_objc_msgSend(ObjCRuntime.Class.GetHandle("NSImage"), Selector.GetHandle("alloc")));
 
             if (this.statusBarImage is null)
             {
@@ -72,6 +73,8 @@ namespace DrasticMaui.Tray
             var nsImagePtr = IntPtr_objc_msgSend_IntPtr(this.statusBarImage.Handle, Selector.GetHandle("initWithData:"), imageStream.Handle);
             void_objc_msgSend_IntPtr(this.statusBarButton.Handle, Selector.GetHandle("setImage:"), this.statusBarImage.Handle);
             void_objc_msgSend_bool(nsImagePtr, Selector.GetHandle("setTemplate:"), true);
+
+            this.statusBarImage.Size = new CoreGraphics.CGSize(32, 32);
 
             // Handle click
             void_objc_msgSend_IntPtr(this.statusBarButton.Handle, Selector.GetHandle("setTarget:"), this.Handle);
