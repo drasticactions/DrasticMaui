@@ -44,7 +44,7 @@ public partial class MainPage : ContentPage
 
     private void OnNewWindow(object sender, EventArgs e)
     {
-        var newWindow = new DrasticSplitViewWindow(new TraySample(), new MainPage(), this.Handler.MauiContext);
+        var newWindow = new DrasticSplitViewWindow(new DrasticMainMenu(), new MainPage(), this.Handler.MauiContext);
         Application.Current?.OpenWindow(newWindow);
     }
 
