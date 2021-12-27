@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using DrasticMaui.iOS;
 using DrasticMaui.Tools;
 using Microsoft.Maui.Platform;
 using UIKit;
@@ -23,21 +24,18 @@ namespace DrasticMaui
                 return;
             }
 
-            this.splitView = new UISplitViewController();
-            this.splitView.PrimaryBackgroundStyle = UISplitViewControllerBackgroundStyle.Sidebar;
-            var a = this.menu.ToUIViewController(this.context);
-            if (a.View is not null)
-            {
-                a.View.BackgroundColor = UIColor.Clear;
-            }
-
-            var b = this.Page.ToUIViewController(this.context);
-            this.splitView.ViewControllers = new UIViewController[] { a, b };
             var window = this.Handler?.NativeView as UIWindow;
             if (window is null)
             {
                 return;
             }
+
+            this.splitView = new UISplitViewController();
+            this.splitView.PrimaryBackgroundStyle = UISplitViewControllerBackgroundStyle.Sidebar;
+            var a = new DrasticMenuCollectionView() { View = new UIView() };
+
+            var b = this.Page.ToUIViewController(this.context);
+            this.splitView.ViewControllers = new UIViewController[] { a, b };
 
             window.RootViewController = this.splitView;
         }
