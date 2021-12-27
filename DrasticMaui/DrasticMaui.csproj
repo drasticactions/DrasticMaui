@@ -14,6 +14,9 @@
 
 	<ItemGroup>
 	  <None Remove="Tray\" />
+	  <None Remove="Services\" />
+	  <None Remove="Controls\" />
+	  <None Remove="Events\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Include="DrasticMauiWindow.cs" />
@@ -21,6 +24,9 @@
 
 	<ItemGroup>
 	  <Folder Include="Tray\" />
+	  <Folder Include="Services\" />
+	  <Folder Include="Controls\" />
+	  <Folder Include="Events\" />
 	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<UseWindowsForms>true</UseWindowsForms>
