@@ -33,23 +33,6 @@ namespace DrasticMaui.iOS
                 AutoresizingMask = UIViewAutoresizing.All,
             };
 
-            this.dataSource = new UICollectionViewDiffableDataSource<NativeSidebarMenuItemType, DrasticMenuItem>(this.collectionView, (collectionView, indexPath, item) => {
-                if (item is DrasticMenuItem menuItem)
-                {
-                    switch (menuItem.Type)
-                    {
-                        case SidebarMenuItemType.Header:
-                            return this.collectionView.DequeueConfiguredReusableCell(this.headerRegistration, indexPath, item);
-                        case SidebarMenuItemType.Row:
-                            return this.collectionView.DequeueConfiguredReusableCell(this.rowRegistration, indexPath, item);
-                        case SidebarMenuItemType.ExpandableRow:
-                            return this.collectionView.DequeueConfiguredReusableCell(this.expandedRowRegistration, indexPath, item);
-                    }
-                }
-
-                return new UICollectionViewCell();
-            });
-
             this.View.AddSubview(this.collectionView);
 
             this.headerRegistration = UICollectionViewCellRegistration.GetRegistration(typeof(UICollectionViewListCell), (cell, indexPath, item) =>
@@ -90,7 +73,23 @@ namespace DrasticMaui.iOS
                 cell.ContentConfiguration = contentConfigruation;
             });
 
-            this.collectionView.DataSource = this.dataSource;
+            this.dataSource = new UICollectionViewDiffableDataSource<NativeSidebarMenuItemType, DrasticMenuItem>(this.collectionView, (collectionView, indexPath, item) => {
+                if (item is DrasticMenuItem menuItem)
+                {
+                    switch (menuItem.Type)
+                    {
+                        case SidebarMenuItemType.Header:
+                            return this.collectionView.DequeueConfiguredReusableCell(this.headerRegistration, indexPath, item);
+                        case SidebarMenuItemType.Row:
+                            return this.collectionView.DequeueConfiguredReusableCell(this.rowRegistration, indexPath, item);
+                        case SidebarMenuItemType.ExpandableRow:
+                            return this.collectionView.DequeueConfiguredReusableCell(this.expandedRowRegistration, indexPath, item);
+                    }
+                }
+
+                return new UICollectionViewCell();
+            });
+
             this.AddItems(new List<DrasticMenuItem>() { new DrasticMenuItem("Test"), new DrasticMenuItem("Test2") }, new NativeSidebarMenuItemType());
         }
 

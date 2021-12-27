@@ -32,8 +32,7 @@ namespace DrasticMaui
 
             this.splitView = new UISplitViewController();
             this.splitView.PrimaryBackgroundStyle = UISplitViewControllerBackgroundStyle.Sidebar;
-            var a = new DrasticMenuCollectionView() { View = new UIView() };
-
+            var a = this.menu.ToUIViewController(this.context);
             var b = this.Page.ToUIViewController(this.context);
             this.splitView.ViewControllers = new UIViewController[] { a, b };
 
