@@ -27,10 +27,16 @@ namespace DrasticMaui
             var overlays = this.Overlays.Where(n => n is IVisualTreeElement).Cast<IVisualTreeElement>();
             elements.AddRange(overlays);
 
+            this.AddVisualChildren(elements);
+
             return elements;
         }
 
         /// <inheritdoc/>
         public IVisualTreeElement? GetVisualParent() => Microsoft.Maui.Controls.Application.Current;
+
+        internal virtual void AddVisualChildren(List<IVisualTreeElement> elements)
+        {
+        }
     }
 }

@@ -38,7 +38,16 @@ namespace DrasticMaui
             {
                 return;
             }
+
             window.RootViewController = this.splitView;
+        }
+
+        internal override void AddVisualChildren(List<IVisualTreeElement> elements)
+        {
+            if (this.menu is not null && this.menu is IVisualTreeElement element)
+            {
+                elements.AddRange(element.GetVisualChildren().ToList());
+            }
         }
     }
 }

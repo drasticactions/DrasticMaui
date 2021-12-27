@@ -9,7 +9,7 @@ namespace DrasticMaui
     /// <summary>
     /// Drastic Split View Window.
     /// </summary>
-    public partial class DrasticSplitViewWindow : Window
+    public partial class DrasticSplitViewWindow : DrasticMauiWindow
     {
         private IMauiContext context;
         private Page menu;

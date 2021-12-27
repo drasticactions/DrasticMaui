@@ -15,6 +15,9 @@ namespace DrasticMaui
     /// </summary>
     public partial class DrasticTrayWindow : DrasticMauiWindow
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the tray window should be visible.
+        /// </summary>
         public bool IsVisible { get; set; }
     }
 }
