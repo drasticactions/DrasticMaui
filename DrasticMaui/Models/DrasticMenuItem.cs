@@ -11,13 +11,14 @@ namespace DrasticMaui.Models
     : Foundation.NSObject
 #endif
     {
-        public DrasticMenuItem(string title, Guid? id = null, string subtitle = "", Stream? imageStream = null, SidebarMenuItemType type = SidebarMenuItemType.Row)
+        public DrasticMenuItem(string title, Page page, Guid? id = null, string subtitle = "", Stream? imageStream = null, SidebarMenuItemType type = SidebarMenuItemType.Row)
         {
             this.Id = id ?? Guid.NewGuid();
             this.Type = type;
             this.Title = title;
             this.Image = imageStream;
             this.Subtitle = subtitle;
+            this.Page = page;
         }
 
         public Guid Id { get; }
@@ -27,13 +28,15 @@ namespace DrasticMaui.Models
         public Stream? Image { get; }
 
         /// <summary>
-        /// Gets or sets the text for the menu item.
+        /// Gets the text for the menu item.
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; }
 
         /// <summary>
-        /// Gets or sets the subtitle text for the menu item.
+        /// Gets the subtitle text for the menu item.
         /// </summary>
-        public string Subtitle { get; set; }
+        public string Subtitle { get; }
+
+        public Page Page { get; }
     }
 }

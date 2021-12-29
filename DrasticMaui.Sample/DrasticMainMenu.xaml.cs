@@ -7,12 +7,8 @@ public partial class DrasticMainMenu : ContentPage
     public DrasticMainMenu()
     {
         InitializeComponent();
-        this.CollectionViewTest.ItemsSource = this.MenuItems = new List<DrasticMenuItem>()
-        {
-            new DrasticMenuItem("Test"),
-            new DrasticMenuItem("Test2")
-        };
+        this.CollectionViewTest.ItemsSource = MenuItems;
     }
 
-    public List<DrasticMenuItem> MenuItems { get; set; }
+    public List<DrasticMenuItem> MenuItems { get; set; } = new List<DrasticMenuItem>() { new DrasticMenuItem("Test", new MainPage()) };
 }

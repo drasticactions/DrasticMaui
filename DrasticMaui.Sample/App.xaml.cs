@@ -24,14 +24,14 @@ public partial class App : Application
 
     private void App_HandlerChanged(object? sender, EventArgs e)
     {
-        var handler = this.Handler.MauiContext;
-        var stream = MauiProgram.GetResourceFileContent("Icon.favicon.ico");
-        if (stream is not null && handler is not null)
-        {
-            this.tray = new TrayService("DrasticMaui", stream, handler);
-            this.tray.SetupPage(new TraySample());
-            this.Dispatcher.Dispatch(this.tray.SetupTrayIcon);
-        }
+        //var handler = this.Handler.MauiContext;
+        //var stream = MauiProgram.GetResourceFileContent("Icon.favicon.ico");
+        //if (stream is not null && handler is not null)
+        //{
+        //    this.tray = new TrayService("DrasticMaui", stream, handler);
+        //    this.tray.SetupPage(new TraySample());
+        //    this.Dispatcher.Dispatch(this.tray.SetupTrayIcon);
+        //}
     }
 
     /// <inheritdoc/>
@@ -42,5 +42,5 @@ public partial class App : Application
 
     /// <inheritdoc/>
     protected override Window CreateWindow(IActivationState? activationState)
-        => new DrasticMauiSampleWindow() { Page = new MainPage() };
+        => new DrasticMauiSampleWindow() { Page = new NavigationPage(new MainPage()) };
 }

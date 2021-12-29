@@ -7,7 +7,7 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Border>
-                    <Label Text="{Binding Text}" />
+                    <Label Text="{Binding Title}" />
                 </Border>
             </DataTemplate>
         </CollectionView.ItemTemplate>

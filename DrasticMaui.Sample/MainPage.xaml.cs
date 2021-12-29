@@ -9,6 +9,7 @@ namespace DrasticMaui.Sample;
 /// </summary>
 public partial class MainPage : ContentPage
 {
+    private bool isFullScreen;
     private DrasticMauiSampleWindow? window;
     private PageOverlaySample? sample;
 
@@ -44,8 +45,19 @@ public partial class MainPage : ContentPage
 
     private void OnNewWindow(object sender, EventArgs e)
     {
-        var newWindow = new DrasticSplitViewWindow(new DrasticMainMenu(), new MainPage(), this.Handler.MauiContext);
+        var newWindow = new DrasticMauiWindow() { Page = new MainPage() };
         Application.Current?.OpenWindow(newWindow);
+    }
+
+    private async void OnPageNavigate(object sender, EventArgs e)
+    {
+       await this.Navigation.PushAsync(new DrasticMainMenu());
+    }
+
+    private void OnFullScreen(object sender, EventArgs e)
+    {
+        this.isFullScreen = !isFullScreen;
+        this.window?.ToggleFullScreen(isFullScreen);
     }
 
     private void OnCounterClicked(object sender, EventArgs e)

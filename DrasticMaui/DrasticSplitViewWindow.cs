@@ -11,13 +11,11 @@ namespace DrasticMaui
     /// </summary>
     public partial class DrasticSplitViewWindow : DrasticMauiWindow
     {
-        private IMauiContext context;
         private Page menu;
         private bool isInitialized;
 
-        public DrasticSplitViewWindow(Page menu, Page content, IMauiContext context)
+        public DrasticSplitViewWindow(Page menu, Page content)
         {
-            this.context = context;
             this.Page = content;
             this.menu = menu;
         }
@@ -31,7 +29,15 @@ namespace DrasticMaui
             }
         }
 
-#if !__MACCATALYST__ && !__IOS__
+        internal override void AddVisualChildren(List<IVisualTreeElement> elements)
+        {
+            if (this.menu is not null && this.menu is IVisualTreeElement element)
+            {
+                elements.AddRange(element.GetVisualChildren().ToList());
+            }
+        }
+
+#if !__MACCATALYST__ && !__IOS__ && !WINDOWS
         public void SetupSplitView()
         {
         }

@@ -19,7 +19,7 @@ namespace DrasticMaui.Overlays
     /// </summary>
     public partial class DragAndDropOverlay
     {
-        private Microsoft.UI.Xaml.Controls.Panel? panel;
+        private Microsoft.UI.Xaml.UIElement? panel;
 
         /// <inheritdoc/>
         public override bool Initialize()

@@ -13,7 +13,7 @@ namespace DrasticMaui
     /// <summary>
     /// Drastic Maui Window.
     /// </summary>
-    public class DrasticMauiWindow : Window, IVisualTreeElement
+    public partial class DrasticMauiWindow : Window, IVisualTreeElement
     {
         /// <inheritdoc/>
         public IReadOnlyList<IVisualTreeElement> GetVisualChildren()
@@ -32,9 +32,23 @@ namespace DrasticMaui
             return elements;
         }
 
+#if !MACCATALYST && !WINDOWS
+        /// <summary>
+        /// Toggle Full Screen Support.
+        /// </summary>
+        /// <param name="fullScreen">Enable Full Screen.</param>
+        public void ToggleFullScreen(bool fullScreen)
+        {
+        }
+#endif
+
         /// <inheritdoc/>
         public IVisualTreeElement? GetVisualParent() => Microsoft.Maui.Controls.Application.Current;
 
+        /// <summary>
+        /// Add Visual Children.
+        /// </summary>
+        /// <param name="elements">Elements.</param>
         internal virtual void AddVisualChildren(List<IVisualTreeElement> elements)
         {
         }
