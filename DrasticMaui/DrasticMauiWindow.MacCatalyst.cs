@@ -11,6 +11,9 @@ using UIKit;
 
 namespace DrasticMaui
 {
+    /// <summary>
+    /// Drastic Maui Window.
+    /// </summary>
     public partial class DrasticMauiWindow
     {
         /// <summary>
