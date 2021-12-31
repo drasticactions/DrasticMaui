@@ -4,10 +4,13 @@
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using AppKit;
 using CoreFoundation;
+using CoreGraphics;
 using Foundation;
 using Microsoft.Maui.Platform;
 using ObjCRuntime;
+using UIKit;
 
 namespace DrasticMaui.Tray
 {
@@ -99,21 +102,48 @@ namespace DrasticMaui.Tray
 
         private void ToggleWindow()
         {
-            if (this.trayWindow is null)
+            if (this.context is null)
             {
                 return;
             }
 
-            if (this.trayWindow.IsVisible)
+            if (this.trayWindow?.Page is null)
             {
-                this.trayWindow.IsVisible = false;
-                Microsoft.Maui.Controls.Application.Current?.CloseWindow(this.trayWindow);
+                return;
             }
-            else
+
+            if (this.popoverObj is null)
             {
-                this.trayWindow.IsVisible = true;
-                Microsoft.Maui.Controls.Application.Current?.OpenWindow(this.trayWindow);
+                return;
             }
+
+            if (this.statusBarButton is null)
+            {
+                return;
+            }
+
+            if (this.nsViewControllerObj is null)
+            {
+                return;
+            }
+
+            var view = new UIView();
+            var testing = IntPtr_objc_msgSend(this.nsViewControllerObj.Handle, Selector.GetHandle("view"));
+            var viewHandle = Runtime.GetNSObject(IntPtr_objc_msgSend(this.nsViewControllerObj.Handle, Selector.GetHandle("view")));
+            if (viewHandle is null)
+            {
+                return;
+            }
+
+            var bounds = Runtime.GetNSObject(IntPtr_objc_msgSend(this.statusBarButton.Handle, Selector.GetHandle("bounds")));
+            if (bounds is null)
+            {
+                return;
+            }
+
+            var rect = this.popoverObj.GetMethodForSelector(new Selector("showRelativeToRect:ofView:preferredEdge:"));
+            
+            //var test = IntPtr_objc_msgSend_IntPtr_IntPtr_IntPtr(this.popoverObj.Handle, Selector.GetHandle("showRelativeToRect:ofView:preferredEdge:"), bounds.Handle, this.statusBarButton.Handle, 1);
         }
 
         public void SetupPage(Microsoft.Maui.Controls.Page page)
@@ -126,6 +156,9 @@ namespace DrasticMaui.Tray
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         private static extern IntPtr IntPtr_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        private static extern IntPtr IntPtr_objc_msgSend_IntPtr_IntPtr_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1, IntPtr arg2, nfloat arg3);
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         private static extern IntPtr IntPtr_objc_msgSend(IntPtr receiver, IntPtr selector);
