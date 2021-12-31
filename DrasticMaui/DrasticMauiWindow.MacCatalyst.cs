@@ -31,8 +31,6 @@ namespace DrasticMaui
                 return;
             }
 
-            // TODO: Get NSWindow.
-
             var nsApplication = Runtime.GetNSObject(Class.GetHandle("NSApplication"));
             if (nsApplication is null)
             {
