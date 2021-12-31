@@ -121,7 +121,7 @@ namespace DrasticMaui.Overlays
 
         private void Panel_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (this.element == null || !this.HitTestElements.Any())
+            if (!this.HitTestElements.Any() || this.context is null)
             {
                 return;
             }
@@ -132,8 +132,15 @@ namespace DrasticMaui.Overlays
                 return;
             }
 
-            var nativeElements = this.HitTestElements.Select(n => n.GetNative(true));
-            this.element.IsHitTestVisible = nativeElements.Any(n => n.GetBoundingBox().Contains(new Microsoft.Maui.Graphics.Point(pointerPoint.Position.X, pointerPoint.Position.Y)));
+            foreach (var view in this.Views)
+            {
+                var nativeView = (view as Microsoft.Maui.Controls.Page)?.ToNative(this.context);
+                var hitTests = view.HitTestViews.Any(n => n.GetBoundingBox().Contains(new Microsoft.Maui.Graphics.Point(pointerPoint.Position.X, pointerPoint.Position.Y)));
+                if (nativeView is not null)
+                {
+                    nativeView.IsHitTestVisible = hitTests;
+                }
+            }
         }
     }
 }

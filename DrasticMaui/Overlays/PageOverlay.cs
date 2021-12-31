@@ -18,8 +18,8 @@ namespace DrasticMaui.Overlays
     public partial class PageOverlay : BaseOverlay, IVisualTreeElement
     {
         private bool pageOverlayNativeElementsInitialized;
-        private HashSet<Page> views = new HashSet<Page>();
-        private Dictionary<Page, List<IView>> hitTestElements = new Dictionary<Page, List<IView>>();
+        private HashSet<IHitTestView> views = new HashSet<IHitTestView>();
+        private Dictionary<IHitTestView, List<IView>> hitTestElements = new Dictionary<IHitTestView, List<IView>>();
         private IMauiContext? context;
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace DrasticMaui.Overlays
         /// <summary>
         /// Gets a read only list of the pages on the overlay.
         /// </summary>
-        public IReadOnlyList<Page> Views => this.views.ToList().AsReadOnly();
+        public IReadOnlyList<IHitTestView> Views => this.views.ToList().AsReadOnly();
 
         /// <summary>
         /// Gets hit of hit testable elements.
@@ -49,7 +49,12 @@ namespace DrasticMaui.Overlays
         /// <exception cref="ArgumentNullException">ArgumentNullException.</exception>
         public bool AddView(Page view)
         {
-            var result = this.views.Add(view);
+            if (view is not IHitTestView hitTestView)
+            {
+                throw new ArgumentException(nameof(view));
+            }
+
+            var result = this.views.Add(hitTestView);
             if (!result)
             {
                 return false;
@@ -59,9 +64,9 @@ namespace DrasticMaui.Overlays
 #endif
             if (view is IHitTestView hittestView)
             {
-                this.hitTestElements.Add(view, hittestView.HitTestViews);
+                this.hitTestElements.Add(hitTestView, hittestView.HitTestViews);
             }
-            
+
             Microsoft.Maui.Controls.Xaml.Diagnostics.VisualDiagnostics.OnChildAdded(this, view, 0);
             return true;
         }
@@ -74,12 +79,12 @@ namespace DrasticMaui.Overlays
         /// <exception cref="ArgumentNullException">ArgumentNullException.</exception>
         public bool RemoveView(Page view)
         {
-            if (view is not IHitTestView)
+            if (view is not IHitTestView hitTestView)
             {
                 throw new ArgumentNullException(nameof(view));
             }
 
-            var result = this.views.Remove(view);
+            var result = this.views.Remove(hitTestView);
             if (!result)
             {
                 return false;
@@ -90,7 +95,7 @@ namespace DrasticMaui.Overlays
 #endif
 
             Microsoft.Maui.Controls.Xaml.Diagnostics.VisualDiagnostics.OnChildRemoved(this, view, 0);
-            return this.hitTestElements.Remove(view);
+            return this.hitTestElements.Remove(hitTestView);
         }
 
         /// <summary>
