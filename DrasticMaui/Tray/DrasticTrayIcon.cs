@@ -21,7 +21,7 @@ namespace DrasticMaui
 
         public event EventHandler<EventArgs>? Clicked;
 
-#if !__MACCATALYST__
+#if !__MACCATALYST__ && !WINDOWS
         private void SetupStatusBarButton()
         {
         }
