@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using CoreAnimation;
 using CoreGraphics;
+using Foundation;
 using ObjCRuntime;
 using UIKit;
 
@@ -265,5 +267,74 @@ namespace DrasticMaui.Tools
 
             return transform;
         }
+
+#if __MACCATALYST__
+
+        /// <summary>
+        /// Get NSWindow from UIWindow.
+        /// </summary>
+        /// <param name="window">UIWindow.</param>
+        /// <returns>NSWindow as NSObject.</returns>
+        public static NSObject? GetNSWindowFromUIWindow(this UIWindow window)
+        {
+            if (window is null)
+            {
+                return null;
+            }
+
+            var nsApplication = Runtime.GetNSObject(Class.GetHandle("NSApplication"));
+            if (nsApplication is null)
+            {
+                return null;
+            }
+
+            var sharedApplication = nsApplication.PerformSelector(new Selector("sharedApplication"));
+            if (sharedApplication is null)
+            {
+                return null;
+            }
+
+            var applicationDelegate = sharedApplication.PerformSelector(new Selector("delegate"));
+            if (applicationDelegate is null)
+            {
+                return null;
+            }
+
+            var nsWindowHandle = IntPtr_objc_msgSend_IntPtr(applicationDelegate.Handle, Selector.GetHandle("hostWindowForUIWindow:"), window.Handle);
+            var nsWindow = Runtime.GetNSObject(nsWindowHandle);
+            if (nsWindow is null)
+            {
+                return null;
+            }
+
+            return nsWindow;
+        }
+
+        public static void ToggleFullScreen(this UIWindow window, bool fullScreen)
+        {
+            var nsWindow = window.GetNSWindowFromUIWindow();
+            if (nsWindow is null)
+            {
+                return;
+            }
+
+            void_objc_msgSend_bool(nsWindow.Handle, Selector.GetHandle("toggleFullScreen:"), fullScreen);
+        }
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr IntPtr_objc_msgSend_nfloat(IntPtr receiver, IntPtr selector, nfloat arg1);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr IntPtr_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr IntPtr_objc_msgSend(IntPtr receiver, IntPtr selector);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_bool(IntPtr receiver, IntPtr selector, bool arg1);
+#endif
     }
 }
