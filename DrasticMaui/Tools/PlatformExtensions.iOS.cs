@@ -269,7 +269,6 @@ namespace DrasticMaui.Tools
         }
 
 #if __MACCATALYST__
-
         /// <summary>
         /// Get NSWindow from UIWindow.
         /// </summary>
@@ -321,6 +320,30 @@ namespace DrasticMaui.Tools
             void_objc_msgSend_bool(nsWindow.Handle, Selector.GetHandle("toggleFullScreen:"), fullScreen);
         }
 
+        public static NSObject? GetNSApplicationSharedApplication()
+        {
+            var nsapp = Runtime.GetNSObject(Class.GetHandle("NSApplication"));
+            if (nsapp is null)
+            {
+                return null;
+            }
+
+            var sharedApp = nsapp.PerformSelector(new Selector("sharedApplication"));
+
+            return null;
+        }
+
+        public static void NSApplicationActivateIgnoringOtherApps(bool ignoreSetting = true)
+        {
+            var sharedApplication = GetNSApplicationSharedApplication();
+            if (sharedApplication is null)
+            {
+                return;
+            }
+
+            void_objc_msgSend_bool(sharedApplication.Handle, Selector.GetHandle("activateIgnoringOtherApps:"), ignoreSetting);
+        }
+
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern IntPtr IntPtr_objc_msgSend_nfloat(IntPtr receiver, IntPtr selector, nfloat arg1);
 
@@ -332,6 +355,9 @@ namespace DrasticMaui.Tools
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern void void_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_IntPtr_bool(IntPtr receiver, IntPtr selector, IntPtr arg1, bool arg2);
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern void void_objc_msgSend_bool(IntPtr receiver, IntPtr selector, bool arg1);

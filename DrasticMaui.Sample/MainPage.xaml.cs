@@ -60,6 +60,16 @@ public partial class MainPage : ContentPage
         this.window?.ToggleFullScreen(isFullScreen);
     }
 
+    private void OnTrayIcon(object sender, EventArgs e)
+    {
+        this.window?.SetupTrayIcon();
+    }
+
+    private void OnTrayWindow(object sender, EventArgs e)
+    {
+        this.window?.MoveWindowToTray();
+    }
+
     private void OnCounterClicked(object sender, EventArgs e)
     {
     }
