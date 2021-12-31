@@ -1,13 +1,22 @@
-﻿using System;
+﻿// <copyright file="DrasticTrayIcon.Windows.cs" company="Drastic Actions">
+// Copyright (c) Drastic Actions. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DrasticMaui.Events;
 
 namespace DrasticMaui
 {
+    /// <summary>
+    /// Drastic Tray Icon.
+    /// </summary>
     public partial class DrasticTrayIcon
     {
+        private System.Windows.Forms.ContextMenuStrip? contextMenuStrip;
         private NotifyIcon? notifyIcon;
         private Icon? icon;
 
@@ -22,7 +31,15 @@ namespace DrasticMaui
 
         private void NotifyIcon_MouseClick(object? sender, MouseEventArgs e)
         {
-            this.Clicked?.Invoke(this, EventArgs.Empty);
+            if (e.Button == MouseButtons.Left)
+            {
+                this.LeftClicked?.Invoke(this, EventArgs.Empty);
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                this.RightClicked?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void SetupStatusBarImage()
@@ -31,6 +48,61 @@ namespace DrasticMaui
             {
                 this.icon = new Icon(this.iconStream);
             }
+        }
+
+        private void SetupStatusBarMenu()
+        {
+            if (!this.menuItems.Any())
+            {
+                return;
+            }
+
+            if (this.notifyIcon is null)
+            {
+                return;
+            }
+
+            this.contextMenuStrip = new ContextMenuStrip();
+            this.contextMenuStrip.ItemClicked += this.ContextMenuStrip_ItemClicked;
+            var items = this.menuItems.Select(n => this.GenerateItem(n)).Reverse().ToArray();
+            this.contextMenuStrip.Items.AddRange(items);
+            this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
+        }
+
+        private void ContextMenuStrip_ItemClicked(object? sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem is DrasticToolStripMenuItem stripItem)
+            {
+                this.MenuClicked?.Invoke(this, new DrasticTrayMenuClickedEventArgs(stripItem.Item));
+            }
+        }
+
+        private DrasticToolStripMenuItem GenerateItem(DrasticTrayMenuItem item)
+        {
+            var menu = new DrasticToolStripMenuItem(item);
+            menu.Text = item.Text;
+            if (item.Icon is not null)
+            {
+                menu.Image = System.Drawing.Image.FromStream(item.Icon);
+            }
+
+            return menu;
+        }
+
+        private class DrasticToolStripMenuItem : ToolStripMenuItem
+        {
+            public DrasticToolStripMenuItem(DrasticTrayMenuItem item)
+            {
+                this.Text = item.Text;
+                if (item.Icon is not null)
+                {
+                    this.Image = System.Drawing.Image.FromStream(item.Icon);
+                }
+
+                this.Item = item;
+            }
+
+            public DrasticTrayMenuItem Item { get; }
         }
     }
 }

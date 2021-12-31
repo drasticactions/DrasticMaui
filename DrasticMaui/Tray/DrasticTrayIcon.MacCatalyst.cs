@@ -96,7 +96,11 @@ namespace DrasticMaui
         private void HandleClick(NSObject senderStatusBarButton)
         {
             PlatformExtensions.NSApplicationActivateIgnoringOtherApps(true);
-            this.Clicked?.Invoke(this, EventArgs.Empty);
+            this.LeftClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void SetupStatusBarMenu()
+        {
         }
     }
 }

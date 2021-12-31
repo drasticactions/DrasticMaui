@@ -27,7 +27,6 @@
 	<ItemGroup>
 	  <Folder Include="Services\" />
 	  <Folder Include="Controls\" />
-	  <Folder Include="Events\" />
 	  <Folder Include="Models\" />
 	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
