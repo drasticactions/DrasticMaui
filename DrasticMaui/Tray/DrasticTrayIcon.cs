@@ -8,12 +8,13 @@ using Microsoft.Maui.Handlers;
 
 namespace DrasticMaui
 {
-    public partial class DrasticTrayIcon
+    public partial class DrasticTrayIcon : IDisposable
     {
         private Stream? iconStream;
         private string? iconName;
         private List<DrasticTrayMenuItem> menuItems;
         private bool holdsWindowInTray;
+        private bool disposedValue;
 
         public DrasticTrayIcon(string name, Stream stream, List<DrasticTrayMenuItem>? menuItems = null)
         {
@@ -32,11 +33,6 @@ namespace DrasticMaui
         public event EventHandler<DrasticTrayMenuClickedEventArgs>? MenuClicked;
 
 #if !__MACCATALYST__ && !WINDOWS
-
-        public void MoveWindowToTray(WindowHandler handler)
-        {
-        }
-
         private void SetupStatusBarButton()
         {
         }
@@ -48,6 +44,29 @@ namespace DrasticMaui
         private void SetupStatusBarMenu()
         {
         }
+
+        private void NativeElementDispose()
+        {
+        }
 #endif
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    this.NativeElementDispose();
+                }
+
+                this.disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
     }
 }

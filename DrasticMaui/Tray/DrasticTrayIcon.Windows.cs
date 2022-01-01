@@ -23,38 +23,6 @@ namespace DrasticMaui
         private System.Windows.Forms.ContextMenuStrip? contextMenuStrip;
         private NotifyIcon? notifyIcon;
         private Icon? icon;
-        private Microsoft.UI.Windowing.AppWindow? appWindow;
-
-        public void MoveWindowToTray(WindowHandler handler)
-        {
-            if (this.notifyIcon is null)
-            {
-                return;
-            }
-
-            if (handler.NativeView is not Microsoft.UI.Xaml.Window window)
-            {
-                return;
-            }
-
-            if (this.appWindow is null)
-            {
-                this.appWindow = window.GetAppWindowForWinUI();
-                if (this.appWindow.Presenter is OverlappedPresenter presenter)
-                {
-                    presenter.IsResizable = false;
-                    presenter.IsAlwaysOnTop = true;
-                    presenter.IsMaximizable = false;
-                    presenter.IsMinimizable = false;
-                }
-
-                this.appWindow.TitleBar.SetDragRectangles(new[] { new RectInt32(0, 0, 0, 0) });
-                this.appWindow.Hide();
-               // this.appWindow.SetPresenter()
-            }
-
-            this.holdsWindowInTray = true;
-        }
 
         private void SetupStatusBarButton()
         {
@@ -69,11 +37,6 @@ namespace DrasticMaui
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (this.holdsWindowInTray && this.appWindow is not null)
-                {
-                    this.HandleWindow(this.appWindow, Cursor.Position);
-                }
-
                 this.LeftClicked?.Invoke(this, EventArgs.Empty);
             }
 
@@ -83,17 +46,9 @@ namespace DrasticMaui
             }
         }
 
-        private void HandleWindow(Microsoft.UI.Windowing.AppWindow window, System.Drawing.Point point)
+        private void NativeElementDispose()
         {
-            if (!window.IsVisible)
-            {
-                window.MoveAndResize(new Windows.Graphics.RectInt32(point.X - 200, point.Y - 650, 400, 600));
-                window.Show();
-            }
-            else
-            {
-                window.Hide();
-            }
+            this.icon?.Dispose();
         }
 
         private void SetupStatusBarImage()

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DrasticMaui.Models;
 using DrasticMaui.Overlays;
+using Microsoft.Maui.Handlers;
 
 namespace DrasticMaui.Sample
 {
@@ -50,27 +51,33 @@ namespace DrasticMaui.Sample
                 return;
             }
 
-            var stream = MauiProgram.GetResourceFileContent("Icon.favicon.ico");
+            var stream = GetResourceFileContent("Icon.favicon.ico");
             if (stream is null)
             {
                 throw new Exception("Couldn't set up tray image");
             }
 
-            this.TrayIcon = new DrasticTrayIcon("Maui", stream);
-            this.TrayIcon.Clicked += this.TrayIcon_Clicked;
+            var menuItems = new List<DrasticTrayMenuItem>
+            {
+                new DrasticTrayMenuItem("Exit"),
+                new DrasticTrayMenuItem("Test"),
+                new DrasticTrayMenuItem("Test 2")
+            };
+
+            this.TrayIcon = new DrasticTrayIcon("Maui", stream, menuItems);
+            this.TrayIcon.LeftClicked += this.TrayIcon_Clicked;
+            this.TrayIcon.MenuClicked += TrayIcon_MenuClicked;
         }
 
-        public void MoveWindowToTray()
+        private void TrayIcon_MenuClicked(object? sender, Events.DrasticTrayMenuClickedEventArgs e)
         {
-#if __MACCATALYST__
-            var uiWindow = this.Handler.NativeView as UIKit.UIWindow;
-            if (uiWindow is null)
+            if (e.MenuItem.Text == "Exit")
             {
+#if WINDOWS
+                Microsoft.UI.Xaml.Application.Current.Exit();
                 return;
-            }
-
-            this.TrayIcon?.MoveUIWindowToTray(uiWindow);
 #endif
+            }
         }
 
         private void TrayIcon_Clicked(object? sender, EventArgs e)

@@ -16,43 +16,6 @@ namespace DrasticMaui
         private NSObject? statusBarItem;
         private NSObject? statusBarButton;
 
-        public void MoveWindowToTray(WindowHandler handler)
-        {
-            var window = handler.NativeView;
-            if (window is not null)
-            {
-                this.MoveUIWindowToTray(window);
-            }
-        }
-
-        private void MoveUIWindowToTray(UIWindow window)
-        {
-            if (this.statusBarButton is null)
-            {
-                return;
-            }
-
-            var nsWindow = window.GetNSWindowFromUIWindow();
-            if (nsWindow is null)
-            {
-                return;
-            }
-
-            var buttonWindow = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarButton.Handle, Selector.GetHandle("window")));
-            if (buttonWindow is null)
-            {
-                return;
-            }
-
-            var cgRectWindowFrame = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(buttonWindow.Handle, Selector.GetHandle("frame")));
-            if (cgRectWindowFrame is null)
-            {
-                return;
-            }
-
-            PlatformExtensions.void_objc_msgSend_IntPtr_bool(nsWindow.Handle, Selector.GetHandle("setFrame:display:"), cgRectWindowFrame.Handle, false);
-        }
-
         private void SetupStatusBarButton()
         {
             this.statusBarObj = Runtime.GetNSObject(Class.GetHandle("NSStatusBar"));
@@ -110,6 +73,10 @@ namespace DrasticMaui
         }
 
         private void SetupStatusBarMenu()
+        {
+        }
+
+        private void NativeElementDispose()
         {
         }
     }

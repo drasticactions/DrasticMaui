@@ -5,11 +5,21 @@ using Microsoft.Maui.Controls.Xaml;
 
 namespace DrasticMaui.Sample
 {
-	public partial class TraySample : ContentPage
-	{
-		public TraySample()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class TraySample : ContentPage
+    {
+        int count = 0;
+
+        public TraySample()
+        {
+            InitializeComponent();
+        }
+
+        private void OnCounterClicked(object sender, EventArgs e)
+        {
+            count++;
+            CounterLabel.Text = $"Current count: {count}";
+
+            SemanticScreenReader.Announce(CounterLabel.Text);
+        }
+    }
 }

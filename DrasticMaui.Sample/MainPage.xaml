@@ -4,7 +4,6 @@
     <VerticalStackLayout Spacing="10" VerticalOptions="Center">
         <Button Text="Toggle Full Screen" Clicked="OnFullScreen"></Button>
         <Button Text="Setup Tray Icon" Clicked="OnTrayIcon"></Button>
-        <Button Text="Move Window to Tray" Clicked="OnTrayWindow"></Button>
         <Button Text="New Window" Clicked="OnNewWindow"></Button>
         <Button Text="Add Page Overlay" Clicked="OnPageOverlay"></Button>
         <Button Text="Navigate page" Clicked="OnPageNavigate"></Button>

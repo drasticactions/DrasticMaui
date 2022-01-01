@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DrasticMaui.Options;
 
 namespace DrasticMaui
 {
@@ -15,9 +16,68 @@ namespace DrasticMaui
     /// </summary>
     public partial class DrasticTrayWindow : DrasticMauiWindow
     {
+        private DrasticTrayIcon icon;
+        private DrasticTrayWindowOptions options;
+
         /// <summary>
-        /// Gets or sets a value indicating whether the tray window should be visible.
+        /// Initializes a new instance of the <see cref="DrasticTrayWindow"/> class.
         /// </summary>
-        public bool IsVisible { get; set; }
+        /// <param name="icon"><see cref="DrasticTrayIcon"/>.</param>
+        /// <param name="options"><see cref="DrasticTrayWindowOptions"/>.</param>
+        public DrasticTrayWindow(DrasticTrayIcon icon, DrasticTrayWindowOptions? options = null)
+        {
+            this.icon = icon;
+            this.options = options ?? new DrasticTrayWindowOptions();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnCreated()
+        {
+            base.OnCreated();
+            this.SetupWindow();
+            this.SetupTrayIcon();
+        }
+
+        private void SetupTrayIcon()
+        {
+            if (this.icon is null)
+            {
+                return;
+            }
+
+            this.icon.LeftClicked += this.Icon_LeftClicked;
+        }
+
+        private void Icon_LeftClicked(object? sender, EventArgs e)
+        {
+            if (this.IsVisible)
+            {
+                this.HideWindow();
+            }
+            else
+            {
+                this.ShowWindow();
+            }
+        }
+
+#if !WINDOWS && !MACCATALYST
+
+        /// <summary>
+        /// Gets a value indicating whether the tray window should be visible.
+        /// </summary>
+        public bool IsVisible => true;
+
+        private void SetupWindow()
+        {
+        }
+
+        private void ShowWindow()
+        {
+        }
+
+        private void HideWindow()
+        {
+        }
+#endif
     }
 }

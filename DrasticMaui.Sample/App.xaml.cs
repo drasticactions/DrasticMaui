@@ -4,14 +4,14 @@
 
 namespace DrasticMaui.Sample;
 
-using DrasticMaui.Tray;
+using DrasticMaui.Events;
 
 /// <summary>
 /// App.
 /// </summary>
 public partial class App : Application
 {
-    private TrayService tray;
+    private DrasticTrayIcon icon;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="App"/> class.
@@ -19,28 +19,37 @@ public partial class App : Application
     public App()
     {
         this.InitializeComponent();
-        this.HandlerChanged += App_HandlerChanged;
+
+        var menuItems = new List<DrasticTrayMenuItem>
+            {
+                new DrasticTrayMenuItem("Exit"),
+                new DrasticTrayMenuItem("Test"),
+                new DrasticTrayMenuItem("Test 2"),
+            };
+
+        var stream = MauiProgram.GetResourceFileContent("Icon.favicon.ico");
+        if (stream is null)
+        {
+            throw new Exception("Couldn't set up tray image");
+        }
+
+        this.icon = new DrasticTrayIcon("Maui", stream, menuItems);
+        this.icon.MenuClicked += this.TrayIcon_MenuClicked;
     }
 
-    private void App_HandlerChanged(object? sender, EventArgs e)
+    private void TrayIcon_MenuClicked(object? sender, DrasticTrayMenuClickedEventArgs e)
     {
-        //var handler = this.Handler.MauiContext;
-        //var stream = MauiProgram.GetResourceFileContent("Icon.favicon.ico");
-        //if (stream is not null && handler is not null)
-        //{
-        //    this.tray = new TrayService("DrasticMaui", stream, handler);
-        //    this.tray.SetupPage(new TraySample());
-        //    this.Dispatcher.Dispatch(this.tray.SetupTrayIcon);
-        //}
-    }
-
-    /// <inheritdoc/>
-    protected override void OnStart()
-    {
-        base.OnStart();
+        if (e.MenuItem.Text == "Exit")
+        {
+#if WINDOWS
+            Microsoft.UI.Xaml.Application.Current.Exit();
+            return;
+#endif
+        }
     }
 
     /// <inheritdoc/>
     protected override Window CreateWindow(IActivationState? activationState)
-        => new DrasticMauiSampleWindow() { Page = new NavigationPage(new MainPage()) };
+        // => new DrasticMauiSampleWindow() { Page = new NavigationPage(new MainPage()) };
+        => new DrasticMauiSampleTrayWindow(this.icon) { Page = new TraySample() };
 }
