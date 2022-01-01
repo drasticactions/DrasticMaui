@@ -87,7 +87,7 @@ namespace DrasticMaui
         {
             if (!window.IsVisible)
             {
-                window.MoveAndResize(new Windows.Graphics.RectInt32(point.X - 200, point.Y - 600, 400, 600));
+                window.MoveAndResize(new Windows.Graphics.RectInt32(point.X - 200, point.Y - 650, 400, 600));
                 window.Show();
             }
             else
