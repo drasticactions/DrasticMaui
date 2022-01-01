@@ -3,11 +3,27 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using WinPoint = Windows.Foundation.Point;
 
 namespace DrasticMaui.Tools
 {
+    public struct RECT
+    {
+        public int left;
+        public int top;
+        public int right;
+        public int bottom;
+
+        public override string ToString()
+        {
+            return "(" + left + ", " + top + ") --> (" + right + ", " + bottom + ")";
+        }
+    }
+
     /// <summary>
     /// Windows Platform Extensions.
     /// </summary>
@@ -27,6 +43,19 @@ namespace DrasticMaui.Tools
             }
 
             return view.Handler?.NativeView as FrameworkElement;
+        }
+
+        public static AppWindow GetAppWindowForWinUI(this Microsoft.UI.Xaml.Window window)
+        {
+            var windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+
+            return GetAppWindowFromWindowHandle(windowHandle);
+        }
+
+        private static AppWindow GetAppWindowFromWindowHandle(IntPtr windowHandle)
+        {
+            var windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            return AppWindow.GetFromWindowId(windowId);
         }
 
         internal static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view)

@@ -2,8 +2,9 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using DrasticMaui.Events;
 using System;
+using DrasticMaui.Events;
+using Microsoft.Maui.Handlers;
 
 namespace DrasticMaui
 {
@@ -12,6 +13,7 @@ namespace DrasticMaui
         private Stream? iconStream;
         private string? iconName;
         private List<DrasticTrayMenuItem> menuItems;
+        private bool holdsWindowInTray;
 
         public DrasticTrayIcon(string name, Stream stream, List<DrasticTrayMenuItem>? menuItems = null)
         {
@@ -30,6 +32,11 @@ namespace DrasticMaui
         public event EventHandler<DrasticTrayMenuClickedEventArgs>? MenuClicked;
 
 #if !__MACCATALYST__ && !WINDOWS
+
+        public void MoveWindowToTray(WindowHandler handler)
+        {
+        }
+
         private void SetupStatusBarButton()
         {
         }

@@ -2,6 +2,7 @@
 using CoreGraphics;
 using DrasticMaui.Tools;
 using Foundation;
+using Microsoft.Maui.Handlers;
 using ObjCRuntime;
 using UIKit;
 
@@ -15,7 +16,16 @@ namespace DrasticMaui
         private NSObject? statusBarItem;
         private NSObject? statusBarButton;
 
-        public void MoveUIWindowToTray(UIWindow window)
+        public void MoveWindowToTray(WindowHandler handler)
+        {
+            var window = handler.NativeView;
+            if (window is not null)
+            {
+                this.MoveUIWindowToTray(window);
+            }
+        }
+
+        private void MoveUIWindowToTray(UIWindow window)
         {
             if (this.statusBarButton is null)
             {
