@@ -50,6 +50,6 @@ public partial class App : Application
 
     /// <inheritdoc/>
     protected override Window CreateWindow(IActivationState? activationState)
-        // => new DrasticMauiSampleWindow() { Page = new NavigationPage(new MainPage()) };
+        //=> new DrasticMauiSampleWindow() { Page = new NavigationPage(new MainPage()) };
         => new DrasticMauiSampleTrayWindow(this.icon) { Page = new TraySample() };
 }

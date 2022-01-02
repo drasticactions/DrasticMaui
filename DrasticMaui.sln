@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32023.32
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrasticMaui.Sample", "DrasticMaui.Sample\DrasticMaui.Sample.csproj", "{BD39811E-11BA-47FA-9F6A-A322AAAE1057}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrasticMaui.Sample", "DrasticMaui.Sample\DrasticMaui.Sample.csproj", "{BD39811E-11BA-47FA-9F6A-A322AAAE1057}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrasticMaui", "DrasticMaui\DrasticMaui.csproj", "{ABBB7C06-7C93-4091-81FB-FAB580FBE76D}"
 EndProject

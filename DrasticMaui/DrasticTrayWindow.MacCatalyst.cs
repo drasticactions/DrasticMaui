@@ -7,9 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CoreAnimation;
+using CoreGraphics;
 using DrasticMaui.Tools;
 using Foundation;
 using Microsoft.Maui.Handlers;
+using ObjCRuntime;
+using UIKit;
 
 namespace DrasticMaui
 {
@@ -20,13 +24,15 @@ namespace DrasticMaui
     {
         private UIKit.UIWindow? uiWindow;
         private NSObject? nsWindow;
+        private bool isActivated;
+        private DrasticTrayUIViewController? drasticViewController;
 
         /// <summary>
         /// Gets a value indicating whether the tray window should be visible.
         /// </summary>
         public bool IsVisible => true;
 
-        private void SetupWindow()
+        private async void SetupWindow()
         {
             var handler = this.Handler as Microsoft.Maui.Handlers.WindowHandler;
             if (handler?.NativeView is not UIKit.UIWindow uiWindow)
@@ -35,7 +41,27 @@ namespace DrasticMaui
             }
 
             this.uiWindow = uiWindow;
-            this.nsWindow = uiWindow.GetNSWindowFromUIWindow();
+
+            this.nsWindow = await this.uiWindow.GetNSWindowFromUIWindow();
+
+
+
+            await this.uiWindow.ToggleTitleBarButtons(true);
+
+            if (this.uiWindow.RootViewController is null)
+            {
+                return;
+            }
+
+            this.uiWindow.RootViewController = this.drasticViewController = new DrasticTrayUIViewController(this.uiWindow, this.uiWindow.RootViewController, this.icon, this.options);
+
+        }
+
+        protected override void OnHandlerChanged()
+        {
+            base.OnHandlerChanged();
+            this.SetupWindow();
+            this.SetupTrayIcon();
         }
 
         private void TestUIWindowToTray()
@@ -68,10 +94,12 @@ namespace DrasticMaui
 
         private void ShowWindow()
         {
+            this.drasticViewController?.ToggleVisibility();
         }
 
         private void HideWindow()
         {
+            this.drasticViewController?.ToggleVisibility();
         }
     }
 }

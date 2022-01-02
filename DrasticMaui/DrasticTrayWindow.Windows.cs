@@ -26,6 +26,14 @@ namespace DrasticMaui
         /// </summary>
         public bool IsVisible => this.appWindow is not null ? this.appWindow.IsVisible : true;
 
+        ///// <inheritdoc/>
+        protected override void OnCreated()
+        {
+            base.OnCreated();
+            this.SetupWindow();
+            this.SetupTrayIcon();
+        }
+
         private void SetupWindow()
         {
             var handler = this.Handler as Microsoft.Maui.Handlers.WindowHandler;

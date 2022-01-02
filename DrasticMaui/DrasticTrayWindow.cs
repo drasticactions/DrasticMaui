@@ -30,14 +30,6 @@ namespace DrasticMaui
             this.options = options ?? new DrasticTrayWindowOptions();
         }
 
-        /// <inheritdoc/>
-        protected override void OnCreated()
-        {
-            base.OnCreated();
-            this.SetupWindow();
-            this.SetupTrayIcon();
-        }
-
         private void SetupTrayIcon()
         {
             if (this.icon is null)

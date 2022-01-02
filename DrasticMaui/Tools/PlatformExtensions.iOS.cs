@@ -274,7 +274,7 @@ namespace DrasticMaui.Tools
         /// </summary>
         /// <param name="window">UIWindow.</param>
         /// <returns>NSWindow as NSObject.</returns>
-        public static NSObject? GetNSWindowFromUIWindow(this UIWindow window)
+        public static async Task<NSObject?> GetNSWindowFromUIWindow(this UIWindow window)
         {
             if (window is null)
             {
@@ -299,19 +299,71 @@ namespace DrasticMaui.Tools
                 return null;
             }
 
+            return await GetNSWindow(window, applicationDelegate);
+        }
+
+        public static async Task<NSObject?> GetNSWindow(UIWindow window, NSObject applicationDelegate)
+        {
             var nsWindowHandle = IntPtr_objc_msgSend_IntPtr(applicationDelegate.Handle, Selector.GetHandle("hostWindowForUIWindow:"), window.Handle);
-            var nsWindow = Runtime.GetNSObject(nsWindowHandle);
+            var nsWindow = Runtime.GetNSObject<NSObject>(nsWindowHandle);
             if (nsWindow is null)
             {
-                return null;
+                await Task.Delay(500);
+                return await GetNSWindow(window, applicationDelegate);
             }
 
             return nsWindow;
         }
 
+        public static async Task SetFrameForUIWindow(this UIWindow window, CGRect rect)
+        {
+            var nsWindow = await window.GetNSWindowFromUIWindow();
+            if (nsWindow is null)
+            {
+                return;
+            }
+
+            var newRect = NSValue.FromCGRect(rect);
+
+            void_objc_msgSend_IntPtr_bool(nsWindow.Handle, Selector.GetHandle("setFrame:display:"), newRect.Handle, false);
+        }
+
+        public static async Task ToggleTitleBarButtons(this UIWindow window, bool hideButtons)
+        {
+            var nsWindow = await window.GetNSWindowFromUIWindow();
+            if (nsWindow is null)
+            {
+                return;
+            }
+
+            var closeButton = Runtime.GetNSObject(IntPtr_objc_msgSend_nfloat(nsWindow.Handle, Selector.GetHandle("standardWindowButton:"), 0));
+
+            if (closeButton is null)
+            {
+                return;
+            }
+
+            var miniaturizeButton = Runtime.GetNSObject(IntPtr_objc_msgSend_nfloat(nsWindow.Handle, Selector.GetHandle("standardWindowButton:"), 1));
+            if (miniaturizeButton is null)
+            {
+                return;
+            }
+
+            var zoomButton = Runtime.GetNSObject(IntPtr_objc_msgSend_nfloat(nsWindow.Handle, Selector.GetHandle("standardWindowButton:"), 2));
+
+            if (zoomButton is null)
+            {
+                return;
+            }
+
+            void_objc_msgSend_bool(closeButton.Handle, Selector.GetHandle("isHidden"), hideButtons);
+            void_objc_msgSend_bool(miniaturizeButton.Handle, Selector.GetHandle("isHidden"), hideButtons);
+            void_objc_msgSend_bool(zoomButton.Handle, Selector.GetHandle("isHidden"), hideButtons);
+        }
+
         public static void ToggleFullScreen(this UIWindow window, bool fullScreen)
         {
-            var nsWindow = window.GetNSWindowFromUIWindow();
+            var nsWindow = window.GetNSWindowFromUIWindow().Result;
             if (nsWindow is null)
             {
                 return;
@@ -361,6 +413,9 @@ namespace DrasticMaui.Tools
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern void void_objc_msgSend_bool(IntPtr receiver, IntPtr selector, bool arg1);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_ulong(IntPtr receiver, IntPtr selector, ulong arg1);
 #endif
     }
 }

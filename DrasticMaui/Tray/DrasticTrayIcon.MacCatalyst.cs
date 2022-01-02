@@ -16,6 +16,28 @@ namespace DrasticMaui
         private NSObject? statusBarItem;
         private NSObject? statusBarButton;
 
+        public CGRect GetFrame()
+        {
+            if (this.statusBarButton is null)
+            {
+                return new CGRect(0, 0, 1, 1);
+            }
+
+            var buttonValue = Runtime.GetNSObject<NSValue>(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarButton.Handle, Selector.GetHandle("frame")));
+            if (buttonValue is null)
+            {
+                return new CGRect(0, 0, 1, 1);
+            }
+
+            //var cgRectWindowFrame = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(buttonWindow.Handle, Selector.GetHandle("frame")));
+            //if (cgRectWindowFrame is null)
+            //{
+            //    return new CGRect(0, 0, 1, 1);
+            //}
+
+            return new CGRect(0, 0, 1, 1);
+        }
+
         private void SetupStatusBarButton()
         {
             this.statusBarObj = Runtime.GetNSObject(Class.GetHandle("NSStatusBar"));
