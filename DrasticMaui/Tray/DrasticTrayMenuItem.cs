@@ -21,7 +21,7 @@ namespace DrasticMaui
         /// <param name="text">Menu Text.</param>
         /// <param name="icon">Icon.</param>
         /// <param name="action">Action to perform when clicked.</param>
-        public DrasticTrayMenuItem (string text, Stream? icon = null, Task<Action>? action = null)
+        public DrasticTrayMenuItem (string text, Stream? icon = null, Func<Task>? action = null)
         {
             this.Text = text;
             this.Icon = icon;
@@ -43,6 +43,6 @@ namespace DrasticMaui
         /// Gets the action to be performed when the item is clicked.
         /// Optional.
         /// </summary>
-        public Task<Action>? Action { get; }
+        public Func<Task>? Action { get; }
     }
 }

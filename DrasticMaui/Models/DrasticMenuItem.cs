@@ -26,7 +26,7 @@ namespace DrasticMaui.Models
         /// <param name="type">Type of Sidebar Item.</param>
         public DrasticMenuItem(
             string title,
-            Task<Action>? action = null,
+            Func<Task>? action = null,
             Page? page = null,
             Guid? id = null,
             string subtitle = "",
@@ -82,6 +82,6 @@ namespace DrasticMaui.Models
         /// <summary>
         /// Gets the action to invoke upon selection.
         /// </summary>
-        public Task<Action>? Action { get; }
+        public Func<Task>? Action { get; }
     }
 }

@@ -26,6 +26,9 @@ namespace DrasticMaui.Sample
             this.PageOverlay = new PageOverlay(this);
         }
 
+        /// <summary>
+        /// Gets the tray icon.
+        /// </summary>
         internal DrasticTrayIcon? TrayIcon { get; private set; }
 
         /// <summary>
@@ -79,9 +82,9 @@ namespace DrasticMaui.Sample
 
             var menuItems = new List<DrasticTrayMenuItem>
             {
-                new DrasticTrayMenuItem("Exit"),
-                new DrasticTrayMenuItem("Test"),
-                new DrasticTrayMenuItem("Test 2")
+                new DrasticTrayMenuItem("Exit", action: async () => this.ExitApp()),
+                new DrasticTrayMenuItem("Test", action: async () => this.ShowMessage("Test Message One")),
+                new DrasticTrayMenuItem("Test 2", action: async () => this.ShowMessage("Test Message Two")),
             };
 
             this.TrayIcon = new DrasticTrayIcon("Maui", stream, menuItems);
@@ -89,15 +92,24 @@ namespace DrasticMaui.Sample
             this.TrayIcon.MenuClicked += TrayIcon_MenuClicked;
         }
 
-        private void TrayIcon_MenuClicked(object? sender, Events.DrasticTrayMenuClickedEventArgs e)
+        private async void ShowMessage(string message)
         {
-            if (e.MenuItem.Text == "Exit")
+            await this.Page?.DisplayAlert("Message", message, "Okay");
+        }
+
+        private async void TrayIcon_MenuClicked(object? sender, Events.DrasticTrayMenuClickedEventArgs e)
+        {
+            if (e.MenuItem.Action is not null)
             {
-#if WINDOWS
-                Microsoft.UI.Xaml.Application.Current.Exit();
-                return;
-#endif
+                await e.MenuItem.Action();
             }
+        }
+
+        private void ExitApp()
+        {
+#if WINDOWS
+            Microsoft.UI.Xaml.Application.Current.Exit();
+#endif
         }
 
         private void TrayIcon_Clicked(object? sender, EventArgs e)
