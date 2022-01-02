@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DrasticMaui.Events;
 
 namespace DrasticMaui.Services
 {
@@ -15,6 +16,11 @@ namespace DrasticMaui.Services
     /// </summary>
     public interface IErrorHandlerService
     {
+        /// <summary>
+        /// Called when an error is hit through the service.
+        /// </summary>
+        event EventHandler<DrasticErrorHandlerEventArgs> OnError;
+
         /// <summary>
         /// Handle error in UI.
         /// </summary>
