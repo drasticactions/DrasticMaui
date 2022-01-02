@@ -37,5 +37,12 @@ namespace DrasticMaui.Tools
                 return false;
             }
         }
+
+        /// <summary>
+        /// Generate a clean path.
+        /// </summary>
+        /// <param name="path">Path.</param>
+        /// <returns>String.</returns>
+        public static string CleanPath(this string path) => string.Join("_", path.Split(Path.GetInvalidFileNameChars()));
     }
 }
