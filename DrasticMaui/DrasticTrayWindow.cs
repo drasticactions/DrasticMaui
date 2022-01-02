@@ -30,6 +30,11 @@ namespace DrasticMaui
             this.options = options ?? new DrasticTrayWindowOptions();
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the tray window should be visible.
+        /// </summary>
+        public bool IsVisible { get; private set; }
+
         private void SetupTrayIcon()
         {
             if (this.icon is null)
@@ -50,14 +55,11 @@ namespace DrasticMaui
             {
                 this.ShowWindow();
             }
+
+            this.IsVisible = !this.IsVisible;
         }
 
 #if !WINDOWS && !MACCATALYST
-
-        /// <summary>
-        /// Gets a value indicating whether the tray window should be visible.
-        /// </summary>
-        public bool IsVisible => true;
 
         private void SetupWindow()
         {
@@ -68,10 +70,6 @@ namespace DrasticMaui
         }
 
         private void HideWindow()
-        {
-        }
-
-        public void Setup()
         {
         }
 #endif

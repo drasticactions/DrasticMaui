@@ -48,6 +48,7 @@ namespace DrasticMaui
 
         private void NativeElementDispose()
         {
+            this.notifyIcon?.Dispose();
             this.icon?.Dispose();
         }
 

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DrasticTrayUIViewController.MacCatalyst.cs" company="Drastic Actions">
+// Copyright (c) Drastic Actions. All rights reserved.
+// </copyright>
+
+using System;
 using CoreGraphics;
 using DrasticMaui.Options;
 using DrasticMaui.Tools;
@@ -7,6 +11,11 @@ using UIKit;
 
 namespace DrasticMaui
 {
+    /// <summary>
+    /// Drastic Tray UI View Controller.
+    /// Holds an existing MAUI UI View Controller and turns
+    /// it into a modal popover.
+    /// </summary>
     public class DrasticTrayUIViewController : UIViewController
     {
         private UIViewController contentController;
@@ -15,6 +24,13 @@ namespace DrasticMaui
         private DrasticTrayWindowOptions options;
         private DrasticTrayIcon trayIcon;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrasticTrayUIViewController"/> class.
+        /// </summary>
+        /// <param name="window">Containing UI Window.</param>
+        /// <param name="contentController">Embedded UI View Controller.</param>
+        /// <param name="trayIcon">Tray Icon.</param>
+        /// <param name="options">Options.</param>
         public DrasticTrayUIViewController(
             UIWindow window,
             UIViewController contentController,
@@ -29,6 +45,9 @@ namespace DrasticMaui
             this.SetupWindow();
         }
 
+        /// <summary>
+        /// Toggle Visibility of the window.
+        /// </summary>
         public async void ToggleVisibility()
         {
             if (this.contentController?.View is null)
@@ -49,7 +68,7 @@ namespace DrasticMaui
             {
                 viewController.DismissViewController(true, null);
             }
-           else
+            else
             {
                 viewController.ModalPresentationStyle = UIModalPresentationStyle.Popover;
                 viewController.PopoverPresentationController.SourceView = this.View;
@@ -59,6 +78,7 @@ namespace DrasticMaui
             }
         }
 
+        /// <inheritdoc/>
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);

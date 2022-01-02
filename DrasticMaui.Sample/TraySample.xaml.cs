@@ -18,7 +18,6 @@ namespace DrasticMaui.Sample
         {
             if (this.GetParentWindow() is DrasticTrayWindow win)
             {
-                win.Setup();
             }
         }
 

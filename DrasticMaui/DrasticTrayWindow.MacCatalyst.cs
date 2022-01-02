@@ -27,10 +27,13 @@ namespace DrasticMaui
         private bool isActivated;
         private DrasticTrayUIViewController? drasticViewController;
 
-        /// <summary>
-        /// Gets a value indicating whether the tray window should be visible.
-        /// </summary>
-        public bool IsVisible => true;
+        /// <inheritdoc/>
+        protected override void OnHandlerChanged()
+        {
+            base.OnHandlerChanged();
+            this.SetupWindow();
+            this.SetupTrayIcon();
+        }
 
         private async void SetupWindow()
         {
@@ -52,48 +55,6 @@ namespace DrasticMaui
             }
 
             this.uiWindow.RootViewController = this.drasticViewController = new DrasticTrayUIViewController(this.uiWindow, this.uiWindow.RootViewController, this.icon, this.options);
-
-        }
-
-        protected override void OnHandlerChanged()
-        {
-            base.OnHandlerChanged();
-            //this.SetupWindow();
-            //this.SetupTrayIcon();
-        }
-
-        public void Setup()
-        {
-            this.SetupWindow();
-            this.SetupTrayIcon();
-        }
-
-        private void TestUIWindowToTray()
-        {
-            //if (this.statusBarButton is null)
-            //{
-            //    return;
-            //}
-
-            //var nsWindow = window.GetNSWindowFromUIWindow();
-            //if (nsWindow is null)
-            //{
-            //    return;
-            //}
-
-            //var buttonWindow = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarButton.Handle, Selector.GetHandle("window")));
-            //if (buttonWindow is null)
-            //{
-            //    return;
-            //}
-
-            //var cgRectWindowFrame = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(buttonWindow.Handle, Selector.GetHandle("frame")));
-            //if (cgRectWindowFrame is null)
-            //{
-            //    return;
-            //}
-
-            //PlatformExtensions.void_objc_msgSend_IntPtr_bool(nsWindow.Handle, Selector.GetHandle("setFrame:display:"), cgRectWindowFrame.Handle, false);
         }
 
         private void ShowWindow()

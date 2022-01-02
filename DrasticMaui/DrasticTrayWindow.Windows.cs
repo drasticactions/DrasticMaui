@@ -21,11 +21,6 @@ namespace DrasticMaui
         private Microsoft.UI.Windowing.AppWindow? appWindow;
         private bool appLaunched;
 
-        /// <summary>
-        /// Gets a value indicating whether the tray window should be visible.
-        /// </summary>
-        public bool IsVisible => this.appWindow is not null ? this.appWindow.IsVisible : true;
-
         ///// <inheritdoc/>
         protected override void OnCreated()
         {
@@ -69,10 +64,6 @@ namespace DrasticMaui
             {
                 window.VisibilityChanged -= this.Window_VisibilityChanged;
             }
-        }
-
-        public void Setup()
-        {
         }
 
         private void ShowWindow()
