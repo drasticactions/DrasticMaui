@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DrasticMaui.Models;
 using DrasticMaui.Overlays;
+using DrasticMaui.Tools;
 using Microsoft.Maui.Handlers;
 
 namespace DrasticMaui.Sample
@@ -42,6 +43,25 @@ namespace DrasticMaui.Sample
         {
             this.AddOverlay(this.PageOverlay);
             this.AddOverlay(this.DragAndDropOverlay);
+        }
+
+        public async Task TestTrayIcon()
+        {
+#if __MACCATALYST__
+          if (this.Handler is WindowHandler handler)
+            {
+                await handler.NativeView.SetFrameForUIWindow(new CoreGraphics.CGRect(0, 0, 100, 100));
+            }
+#endif
+        }
+
+        public async Task EnableTrayApp()
+        {
+            if (this.TrayIcon is not null)
+            {
+                var trayWindow = new DrasticTrayWindow(this.TrayIcon) { Page = new TraySample() };
+                Application.Current?.OpenWindow(trayWindow);
+            }
         }
 
         public void SetupTrayIcon()

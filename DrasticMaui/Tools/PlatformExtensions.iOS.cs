@@ -269,6 +269,10 @@ namespace DrasticMaui.Tools
         }
 
 #if __MACCATALYST__
+
+        public static NSObject? GetNSStatusBar()
+            => Runtime.GetNSObject(Class.GetHandle("NSStatusBar"));
+
         /// <summary>
         /// Get NSWindow from UIWindow.
         /// </summary>
@@ -323,9 +327,38 @@ namespace DrasticMaui.Tools
                 return;
             }
 
-            var newRect = NSValue.FromCGRect(rect);
+            var testFrame = window.GetFrame();
 
-            void_objc_msgSend_IntPtr_bool(nsWindow.Handle, Selector.GetHandle("setFrame:display:"), newRect.Handle, false);
+            var attachedWindow = nsWindow.ValueForKey(new NSString("attachedWindow"));
+
+            if (attachedWindow is null)
+            {
+                return;
+            }
+
+            var windowFrame = (NSValue)attachedWindow.ValueForKey(new NSString("frame"));
+
+            var originalOne = windowFrame.CGRectValue;
+
+            var newRect = NSValue.FromCGRect(new CGRect(originalOne.X, originalOne.Y, originalOne.Width, originalOne.Height));
+
+            // var point = NSValue.FromCGPoint(new CGPoint(rect.X, rect.Y));
+
+            //void_objc_msgSend_IntPtr_bool(attachedWindow.Handle, Selector.GetHandle("setFrameTopLeftPoint:"), point.Handle, false);
+
+            //attachedWindow.PerformSelector(new Selector("setFrame:display:"), newRect, NSNumber.FromBoolean(false));
+
+            //void_objc_msgSend_IntPtr_bool(attachedWindow.Handle, Selector.GetHandle("setFrame:display:"), windowFrame.Handle, true);
+
+            //void_objc_msgSend_IntPtr(attachedWindow.Handle, Selector.GetHandle("setFrameOrigin:"), point.Handle);
+
+            windowFrame = (NSValue)attachedWindow.ValueForKey(new NSString("frame"));
+
+            // void_objc_msgSend_IntPtr(attachedWindow.Handle, Selector.GetHandle("setFrameOrigin:"), point.Handle);
+
+            // void_objc_msgSend_IntPtr(nsWindow.Handle, Selector.GetHandle("makeKeyAndOrderFront:"), nsWindow.Handle);
+
+            //NSApplicationActivateIgnoringOtherApps();
         }
 
         public static async Task ToggleTitleBarButtons(this UIWindow window, bool hideButtons)
@@ -409,10 +442,20 @@ namespace DrasticMaui.Tools
         internal static extern void void_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_bool_IntPtr(IntPtr receiver, IntPtr selector, bool arg1, IntPtr arg2);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_IntPtr_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1, IntPtr arg2);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern void void_objc_msgSend_IntPtr_bool(IntPtr receiver, IntPtr selector, IntPtr arg1, bool arg2);
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_IntPtr_bool_bool(IntPtr receiver, IntPtr selector, IntPtr arg1, bool arg2, bool arg3);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern void void_objc_msgSend_bool(IntPtr receiver, IntPtr selector, bool arg1);
+
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern void void_objc_msgSend_ulong(IntPtr receiver, IntPtr selector, ulong arg1);

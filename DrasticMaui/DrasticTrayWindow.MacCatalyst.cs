@@ -44,8 +44,6 @@ namespace DrasticMaui
 
             this.nsWindow = await this.uiWindow.GetNSWindowFromUIWindow();
 
-
-
             await this.uiWindow.ToggleTitleBarButtons(true);
 
             if (this.uiWindow.RootViewController is null)
@@ -60,6 +58,12 @@ namespace DrasticMaui
         protected override void OnHandlerChanged()
         {
             base.OnHandlerChanged();
+            //this.SetupWindow();
+            //this.SetupTrayIcon();
+        }
+
+        public void Setup()
+        {
             this.SetupWindow();
             this.SetupTrayIcon();
         }

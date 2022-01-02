@@ -70,6 +70,10 @@ namespace DrasticMaui
         private void HideWindow()
         {
         }
+
+        public void Setup()
+        {
+        }
 #endif
     }
 }

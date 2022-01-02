@@ -65,6 +65,16 @@ public partial class MainPage : ContentPage
         this.window?.SetupTrayIcon();
     }
 
+    private async void OnStatusIcon(object sender, EventArgs e)
+    {
+        await this.window?.TestTrayIcon();
+    }
+
+    private void OnNewTrayApp(object sender, EventArgs e)
+    {
+        this.window?.EnableTrayApp();
+    }
+
     private void OnCounterClicked(object sender, EventArgs e)
     {
     }

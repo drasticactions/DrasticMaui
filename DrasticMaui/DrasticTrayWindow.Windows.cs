@@ -71,6 +71,10 @@ namespace DrasticMaui
             }
         }
 
+        public void Setup()
+        {
+        }
+
         private void ShowWindow()
         {
             if (this.appWindow is null)

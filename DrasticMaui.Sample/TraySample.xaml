@@ -4,7 +4,7 @@
              x:Class="DrasticMaui.Sample.TraySample"
              Title="TraySample">
     <ScrollView>
-        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*"
+        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
               Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
 
             <Label 
@@ -36,6 +36,14 @@
                 Grid.Row="3"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
+                HorizontalOptions="Center" />
+
+             <Button 
+                Text="Reset View"
+                FontAttributes="Bold"
+                Grid.Row="5"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnReset"
                 HorizontalOptions="Center" />
 
             <Image Grid.Row="4"

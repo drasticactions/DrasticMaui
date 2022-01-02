@@ -10,63 +10,63 @@ namespace DrasticMaui
 {
     public partial class DrasticTrayIcon : NSObject
     {
+        private bool setupFrames;
         private AppKit.NSImage? statusBarImage;
-        private NSObject? systemStatusBarObj;
-        private NSObject? statusBarObj;
         private NSObject? statusBarItem;
-        private NSObject? statusBarButton;
 
         public CGRect GetFrame()
         {
-            if (this.statusBarButton is null)
+            if (this.statusBarItem is null)
             {
-                return new CGRect(0, 0, 1, 1);
+                return new CGRect(0, 0, 0, 0);
             }
 
-            var buttonValue = Runtime.GetNSObject<NSValue>(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarButton.Handle, Selector.GetHandle("frame")));
-            if (buttonValue is null)
+            var statusBarButton = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarItem.Handle, Selector.GetHandle("button")));
+            if (statusBarButton is null)
             {
-                return new CGRect(0, 0, 1, 1);
+                return new CGRect(0, 0, 0, 0);
             }
 
-            //var cgRectWindowFrame = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(buttonWindow.Handle, Selector.GetHandle("frame")));
-            //if (cgRectWindowFrame is null)
-            //{
-            //    return new CGRect(0, 0, 1, 1);
-            //}
+            var nsButtonWindow = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(statusBarButton.Handle, Selector.GetHandle("window")));
+            if (nsButtonWindow is null)
+            {
+                return new CGRect(0, 0, 0, 0);
+            }
 
-            return new CGRect(0, 0, 1, 1);
+            var windowFrame = (NSValue)nsButtonWindow.ValueForKey(new NSString("frame"));
+
+            return windowFrame.CGRectValue;
         }
 
         private void SetupStatusBarButton()
         {
-            this.statusBarObj = Runtime.GetNSObject(Class.GetHandle("NSStatusBar"));
-            if (this.statusBarObj is null)
+            var statusBarObj = PlatformExtensions.GetNSStatusBar();
+            if (statusBarObj is null)
             {
                 return;
             }
 
-            this.systemStatusBarObj = this.statusBarObj.PerformSelector(new Selector("systemStatusBar"));
-            this.statusBarItem = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend_nfloat(this.systemStatusBarObj.Handle, Selector.GetHandle("statusItemWithLength:"), -1));
+            var systemStatusBarObj = statusBarObj.PerformSelector(new Selector("systemStatusBar"));
+            this.statusBarItem = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend_nfloat(systemStatusBarObj.Handle, Selector.GetHandle("statusItemWithLength:"), -1));
             if (this.statusBarItem is null)
             {
                 return;
             }
 
-            this.statusBarButton = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarItem.Handle, Selector.GetHandle("button")));
+            var statusBarButton = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarItem.Handle, Selector.GetHandle("button")));
 
-            if (this.statusBarButton is not null && this.statusBarImage is not null)
+            if (statusBarButton is not null && statusBarImage is not null)
             {
-                PlatformExtensions.void_objc_msgSend_IntPtr(this.statusBarButton.Handle, Selector.GetHandle("setImage:"), this.statusBarImage.Handle);
+                PlatformExtensions.void_objc_msgSend_IntPtr(statusBarButton.Handle, Selector.GetHandle("setImage:"), statusBarImage.Handle);
                 PlatformExtensions.void_objc_msgSend_bool(this.statusBarImage.Handle, Selector.GetHandle("setTemplate:"), true);
                 this.statusBarImage.Size = new CoreGraphics.CGSize(32, 32);
             }
 
-            if (this.statusBarButton is not null)
+            if (statusBarButton is not null)
             {
                 // Handle click
-                PlatformExtensions.void_objc_msgSend_IntPtr(this.statusBarButton.Handle, Selector.GetHandle("setTarget:"), this.Handle);
-                PlatformExtensions.void_objc_msgSend_IntPtr(this.statusBarButton.Handle, Selector.GetHandle("setAction:"), new Selector("handleButtonClick:").Handle);
+                PlatformExtensions.void_objc_msgSend_IntPtr(statusBarButton.Handle, Selector.GetHandle("setTarget:"), this.Handle);
+                PlatformExtensions.void_objc_msgSend_IntPtr(statusBarButton.Handle, Selector.GetHandle("setAction:"), new Selector("handleButtonClick:").Handle);
             }
         }
 
@@ -85,6 +85,32 @@ namespace DrasticMaui
             }
 
             PlatformExtensions.IntPtr_objc_msgSend_IntPtr(this.statusBarImage.Handle, Selector.GetHandle("initWithData:"), imageStream.Handle);
+        }
+
+        private void SetupButtonFrames()
+        {
+            if (this.statusBarItem is null)
+            {
+                return;
+            }
+
+            var statusBarButton = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarItem.Handle, Selector.GetHandle("button")));
+            if (statusBarButton is null)
+            {
+                return;
+            }
+
+            var nsButtonWindow = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(statusBarButton.Handle, Selector.GetHandle("window")));
+            if (nsButtonWindow is null)
+            {
+                return;
+            }
+
+            var windowFrame = (NSValue)nsButtonWindow.ValueForKey(new NSString("frame"));
+            var buttonFrame = (NSValue)statusBarButton.ValueForKey(new NSString("frame"));
+
+            var what  = windowFrame.CGRectValue;
+            //this.setupFrames = true;
         }
 
         [Export("handleButtonClick:")]

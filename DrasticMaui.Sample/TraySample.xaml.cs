@@ -14,6 +14,14 @@ namespace DrasticMaui.Sample
             InitializeComponent();
         }
 
+        private void OnReset(object sender, EventArgs e)
+        {
+            if (this.GetParentWindow() is DrasticTrayWindow win)
+            {
+                win.Setup();
+            }
+        }
+
         private void OnCounterClicked(object sender, EventArgs e)
         {
             count++;

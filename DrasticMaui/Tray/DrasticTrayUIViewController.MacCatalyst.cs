@@ -41,8 +41,8 @@ namespace DrasticMaui
                 return;
             }
 
-            //var frame = this.trayIcon.GetFrame();
-            //await this.window.SetFrameForUIWindow(new CGRect(500, 500, 1000, 1000));
+            var buttonBounds = this.trayIcon.GetFrame();
+            await this.window.SetFrameForUIWindow(buttonBounds);
             var viewController = this.contentController;
 
             if (viewController.PresentingViewController is not null)
