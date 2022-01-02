@@ -32,18 +32,18 @@ namespace DrasticMaui.Overlays
                 return true;
             }
 
-            if (Window == null)
+            if (this.Window == null)
             {
                 return false;
             }
 
-            var nativeWindow = Window?.Content?.GetNative(true);
+            var nativeWindow = this.Window?.Content?.GetNative(true);
             if (nativeWindow == null)
             {
                 return false;
             }
 
-            var handler = Window?.Handler as WindowHandler;
+            var handler = this.Window?.Handler as WindowHandler;
             if (handler?.MauiContext == null)
             {
                 return false;
@@ -57,21 +57,20 @@ namespace DrasticMaui.Overlays
                 return false;
             }
 
-
             if (handler.NativeView is not Activity activity)
             {
                 return false;
             }
 
-            nativeActivity = activity;
-            nativeLayer = rootManager.RootView as ViewGroup;
+            this.nativeActivity = activity;
+            this.nativeLayer = rootManager.RootView as ViewGroup;
 
-            if (nativeLayer?.Context == null)
+            if (this.nativeLayer?.Context == null)
             {
                 return false;
             }
 
-            if (nativeActivity?.WindowManager?.DefaultDisplay == null)
+            if (this.nativeActivity?.WindowManager?.DefaultDisplay == null)
             {
                 return false;
             }

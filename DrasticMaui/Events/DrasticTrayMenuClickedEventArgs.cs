@@ -15,10 +15,7 @@ namespace DrasticMaui.Events
     /// </summary>
     public class DrasticTrayMenuClickedEventArgs : EventArgs
     {
-        /// <summary>
-        /// DrasticTrayMenuItem.
-        /// </summary>
-        public readonly DrasticTrayMenuItem MenuItem;
+        private DrasticTrayMenuItem menuItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrasticTrayMenuClickedEventArgs"/> class.
@@ -26,7 +23,12 @@ namespace DrasticMaui.Events
         /// <param name="item">Position.</param>
         internal DrasticTrayMenuClickedEventArgs(DrasticTrayMenuItem item)
         {
-            this.MenuItem = item;
+            this.menuItem = item;
         }
+
+        /// <summary>
+        /// Gets the DrasticTrayMenuItem.
+        /// </summary>
+        public DrasticTrayMenuItem MenuItem => this.menuItem;
     }
 }

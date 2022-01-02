@@ -9,10 +9,7 @@ namespace DrasticMaui.Events
     /// </summary>
     public class DrasticSliderPositionChangedEventArgs : EventArgs
     {
-        /// <summary>
-        /// Drastic Sliders's current position.
-        /// </summary>
-        public readonly float Position;
+        private readonly float position;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrasticSliderPositionChangedEventArgs"/> class.
@@ -20,7 +17,12 @@ namespace DrasticMaui.Events
         /// <param name="position">Position.</param>
         internal DrasticSliderPositionChangedEventArgs(float position)
         {
-            Position = position;
+            this.position = position;
         }
+
+        /// <summary>
+        /// Gets the Drastic Sliders's current position.
+        /// </summary>
+        public float Position => this.position;
     }
 }
