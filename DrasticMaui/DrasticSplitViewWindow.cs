@@ -14,21 +14,27 @@ namespace DrasticMaui
         private Page menu;
         private bool isInitialized;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrasticSplitViewWindow"/> class.
+        /// </summary>
+        /// <param name="menu">Pane Content.</param>
+        /// <param name="content">Main Content.</param>
         public DrasticSplitViewWindow(Page menu, Page content)
         {
             this.Page = content;
             this.menu = menu;
         }
 
-        protected override void OnHandlerChanged()
+#if !__MACCATALYST__ && !__IOS__ && !WINDOWS
+        /// <summary>
+        /// Setup Split View.
+        /// </summary>
+        public void SetupSplitView()
         {
-            base.OnHandlerChanged();
-            if (!this.isInitialized)
-            {
-                this.SetupSplitView();
-            }
         }
+#endif
 
+        /// <inheritdoc/>
         internal override void AddVisualChildren(List<IVisualTreeElement> elements)
         {
             if (this.menu is not null && this.menu is IVisualTreeElement element)
@@ -37,10 +43,14 @@ namespace DrasticMaui
             }
         }
 
-#if !__MACCATALYST__ && !__IOS__ && !WINDOWS
-        public void SetupSplitView()
+        /// <inheritdoc/>
+        protected override void OnHandlerChanged()
         {
+            base.OnHandlerChanged();
+            if (!this.isInitialized)
+            {
+                this.SetupSplitView();
+            }
         }
-#endif
     }
 }

@@ -61,10 +61,6 @@ namespace DrasticMaui
 
 #if !WINDOWS && !MACCATALYST
 
-        private void SetupWindow()
-        {
-        }
-
         private void ShowWindow()
         {
         }

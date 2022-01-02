@@ -16,6 +16,9 @@ namespace DrasticMaui
     {
         private UISplitViewController? splitView;
 
+        /// <summary>
+        /// Setup Split View.
+        /// </summary>
         public void SetupSplitView()
         {
             if (this.Page == null)
@@ -34,6 +37,10 @@ namespace DrasticMaui
             {
                 return;
             }
+
+            // Create a split view controller.
+            // Take the existing content and put it into the main panel.
+            // Put the side panel content into the pane.
 
             this.splitView = new UISplitViewController();
             this.splitView.PrimaryBackgroundStyle = UISplitViewControllerBackgroundStyle.Sidebar;

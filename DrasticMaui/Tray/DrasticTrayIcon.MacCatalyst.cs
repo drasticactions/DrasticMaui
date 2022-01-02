@@ -55,9 +55,9 @@ namespace DrasticMaui
 
             var statusBarButton = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarItem.Handle, Selector.GetHandle("button")));
 
-            if (statusBarButton is not null && statusBarImage is not null)
+            if (statusBarButton is not null && this.statusBarImage is not null)
             {
-                PlatformExtensions.void_objc_msgSend_IntPtr(statusBarButton.Handle, Selector.GetHandle("setImage:"), statusBarImage.Handle);
+                PlatformExtensions.void_objc_msgSend_IntPtr(statusBarButton.Handle, Selector.GetHandle("setImage:"), this.statusBarImage.Handle);
                 PlatformExtensions.void_objc_msgSend_bool(this.statusBarImage.Handle, Selector.GetHandle("setTemplate:"), true);
                 this.statusBarImage.Size = new CoreGraphics.CGSize(32, 32);
             }
@@ -87,32 +87,6 @@ namespace DrasticMaui
             PlatformExtensions.IntPtr_objc_msgSend_IntPtr(this.statusBarImage.Handle, Selector.GetHandle("initWithData:"), imageStream.Handle);
         }
 
-        private void SetupButtonFrames()
-        {
-            if (this.statusBarItem is null)
-            {
-                return;
-            }
-
-            var statusBarButton = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(this.statusBarItem.Handle, Selector.GetHandle("button")));
-            if (statusBarButton is null)
-            {
-                return;
-            }
-
-            var nsButtonWindow = Runtime.GetNSObject(PlatformExtensions.IntPtr_objc_msgSend(statusBarButton.Handle, Selector.GetHandle("window")));
-            if (nsButtonWindow is null)
-            {
-                return;
-            }
-
-            var windowFrame = (NSValue)nsButtonWindow.ValueForKey(new NSString("frame"));
-            var buttonFrame = (NSValue)statusBarButton.ValueForKey(new NSString("frame"));
-
-            var what  = windowFrame.CGRectValue;
-            //this.setupFrames = true;
-        }
-
         [Export("handleButtonClick:")]
         private void HandleClick(NSObject senderStatusBarButton)
         {
@@ -126,6 +100,8 @@ namespace DrasticMaui
 
         private void NativeElementDispose()
         {
+            this.statusBarImage?.Dispose();
+            this.statusBarItem?.Dispose();
         }
     }
 }

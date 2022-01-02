@@ -2,19 +2,25 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using DrasticMaui.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DrasticMaui.Tools;
 
 namespace DrasticMaui
 {
+    /// <summary>
+    /// Drastic Split View Window.
+    /// </summary>
     public partial class DrasticSplitViewWindow
     {
         private Microsoft.UI.Xaml.Controls.SplitView? splitView;
 
+        /// <summary>
+        /// Setup Split View Window.
+        /// </summary>
         public void SetupSplitView()
         {
             if (this.Page == null)
@@ -44,16 +50,12 @@ namespace DrasticMaui
             this.splitView.DisplayMode = Microsoft.UI.Xaml.Controls.SplitViewDisplayMode.Inline;
             this.splitView.Content = this.Page.GetNative(true);
 
+            // TODO: Keep existing overlays.
             panel.Children.Clear();
             panel.Children.Add(this.splitView);
 
             window.ExtendsContentIntoTitleBar = false;
             this.splitView.IsPaneOpen = true;
         }
-    }
-
-    public class TestPanel : Microsoft.UI.Xaml.Controls.Panel
-    {
-
     }
 }
