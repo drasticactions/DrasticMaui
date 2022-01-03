@@ -2,23 +2,30 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
+using DrasticMaui.Sample.ViewModels;
+using DrasticMaui.Tools;
+
 namespace DrasticMaui.Sample;
 
 /// <summary>
 /// Main Page.
 /// </summary>
-public partial class MainPage : ContentPage
+public partial class MainPage : BasePage
 {
     private bool isFullScreen;
     private DrasticMauiSampleWindow? window;
     private PageOverlaySample? sample;
+    private MainPageViewModel vm;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainPage"/> class.
     /// </summary>
-    public MainPage()
+    /// <param name="services">IServiceProvider.</param>
+    public MainPage(IServiceProvider services)
+        : base(services)
     {
         this.InitializeComponent();
+        this.BindingContext = this.ViewModel = services.ResolveWith<MainPageViewModel>(this);
     }
 
     /// <inheritdoc/>
@@ -39,13 +46,13 @@ public partial class MainPage : ContentPage
             return;
         }
 
-        this.sample ??= new PageOverlaySample(this.window);
+        this.sample ??= new PageOverlaySample(this.window, this.Services);
         this.window?.PageOverlay.AddView(this.sample);
     }
 
     private void OnNewWindow(object sender, EventArgs e)
     {
-        var newWindow = new DrasticMauiWindow() { Page = new MainPage() };
+        var newWindow = new DrasticMauiWindow(this.Services) { Page = new MainPage(this.Services) };
         Application.Current?.OpenWindow(newWindow);
     }
 

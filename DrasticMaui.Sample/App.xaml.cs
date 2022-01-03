@@ -12,13 +12,15 @@ using DrasticMaui.Events;
 public partial class App : Application
 {
     private DrasticTrayIcon icon;
+    private IServiceProvider serviceProvider;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="App"/> class.
     /// </summary>
-    public App()
+    public App(IServiceProvider provider)
     {
         this.InitializeComponent();
+        this.serviceProvider = provider;
     }
 
     private void TrayIcon_MenuClicked(object? sender, DrasticTrayMenuClickedEventArgs e)
@@ -34,5 +36,5 @@ public partial class App : Application
 
     /// <inheritdoc/>
     protected override Window CreateWindow(IActivationState? activationState)
-        => new DrasticMauiSampleWindow() { Page = new NavigationPage(new MainPage()) };
+        => new DrasticMauiSampleWindow(this.serviceProvider) { Page = new NavigationPage(new MainPage(this.serviceProvider)) };
 }

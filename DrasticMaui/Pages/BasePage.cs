@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DrasticMaui.ViewModels;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
-namespace DrasticMaui.Page
+namespace DrasticMaui
 {
     /// <summary>
     /// Base Page.
@@ -30,12 +31,12 @@ namespace DrasticMaui.Page
         /// <summary>
         /// Gets or sets the View Model.
         /// </summary>
-        internal BaseViewModel? ViewModel { get; set; }
+        public BaseViewModel? ViewModel { get; set; }
 
         /// <summary>
         /// Gets or sets the IServiceProvider.
         /// </summary>
-        internal IServiceProvider Services { get; set; }
+        public IServiceProvider Services { get; set; }
 
         /// <inheritdoc/>
         protected override async void OnAppearing()
@@ -45,28 +46,6 @@ namespace DrasticMaui.Page
             {
                 await this.ViewModel.LoadAsync();
             }
-        }
-
-        protected override void OnHandlerChanged()
-        {
-            base.OnHandlerChanged();
-            this.SetPlayerHeight(this.ViewModel);
-        }
-
-        public void SetPlayerHeight(BaseViewModel? vm)
-        {
-            if (vm is null)
-            {
-                return;
-            }
-
-            var parentWindow = this.GetParentWindow() as MediaWindow;
-            if (parentWindow is null)
-            {
-                return;
-            }
-
-            this.ViewModel.SetPlayerHeight(parentWindow.GetPlayerHeight());
         }
     }
 }

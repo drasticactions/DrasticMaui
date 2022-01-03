@@ -9,18 +9,10 @@ namespace DrasticMaui.Services
     /// </summary>
     public class NavigationService : INavigationService
     {
-        public NavigationService(DrasticMauiWindow window)
-        {
-            this.Window = window;
-        }
-
         /// <inheritdoc/>
-        public DrasticMauiWindow Window { get; }
-
-        /// <inheritdoc/>
-        public Task PopModalAsync()
+        public Task PopModalAsync(Window window)
         {
-            return this.Window.Navigation.PopModalAsync();
+            return window.Navigation.PopModalAsync();
         }
     }
 }

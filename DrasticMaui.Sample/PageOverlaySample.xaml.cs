@@ -13,7 +13,7 @@ namespace DrasticMaui.Sample
     /// <summary>
     /// Page Overlay Sample.
     /// </summary>
-    public partial class PageOverlaySample : ContentPage, IHitTestView
+    public partial class PageOverlaySample : BasePage, IHitTestView
     {
         private DrasticMauiSampleWindow window;
 
@@ -21,7 +21,8 @@ namespace DrasticMaui.Sample
         /// Initializes a new instance of the <see cref="PageOverlaySample"/> class.
         /// </summary>
         /// <param name="window">Window.</param>
-        public PageOverlaySample(DrasticMauiSampleWindow window)
+        public PageOverlaySample(DrasticMauiSampleWindow window, IServiceProvider services)
+            : base(services)
         {
             this.InitializeComponent();
             this.window = window;

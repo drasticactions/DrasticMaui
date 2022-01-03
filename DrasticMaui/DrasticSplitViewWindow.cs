@@ -19,7 +19,9 @@ namespace DrasticMaui
         /// </summary>
         /// <param name="menu">Pane Content.</param>
         /// <param name="content">Main Content.</param>
-        public DrasticSplitViewWindow(Page menu, Page content)
+        /// <param name="services">Services.</param>
+        public DrasticSplitViewWindow(Page menu, Page content, IServiceProvider services)
+            : base(services)
         {
             this.Page = content;
             this.menu = menu;

@@ -15,6 +15,22 @@ namespace DrasticMaui
     /// </summary>
     public partial class DrasticMauiWindow : Window, IVisualTreeElement
     {
+        private IServiceProvider serviceProvider;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrasticMauiWindow"/> class.
+        /// </summary>
+        /// <param name="services">Service Provider.</param>
+        public DrasticMauiWindow(IServiceProvider services)
+        {
+            this.serviceProvider = services;
+        }
+
+        /// <summary>
+        /// Gets the service provider.
+        /// </summary>
+        public IServiceProvider ServiceProvider => this.serviceProvider;
+
         /// <inheritdoc/>
         public IReadOnlyList<IVisualTreeElement> GetVisualChildren()
         {

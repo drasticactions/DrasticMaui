@@ -1,5 +1,7 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<local:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DrasticMaui;assembly=DrasticMaui"
+             Title="{Binding Title}"
              x:Class="DrasticMaui.Sample.MainPage">
     <VerticalStackLayout Spacing="10" VerticalOptions="Center">
         <Button Text="Toggle Full Screen" Clicked="OnFullScreen"></Button>
@@ -10,4 +12,4 @@
         <Button Text="Add Page Overlay" Clicked="OnPageOverlay"></Button>
         <Button Text="Navigate page" Clicked="OnPageNavigate"></Button>
     </VerticalStackLayout>
-</ContentPage>
+</local:BasePage>

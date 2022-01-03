@@ -22,9 +22,11 @@ namespace DrasticMaui
         /// <summary>
         /// Initializes a new instance of the <see cref="DrasticTrayWindow"/> class.
         /// </summary>
+        /// <param name="services">Service Provider.</param>
         /// <param name="icon"><see cref="DrasticTrayIcon"/>.</param>
         /// <param name="options"><see cref="DrasticTrayWindowOptions"/>.</param>
-        public DrasticTrayWindow(DrasticTrayIcon icon, DrasticTrayWindowOptions? options = null)
+        public DrasticTrayWindow(IServiceProvider provider, DrasticTrayIcon icon, DrasticTrayWindowOptions? options = null)
+            : base(provider)
         {
             this.icon = icon;
             this.options = options ?? new DrasticTrayWindowOptions();

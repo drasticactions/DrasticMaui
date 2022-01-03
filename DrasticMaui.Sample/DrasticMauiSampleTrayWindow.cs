@@ -11,10 +11,19 @@ using DrasticMaui.Options;
 
 namespace DrasticMaui.Sample
 {
+    /// <summary>
+    /// Drastic Maui Sample Tray Window.
+    /// </summary>
     public class DrasticMauiSampleTrayWindow : DrasticTrayWindow
     {
-        public DrasticMauiSampleTrayWindow(DrasticTrayIcon icon, DrasticTrayWindowOptions? options = null)
-            : base(icon, options)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrasticMauiSampleTrayWindow"/> class.
+        /// </summary>
+        /// <param name="services">Service Provider.</param>
+        /// <param name="icon">Tray Icon.</param>
+        /// <param name="options">Options.</param>
+        public DrasticMauiSampleTrayWindow(IServiceProvider services, DrasticTrayIcon icon, DrasticTrayWindowOptions? options = null)
+            : base(services, icon, options)
         {
         }
     }

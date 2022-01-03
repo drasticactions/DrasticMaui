@@ -20,7 +20,12 @@ namespace DrasticMaui.Sample
     /// </summary>
     public class DrasticMauiSampleWindow : DrasticMauiWindow
     {
-        public DrasticMauiSampleWindow()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrasticMauiSampleWindow"/> class.
+        /// </summary>
+        /// <param name="services">Service Provider.</param>
+        public DrasticMauiSampleWindow(IServiceProvider services)
+            : base(services)
         {
             this.DragAndDropOverlay = new DragAndDropOverlay(this);
             this.PageOverlay = new PageOverlay(this);
@@ -62,7 +67,7 @@ namespace DrasticMaui.Sample
         {
             if (this.TrayIcon is not null)
             {
-                var trayWindow = new DrasticTrayWindow(this.TrayIcon) { Page = new TraySample() };
+                var trayWindow = new DrasticTrayWindow(this.ServiceProvider, this.TrayIcon) { Page = new TraySample() };
                 Application.Current?.OpenWindow(trayWindow);
             }
         }

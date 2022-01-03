@@ -12,14 +12,11 @@ namespace DrasticMaui.Services
     public interface INavigationService
     {
         /// <summary>
-        /// Gets the window.
-        /// </summary>
-        DrasticMauiWindow Window { get; }
-
-        /// <summary>
         /// Close the current dialog message menu if it's on screen.
         /// </summary>
+        /// <param name="window">Window.</param>
         /// <returns>Task.</returns>
-        Task PopModalAsync();
+
+        Task PopModalAsync(Window window);
     }
 }

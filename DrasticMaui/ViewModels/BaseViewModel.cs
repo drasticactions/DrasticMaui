@@ -15,16 +15,19 @@ namespace DrasticMaui.ViewModels
         private bool isBusy;
         private bool isRefreshing;
         private string? title;
+        private Page? originalPage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseViewModel"/> class.
         /// </summary>
-        /// <param name="navigation">Navigation Service.</param>
         /// <param name="services">IServiceProvider.</param>
-        public BaseViewModel(INavigationService navigation, IServiceProvider services)
+        /// <param name="originalPage">Original Page.</param>
+        public BaseViewModel(IServiceProvider services, Page? originalPage = null)
         {
+            this.originalPage = originalPage;
             this.Services = services;
             var error = services.GetService<IErrorHandlerService>();
+            var navigation = services.GetService<INavigationService>();
 
             if (navigation is null)
             {
@@ -102,6 +105,11 @@ namespace DrasticMaui.ViewModels
         public AsyncCommand CloseDialogCommand { get; private set; }
 
         /// <summary>
+        /// Gets the original page.
+        /// </summary>
+        protected Page? OriginalPage => this.originalPage;
+
+        /// <summary>
         /// Gets the service provider collection.
         /// </summary>
         protected IServiceProvider Services { get; private set; }
@@ -115,6 +123,11 @@ namespace DrasticMaui.ViewModels
         /// Gets the error handler service.
         /// </summary>
         protected IErrorHandlerService Error { get; private set; }
+
+        /// <summary>
+        /// Gets the hosted window for the view model, if the original page was passed in.
+        /// </summary>
+        protected Window? HostedWindow => this.OriginalPage?.GetParentWindow();
 
         /// <summary>
         /// Load VM Async.
@@ -143,7 +156,12 @@ namespace DrasticMaui.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task ExecutePopModalCommand() =>
-            this.Navigation.PopModalAsync();
+        private async Task ExecutePopModalCommand()
+        {
+            if (this.HostedWindow is not null)
+            {
+                await this.Navigation.PopModalAsync(this.HostedWindow);
+            }
+        }
     }
 }
