@@ -4,12 +4,12 @@
              Title="{Binding Title}"
              x:Class="DrasticMaui.Sample.MainPage">
     <VerticalStackLayout Spacing="10" VerticalOptions="Center">
-        <Button Text="Toggle Full Screen" Clicked="OnFullScreen"></Button>
-        <Button Text="Setup Tray Icon" Clicked="OnTrayIcon"></Button>
-        <Button Text="Try Get Status Icon Frame Location" Clicked="OnStatusIcon"></Button>
-        <Button Text="New Window" Clicked="OnNewWindow"></Button>
-        <Button Text="New Tray App" Clicked="OnNewTrayApp"></Button>
-        <Button Text="Add Page Overlay" Clicked="OnPageOverlay"></Button>
-        <Button Text="Navigate page" Clicked="OnPageNavigate"></Button>
+        <Button Text="Toggle Full Screen" Command="{Binding ShowFullScreenCommand}"></Button>
+        <Button Text="Setup Tray Icon" Command="{Binding SetupTrayIconCommand}"></Button>
+        <Button Text="Try Get Status Icon Frame Location" Command="{Binding TestTrayIconCommand}"></Button>
+        <Button Text="New Window" Command="{Binding AddNewWindowCommand}"></Button>
+        <Button Text="New Tray App" Command="{Binding NewTrayAppCommand}"></Button>
+        <Button Text="Add Page Overlay" Command="{Binding AddPageOverlayCommand}"></Button>
+        <Button Text="Navigate page" Command="{Binding NavigatePageCommand}"></Button>
     </VerticalStackLayout>
 </local:BasePage>

@@ -39,23 +39,6 @@ public partial class MainPage : BasePage
         }
     }
 
-    private void OnPageOverlay(object sender, EventArgs e)
-    {
-        if (this.window is null)
-        {
-            return;
-        }
-
-        this.sample ??= new PageOverlaySample(this.window, this.Services);
-        this.window?.PageOverlay.AddView(this.sample);
-    }
-
-    private void OnNewWindow(object sender, EventArgs e)
-    {
-        var newWindow = new DrasticMauiWindow(this.Services) { Page = new MainPage(this.Services) };
-        Application.Current?.OpenWindow(newWindow);
-    }
-
     private async void OnPageNavigate(object sender, EventArgs e)
     {
        await this.Navigation.PushAsync(new DrasticMainMenu());
@@ -70,11 +53,6 @@ public partial class MainPage : BasePage
     private void OnTrayIcon(object sender, EventArgs e)
     {
         this.window?.SetupTrayIcon();
-    }
-
-    private async void OnStatusIcon(object sender, EventArgs e)
-    {
-        await this.window?.TestTrayIcon();
     }
 
     private void OnNewTrayApp(object sender, EventArgs e)
