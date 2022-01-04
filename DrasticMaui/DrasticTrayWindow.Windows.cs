@@ -21,10 +21,10 @@ namespace DrasticMaui
         private Microsoft.UI.Windowing.AppWindow? appWindow;
         private bool appLaunched;
 
-        ///// <inheritdoc/>
-        protected override void OnCreated()
+        /// <inheritdoc/>
+        protected override void OnHandlerChanged()
         {
-            base.OnCreated();
+            base.OnHandlerChanged();
             this.SetupWindow();
             this.SetupTrayIcon();
         }
