@@ -57,7 +57,6 @@ namespace DrasticMaui
             this.sidebarView = new SidebarViewController(this.options, this.macOptions);
             var b = this.Page.ToUIViewController(context);
             this.splitView.ViewControllers = new UIViewController[] { this.sidebarView, b };
-
             window.RootViewController = this.splitView;
         }
     }

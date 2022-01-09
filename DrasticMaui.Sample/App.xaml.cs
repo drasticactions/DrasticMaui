@@ -26,7 +26,7 @@ public partial class App : DrasticApp
         menuList.Add(new NavigationSidebarItem("Test 1"));
         menuList.Add(new NavigationSidebarItem("Test 2"));
         menuList.Add(new NavigationSidebarItem("Test 3"));
-        this.sidebarMenuOptions = new SidebarMenuOptions("DrasticMaui", menuList);
+        this.sidebarMenuOptions = new SidebarMenuOptions("DrasticMaui", menuList, true);
     }
 
     private void TrayIcon_MenuClicked(object? sender, DrasticTrayMenuClickedEventArgs e)
