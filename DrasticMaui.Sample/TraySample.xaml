@@ -7,7 +7,7 @@
         <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
               Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
 
-            <Label 
+            <Label
                 Text="Hello, World!"
                 Grid.Row="0"
                 SemanticProperties.HeadingLevel="Level1"

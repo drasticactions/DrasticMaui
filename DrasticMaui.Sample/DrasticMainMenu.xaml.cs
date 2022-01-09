@@ -10,5 +10,5 @@ public partial class DrasticMainMenu : ContentPage
         this.CollectionViewTest.ItemsSource = MenuItems;
     }
 
-    public List<DrasticMenuItem> MenuItems { get; set; } = new List<DrasticMenuItem>() { };
+    public List<NavigationSidebarItem> MenuItems { get; set; } = new List<NavigationSidebarItem>() { };
 }
