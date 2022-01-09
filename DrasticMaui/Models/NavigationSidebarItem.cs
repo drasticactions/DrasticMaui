@@ -41,6 +41,8 @@ namespace DrasticMaui.Models
                 {
                     this.Image = UIKit.UIImage.LoadFromData(imageData);
                 }
+
+                imageStream.Seek(0, SeekOrigin.Begin);
             }
 #else
             this.Image = imageStream;
