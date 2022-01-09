@@ -1,23 +1,36 @@
-﻿// <copyright file="DrasticSplitViewWindow.iOS.cs" company="Drastic Actions">
+﻿// <copyright file="DrasticSideBarNavigationWindow.iOS.cs" company="Drastic Actions">
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
+using DrasticMaui.iOS;
+using DrasticMaui.Models;
 using Microsoft.Maui.Platform;
 using UIKit;
 
 namespace DrasticMaui
 {
-    /// <summary>
-    /// Drastic Split View Window.
-    /// </summary>
-    public partial class DrasticSplitViewWindow
+    public partial class DrasticSideBarNavigationWindow
     {
+        private MacSidebarMenuOptions macOptions;
         private UISplitViewController? splitView;
+        private SidebarViewController? sidebarView;
+
+        public DrasticSideBarNavigationWindow(
+            Page content,
+            SidebarMenuOptions options,
+            IServiceProvider services,
+            MacSidebarMenuOptions? macOptions = null)
+            : base(services)
+        {
+            this.Page = content;
+            this.options = options;
+            this.macOptions = macOptions ?? new MacSidebarMenuOptions();
+        }
 
         /// <summary>
-        /// Setup Split View.
+        /// Setup Navigation View.
         /// </summary>
-        public void SetupSplitView()
+        public void SetupNavigationView()
         {
             if (this.Page == null)
             {
@@ -41,9 +54,9 @@ namespace DrasticMaui
             // Put the side panel content into the pane.
             this.splitView = new UISplitViewController();
             this.splitView.PrimaryBackgroundStyle = UISplitViewControllerBackgroundStyle.Sidebar;
-            var a = this.menu.ToUIViewController(context);
+            this.sidebarView = new SidebarViewController(this.options, this.macOptions);
             var b = this.Page.ToUIViewController(context);
-            this.splitView.ViewControllers = new UIViewController[] { a, b };
+            this.splitView.ViewControllers = new UIViewController[] { this.sidebarView, b };
 
             window.RootViewController = this.splitView;
         }

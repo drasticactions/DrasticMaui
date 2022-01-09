@@ -1,11 +1,10 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
 
 namespace DrasticMaui.iOS
 {
     public class MacSidebarMenuOptions
     {
-        public MacSidebarMenuOptions(UINavigationItemLargeTitleDisplayMode largeTitle)
+        public MacSidebarMenuOptions(UINavigationItemLargeTitleDisplayMode largeTitle = UINavigationItemLargeTitleDisplayMode.Always)
         {
             this.LargeTitleDisplayMode = largeTitle;
         }

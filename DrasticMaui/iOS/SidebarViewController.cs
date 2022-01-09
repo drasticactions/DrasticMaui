@@ -2,7 +2,6 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
 using DrasticMaui.Events;
 using DrasticMaui.Models;
 using Foundation;
@@ -10,7 +9,7 @@ using UIKit;
 
 namespace DrasticMaui.iOS
 {
-    public class SidebarViewController : UIViewController, IUICollectionViewDelegate, ISidebarMenu
+    public class SidebarViewController : UIViewController, IUICollectionViewDelegate
     {
         private UICollectionView? collectionView;
         private UICollectionViewDiffableDataSource<NSString, NavigationSidebarItem>? dataSource;

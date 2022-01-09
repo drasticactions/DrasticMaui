@@ -36,7 +36,6 @@
 	<ItemGroup>
 	  <Folder Include="Controls\" />
 	  <Folder Include="Models\" />
-	  <Folder Include="Sidebar\" />
 	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<UseWindowsForms>true</UseWindowsForms>
