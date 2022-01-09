@@ -56,7 +56,7 @@ namespace DrasticMaui
             this.splitView.PrimaryBackgroundStyle = UISplitViewControllerBackgroundStyle.Sidebar;
             this.sidebarView = new SidebarViewController(this.options, this.macOptions);
             var b = this.Page.ToUIViewController(context);
-            this.splitView.ViewControllers = new UIViewController[] { this.sidebarView, b };
+            this.splitView.ViewControllers = new UIViewController[] { new UINavigationController(this.sidebarView), b };
             window.RootViewController = this.splitView;
         }
     }

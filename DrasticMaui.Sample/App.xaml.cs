@@ -46,5 +46,5 @@ public partial class App : DrasticApp
 
     /// <inheritdoc/>
     protected override Window CreateWindow(IActivationState? activationState)
-        => new DrasticSideBarNavigationWindow(new MauiTestPage(), this.sidebarMenuOptions, this.Services);
+        => new DrasticSideBarNavigationWindow(new NavigationPage(new MauiTestPage()), this.sidebarMenuOptions, this.Services);
 }

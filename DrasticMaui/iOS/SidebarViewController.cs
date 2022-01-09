@@ -198,7 +198,7 @@ namespace DrasticMaui.iOS
         private UICollectionViewLayout CreateLayout()
         {
             var config = new UICollectionLayoutListConfiguration(UICollectionLayoutListAppearance.Sidebar);
-            config.HeaderMode = UICollectionLayoutListHeaderMode.FirstItemInSection;
+            config.HeaderMode = UICollectionLayoutListHeaderMode.None;
             config.ShowsSeparators = false;
 
             return UICollectionViewCompositionalLayout.GetLayout(config);
