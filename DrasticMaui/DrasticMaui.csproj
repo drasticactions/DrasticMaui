@@ -7,6 +7,13 @@
 		<UseMaui>true</UseMaui>
 		<WarningsAsErrors>nullable</WarningsAsErrors>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="MacCatalyst\**" />
+	  <EmbeddedResource Remove="MacCatalyst\**" />
+	  <MauiCss Remove="MacCatalyst\**" />
+	  <MauiXaml Remove="MacCatalyst\**" />
+	  <None Remove="MacCatalyst\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
@@ -29,7 +36,6 @@
 	<ItemGroup>
 	  <Folder Include="Controls\" />
 	  <Folder Include="Models\" />
-	  <Folder Include="MacCatalyst\" />
 	  <Folder Include="Sidebar\" />
 	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
