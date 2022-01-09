@@ -10,12 +10,13 @@ namespace DrasticMaui.ViewModels
     /// <summary>
     /// Base View Model.
     /// </summary>
-    public class BaseViewModel : ExtendedBindableObject
+    public class BaseViewModel : ExtendedBindableObject, IDisposable
     {
         private bool isBusy;
         private bool isRefreshing;
         private string? title;
         private Page? originalPage;
+        private bool disposedValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseViewModel"/> class.
@@ -130,6 +131,11 @@ namespace DrasticMaui.ViewModels
         protected Window? HostedWindow => this.OriginalPage?.GetParentWindow();
 
         /// <summary>
+        /// Gets the Visual Diagnostics Overlay for the given window this view model is contained in.
+        /// </summary>
+        protected IVisualDiagnosticsOverlay? VisualDiagnosticsOverlay => this.HostedWindow?.VisualDiagnosticsOverlay;
+
+        /// <summary>
         /// Load VM Async.
         /// </summary>
         /// <returns><see cref="Task"/>.</returns>
@@ -154,6 +160,37 @@ namespace DrasticMaui.ViewModels
         public virtual Task UnloadAsync()
         {
             return Task.CompletedTask;
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose VM Values.
+        /// </summary>
+        protected virtual void DisposeVM()
+        {
+        }
+
+        /// <summary>
+        /// Dispose.
+        /// </summary>
+        /// <param name="disposing">Is Disposing.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    this.DisposeVM();
+                }
+
+                this.disposedValue = true;
+            }
         }
 
         private async Task ExecutePopModalCommand()

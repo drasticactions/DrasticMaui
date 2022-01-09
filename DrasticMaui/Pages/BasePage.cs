@@ -2,15 +2,7 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DrasticMaui.ViewModels;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 
 namespace DrasticMaui
 {
@@ -19,6 +11,8 @@ namespace DrasticMaui
     /// </summary>
     public class BasePage : ContentPage
     {
+        private BaseViewModel? viewModel;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BasePage"/> class.
         /// </summary>
@@ -31,7 +25,22 @@ namespace DrasticMaui
         /// <summary>
         /// Gets or sets the View Model.
         /// </summary>
-        public BaseViewModel? ViewModel { get; set; }
+        public BaseViewModel? ViewModel
+        {
+            get
+            {
+                return this.viewModel;
+            }
+
+            set
+            {
+                this.viewModel = value;
+                if (value is not null)
+                {
+                    this.BindingContext = this.viewModel;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the IServiceProvider.

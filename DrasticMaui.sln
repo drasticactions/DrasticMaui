@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32023.32
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrasticMaui.Sample", "DrasticMaui.Sample\DrasticMaui.Sample.csproj", "{BD39811E-11BA-47FA-9F6A-A322AAAE1057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrasticMaui.Sample", "DrasticMaui.Sample\DrasticMaui.Sample.csproj", "{BD39811E-11BA-47FA-9F6A-A322AAAE1057}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrasticMaui", "DrasticMaui\DrasticMaui.csproj", "{ABBB7C06-7C93-4091-81FB-FAB580FBE76D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrasticMaui", "DrasticMaui\DrasticMaui.csproj", "{ABBB7C06-7C93-4091-81FB-FAB580FBE76D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrasticMaui.VisualDiagnostics", "Samples\DrasticMaui.VisualDiagnostics\DrasticMaui.VisualDiagnostics.csproj", "{2408D2DE-3BBE-4223-A240-39C8DCEFF219}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +24,12 @@ Global
 		{ABBB7C06-7C93-4091-81FB-FAB580FBE76D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABBB7C06-7C93-4091-81FB-FAB580FBE76D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABBB7C06-7C93-4091-81FB-FAB580FBE76D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2408D2DE-3BBE-4223-A240-39C8DCEFF219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2408D2DE-3BBE-4223-A240-39C8DCEFF219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2408D2DE-3BBE-4223-A240-39C8DCEFF219}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2408D2DE-3BBE-4223-A240-39C8DCEFF219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2408D2DE-3BBE-4223-A240-39C8DCEFF219}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2408D2DE-3BBE-4223-A240-39C8DCEFF219}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
