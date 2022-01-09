@@ -7,7 +7,6 @@ using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage.Streams;
 using WinPoint = Windows.Foundation.Point;
 
@@ -93,9 +92,7 @@ namespace DrasticMaui.Tools
         {
             if (item.Image is not null)
             {
-                var bitmapImage = new BitmapImage();
-                bitmapImage.SetSource(item.Image.ToRandomAccessStream());
-                var imageIcon = new ImageIcon() { Source = bitmapImage };
+                var imageIcon = new ImageIcon() { Source = item.Image };
                 return new Microsoft.UI.Xaml.Controls.NavigationViewItem() { Tag = item.Id, Content = item.Title, Icon = imageIcon };
             }
 

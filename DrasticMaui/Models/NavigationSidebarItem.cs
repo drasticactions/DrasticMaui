@@ -2,6 +2,8 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
+using DrasticMaui.Tools;
+
 namespace DrasticMaui.Models
 {
     /// <summary>
@@ -44,6 +46,13 @@ namespace DrasticMaui.Models
 
                 imageStream.Seek(0, SeekOrigin.Begin);
             }
+#elif WINDOWS
+            if (imageStream is not null)
+            {
+                this.Image = new Microsoft.UI.Xaml.Media.Imaging.BitmapImage();
+                this.Image.SetSource(imageStream.ToRandomAccessStream());
+                imageStream.Seek(0, SeekOrigin.Begin);
+            }
 #else
             this.Image = imageStream;
 #endif
@@ -64,6 +73,8 @@ namespace DrasticMaui.Models
         /// Gets the image.
         /// </summary>
         public UIKit.UIImage? Image { get; private set; }
+#elif WINDOWS
+        public Microsoft.UI.Xaml.Media.Imaging.BitmapImage? Image { get; private set; }
 #else
         /// <summary>
         /// Gets the sidebar image, optional.
