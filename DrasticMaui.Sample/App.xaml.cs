@@ -22,10 +22,11 @@ public partial class App : DrasticApp
         : base(provider)
     {
         this.InitializeComponent();
+        var icon = MauiProgram.GetResourceFileContent("Icon.favicon.ico");
         var menuList = new List<NavigationSidebarItem>();
-        menuList.Add(new NavigationSidebarItem("Test 1"));
-        menuList.Add(new NavigationSidebarItem("Test 2"));
-        menuList.Add(new NavigationSidebarItem("Test 3"));
+        menuList.Add(new NavigationSidebarItem("Test 1", imageStream: icon));
+        menuList.Add(new NavigationSidebarItem("Test 2", imageStream: icon));
+        menuList.Add(new NavigationSidebarItem("Test 3", imageStream: icon));
         this.sidebarMenuOptions = new SidebarMenuOptions("DrasticMaui", menuList, true);
     }
 

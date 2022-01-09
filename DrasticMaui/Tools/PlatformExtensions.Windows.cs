@@ -6,6 +6,9 @@ using DrasticMaui.Models;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Storage.Streams;
 using WinPoint = Windows.Foundation.Point;
 
 namespace DrasticMaui.Tools
@@ -88,7 +91,36 @@ namespace DrasticMaui.Tools
 
         internal static Microsoft.UI.Xaml.Controls.NavigationViewItem ToNavigationViewItem(this NavigationSidebarItem item)
         {
+            if (item.Image is not null)
+            {
+                var bitmapImage = new BitmapImage();
+                bitmapImage.SetSource(item.Image.ToRandomAccessStream());
+                var imageIcon = new ImageIcon() { Source = bitmapImage };
+                return new Microsoft.UI.Xaml.Controls.NavigationViewItem() { Tag = item.Id, Content = item.Title, Icon = imageIcon };
+            }
+
             return new Microsoft.UI.Xaml.Controls.NavigationViewItem() { Tag = item.Id, Content = item.Title };
+        }
+
+        internal static IRandomAccessStream ToRandomAccessStream(this Stream stream)
+        {
+            InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream();
+            using (DataWriter writer = new DataWriter(ms.GetOutputStreamAt(0)))
+            {
+                var array = (byte[])stream.ToByteArray();
+                writer.WriteBytes(array);
+                writer.StoreAsync().GetResults();
+            }
+
+            stream.Seek(0, SeekOrigin.Begin);
+            return ms;
+        }
+
+        internal static byte[] ToByteArray(this Stream stream)
+        {
+            MemoryStream ms = new MemoryStream();
+            stream.CopyTo(ms);
+            return ms.ToArray();
         }
     }
 }

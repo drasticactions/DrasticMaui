@@ -2,8 +2,6 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Threading.Tasks;
 using DrasticMaui.Services;
 
 namespace DrasticMaui.Tools
@@ -30,6 +28,11 @@ namespace DrasticMaui.Tools
             {
                 handler?.HandleError(ex);
             }
+        }
+
+        public static async Task<IEnumerable<TResult>> SelectAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> method)
+        {
+            return await Task.WhenAll(source.Select(async s => await method(s)));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace DrasticMaui
         /// <summary>
         /// Setup Navigation View.
         /// </summary>
-        public void SetupNavigationView()
+        public async void SetupNavigationView()
         {
             if (this.Page == null)
             {
