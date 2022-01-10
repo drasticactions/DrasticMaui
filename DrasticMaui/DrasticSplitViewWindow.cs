@@ -2,8 +2,6 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-
 namespace DrasticMaui
 {
     /// <summary>
@@ -37,7 +35,7 @@ namespace DrasticMaui
 #endif
 
         /// <inheritdoc/>
-        internal override void AddVisualChildren(List<IVisualTreeElement> elements)
+        public override void AddVisualChildren(List<IVisualTreeElement> elements)
         {
             if (this.menu is not null && this.menu is IVisualTreeElement element)
             {

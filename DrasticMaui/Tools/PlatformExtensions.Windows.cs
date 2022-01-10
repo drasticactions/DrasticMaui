@@ -59,10 +59,10 @@ namespace DrasticMaui.Tools
             return AppWindow.GetFromWindowId(windowId);
         }
 
-        internal static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view)
+        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view)
             => view.GetNative(true).GetBoundingBox();
 
-        internal static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this FrameworkElement? nativeView)
+        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this FrameworkElement? nativeView)
         {
             if (nativeView == null)
                 return new Microsoft.Maui.Graphics.Rectangle();
@@ -88,7 +88,7 @@ namespace DrasticMaui.Tools
             return new Microsoft.Maui.Graphics.Rectangle(x1, y1, x2 - x1, y2 - y1);
         }
 
-        internal static Microsoft.UI.Xaml.Controls.NavigationViewItem ToNavigationViewItem(this NavigationSidebarItem item)
+        public static Microsoft.UI.Xaml.Controls.NavigationViewItem ToNavigationViewItem(this NavigationSidebarItem item)
         {
             if (item.Image is not null)
             {
@@ -99,7 +99,7 @@ namespace DrasticMaui.Tools
             return new Microsoft.UI.Xaml.Controls.NavigationViewItem() { Tag = item.Id, Content = item.Title };
         }
 
-        internal static IRandomAccessStream ToRandomAccessStream(this Stream stream)
+        public static IRandomAccessStream ToRandomAccessStream(this Stream stream)
         {
             InMemoryRandomAccessStream ms = new InMemoryRandomAccessStream();
             using (DataWriter writer = new DataWriter(ms.GetOutputStreamAt(0)))
@@ -113,7 +113,7 @@ namespace DrasticMaui.Tools
             return ms;
         }
 
-        internal static byte[] ToByteArray(this Stream stream)
+        public static byte[] ToByteArray(this Stream stream)
         {
             MemoryStream ms = new MemoryStream();
             stream.CopyTo(ms);

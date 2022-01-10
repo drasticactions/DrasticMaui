@@ -2,12 +2,6 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace DrasticMaui
 {
     /// <summary>
@@ -65,7 +59,7 @@ namespace DrasticMaui
         /// Add Visual Children.
         /// </summary>
         /// <param name="elements">Elements.</param>
-        internal virtual void AddVisualChildren(List<IVisualTreeElement> elements)
+        public virtual void AddVisualChildren(List<IVisualTreeElement> elements)
         {
         }
     }
