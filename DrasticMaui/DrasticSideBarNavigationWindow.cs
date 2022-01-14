@@ -13,12 +13,11 @@ namespace DrasticMaui
 
 #if !IOS && !MACCATALYST && !WINDOWS
         public DrasticSideBarNavigationWindow(
-           Page content,
            SidebarMenuOptions options,
            IServiceProvider services)
            : base(services)
         {
-            this.Page = content;
+            this.Page = new ContentPage();
             this.options = options;
         }
 

@@ -29,12 +29,14 @@ namespace DrasticMaui.Models
             Guid? id = null,
             string subtitle = "",
             Stream? imageStream = null,
+            Page? page = null,
             SidebarItemType type = SidebarItemType.Row)
         {
             this.Id = id ?? Guid.NewGuid();
             this.Type = type;
             this.Title = title;
             this.Subtitle = subtitle;
+            this.Page = page;
 #if __IOS__
             if (imageStream is not null)
             {
@@ -92,5 +94,10 @@ namespace DrasticMaui.Models
         /// Optional.
         /// </summary>
         public string? Subtitle { get; }
+
+        /// <summary>
+        /// Gets or sets the page to navigate to when selected.
+        /// </summary>
+        public Page? Page { get; }
     }
 }

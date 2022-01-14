@@ -4,18 +4,21 @@
 
 using DrasticMaui.Models;
 using DrasticMaui.Tools;
+using Microsoft.Maui.Platform;
 
 namespace DrasticMaui
 {
     public partial class DrasticSideBarNavigationWindow
     {
         private Microsoft.UI.Xaml.Controls.NavigationView? navigationView;
-        private Microsoft.UI.Xaml.Shapes.Rectangle tapGrid = new Microsoft.UI.Xaml.Shapes.Rectangle() { Fill = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0)) };
+        private NavigationRootView? navigationRootView;
 
-        public DrasticSideBarNavigationWindow(Page content, SidebarMenuOptions options, IServiceProvider services)
+        private Microsoft.Maui.Graphics.Rectangle backButton = new Microsoft.Maui.Graphics.Rectangle(0, 0, 100, 100);
+
+        public DrasticSideBarNavigationWindow(SidebarMenuOptions options, IServiceProvider services)
             : base(services)
         {
-            this.Page = content;
+            this.Page = new ContentPage();
             this.options = options;
         }
 
@@ -30,6 +33,12 @@ namespace DrasticMaui
             }
 
             var handler = this.Handler as Microsoft.Maui.Handlers.WindowHandler;
+
+            if (handler?.MauiContext is null)
+            {
+                return;
+            }
+
             if (handler?.NativeView is not Microsoft.UI.Xaml.Window window)
             {
                 return;
@@ -40,9 +49,32 @@ namespace DrasticMaui
                 return;
             }
 
-            this.navigationView = new Microsoft.UI.Xaml.Controls.NavigationView();
-            this.navigationView.Content = this.tapGrid;
-            panel.PointerMoved += NavigationView_PointerMoved;
+            if (panel.Children[0] is not NavigationRootView rootView)
+            {
+                return;
+            }
+
+            this.navigationRootView = rootView;
+            this.navigationRootView.Loaded += this.NavigationRootView_Loaded;
+        }
+
+        private void NavigationRootView_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            if (sender is not NavigationRootView view)
+            {
+                return;
+            }
+
+            this.navigationView = view.NavigationViewControl;
+            if (this.navigationView is null)
+            {
+                return;
+            }
+
+            //this.navigationView = new Microsoft.UI.Xaml.Controls.NavigationView();
+            //var testing = this.page.ToHandler(handler.MauiContext).GetWrappedNativeView();
+            //this.navigationView.Content = testing;
+            ////panel.PointerMoved += NavigationView_PointerMoved;
             this.navigationView.IsSettingsVisible = this.options.ShowSettingsItem;
             this.navigationView.SelectionChanged += this.NavigationView_SelectionChanged;
             var items = this.options.DefaultSidebarItems.Select(n => n.ToNavigationViewItem()).ToList();
@@ -51,18 +83,18 @@ namespace DrasticMaui
                 this.navigationView.MenuItems.Add(item);
             }
 
-            //var existingChildren = panel.Children.ToList();
-            //panel.Children.Clear();
-
-            panel.Children.Add(this.navigationView);
-
-            //foreach (var child in existingChildren)
+            //var nav = this.options.DefaultSidebarItems.FirstOrDefault();
+            //if (nav?.Page is not null && this.Handler.MauiContext is not null)
             //{
-            //    panel.Children.Add(child);
+            //    var navItem = items.First();
+            //    this.navigationView.SelectedItem = navItem;
+            //    view.Content = nav.Page.ToHandler(this.Handler.MauiContext).GetWrappedNativeView();
             //}
 
-            window.ExtendsContentIntoTitleBar = false;
-            this.navigationView.IsPaneOpen = true;
+            this.navigationView.PaneDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Auto;
+            //window.ExtendsContentIntoTitleBar = false;
+            //panel.Children.Add(this.navigationView);
+            this.isInitialized = true;
         }
 
         private void NavigationView_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -78,7 +110,10 @@ namespace DrasticMaui
                 return;
             }
 
-            this.navigationView.IsHitTestVisible = !this.tapGrid.GetBoundingBox().Contains(new Microsoft.Maui.Graphics.Point(pointerPoint.Position.X, pointerPoint.Position.Y));
+            if (this.navigationView.Content is Microsoft.UI.Xaml.FrameworkElement element)
+            {
+                this.navigationView.IsHitTestVisible = !element.GetBoundingBox().Contains(new Microsoft.Maui.Graphics.Point(pointerPoint.Position.X, pointerPoint.Position.Y));
+            }
         }
 
         private void NavigationView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
@@ -100,7 +135,22 @@ namespace DrasticMaui
                     return;
                 }
 
-                // TODO: Handle Navigation.
+                if (this.navigationRootView?.NavigationViewControl is null)
+                {
+                    return;
+                }
+
+                if (selectedItem.Page is null)
+                {
+                    return;
+                }
+
+                if (this.Handler.MauiContext is null)
+                {
+                    return;
+                }
+
+                this.navigationRootView.NavigationViewControl.Content = selectedItem.Page.ToHandler(this.Handler.MauiContext).GetWrappedNativeView();
             }
         }
     }

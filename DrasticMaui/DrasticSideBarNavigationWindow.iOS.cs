@@ -16,13 +16,12 @@ namespace DrasticMaui
         private SidebarViewController? sidebarView;
 
         public DrasticSideBarNavigationWindow(
-            Page content,
             SidebarMenuOptions options,
             IServiceProvider services,
             MacSidebarMenuOptions? macOptions = null)
             : base(services)
         {
-            this.Page = content;
+            this.Page = new ContentPage();
             this.options = options;
             this.macOptions = macOptions ?? new MacSidebarMenuOptions();
         }
