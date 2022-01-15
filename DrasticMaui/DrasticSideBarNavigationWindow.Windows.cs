@@ -10,7 +10,8 @@ namespace DrasticMaui
 {
     public partial class DrasticSideBarNavigationWindow
     {
-        private Microsoft.UI.Xaml.Controls.NavigationView? navigationView;
+        private Microsoft.UI.Xaml.FrameworkElement? page;
+        private MauiNavigationView? navigationView;
         private NavigationRootView? navigationRootView;
 
         private Microsoft.Maui.Graphics.Rectangle backButton = new Microsoft.Maui.Graphics.Rectangle(0, 0, 100, 100);
@@ -71,10 +72,6 @@ namespace DrasticMaui
                 return;
             }
 
-            //this.navigationView = new Microsoft.UI.Xaml.Controls.NavigationView();
-            //var testing = this.page.ToHandler(handler.MauiContext).GetWrappedNativeView();
-            //this.navigationView.Content = testing;
-            ////panel.PointerMoved += NavigationView_PointerMoved;
             this.navigationView.IsSettingsVisible = this.options.ShowSettingsItem;
             this.navigationView.SelectionChanged += this.NavigationView_SelectionChanged;
             var items = this.options.DefaultSidebarItems.Select(n => n.ToNavigationViewItem()).ToList();
@@ -83,36 +80,20 @@ namespace DrasticMaui
                 this.navigationView.MenuItems.Add(item);
             }
 
-            //var nav = this.options.DefaultSidebarItems.FirstOrDefault();
-            //if (nav?.Page is not null && this.Handler.MauiContext is not null)
-            //{
-            //    var navItem = items.First();
-            //    this.navigationView.SelectedItem = navItem;
-            //    view.Content = nav.Page.ToHandler(this.Handler.MauiContext).GetWrappedNativeView();
-            //}
-
+            this.navigationView.IsBackEnabled = true;
+            this.navigationView.SelectedItem = this.navigationView.MenuItems.FirstOrDefault();
+            this.navigationView.BackRequested += NavigationView_BackRequested;
             this.navigationView.PaneDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Auto;
-            //window.ExtendsContentIntoTitleBar = false;
-            //panel.Children.Add(this.navigationView);
+            this.navigationView.IsPaneToggleButtonVisible = true;
+
             this.isInitialized = true;
         }
 
-        private void NavigationView_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void NavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
-            if (this.navigationView is null)
+            if (sender.Content is Microsoft.UI.Xaml.Controls.Frame frame)
             {
-                return;
-            }
-
-            var pointerPoint = e.GetCurrentPoint(this.navigationView);
-            if (pointerPoint == null)
-            {
-                return;
-            }
-
-            if (this.navigationView.Content is Microsoft.UI.Xaml.FrameworkElement element)
-            {
-                this.navigationView.IsHitTestVisible = !element.GetBoundingBox().Contains(new Microsoft.Maui.Graphics.Point(pointerPoint.Position.X, pointerPoint.Position.Y));
+                frame.GoBack();
             }
         }
 
@@ -150,7 +131,51 @@ namespace DrasticMaui
                     return;
                 }
 
-                this.navigationRootView.NavigationViewControl.Content = selectedItem.Page.ToHandler(this.Handler.MauiContext).GetWrappedNativeView();
+                var testing = selectedItem.Page.ToHandler(this.Handler.MauiContext);
+                var page = testing.GetWrappedNativeView();
+
+                bool addNavigationHandlers = false;
+                if (page != this.page)
+                {
+                    addNavigationHandlers = true;
+                    this.RemoveNavigationHandlers(sender, this.page);
+                }
+
+                this.navigationRootView.NavigationViewControl.Content = this.page = page;
+                if (addNavigationHandlers)
+                {
+                    this.AddNavigationHandlers(sender, this.page);
+                }
+            }
+        }
+
+        private void RemoveNavigationHandlers(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.FrameworkElement? element)
+        {
+            if (element is not Microsoft.UI.Xaml.Controls.Frame frame)
+            {
+                return;
+            }
+
+            frame.Navigated -= Frame_Navigated;
+        }
+
+        private void AddNavigationHandlers(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.FrameworkElement? element)
+        {
+            if (element is not Microsoft.UI.Xaml.Controls.Frame frame)
+            {
+                sender.IsBackButtonVisible = Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed;
+                return;
+            }
+
+            frame.Navigated += Frame_Navigated;
+            sender.IsBackButtonVisible = frame.BackStackDepth >= 1 ? Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Visible : Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed;
+        }
+
+        private void Frame_Navigated(object sender, Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            if (sender is Microsoft.UI.Xaml.Controls.Frame frame && this.navigationView is not null)
+            {
+                this.navigationView.IsBackButtonVisible = frame.BackStackDepth >= 1 ? Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Visible : Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed;
             }
         }
     }
