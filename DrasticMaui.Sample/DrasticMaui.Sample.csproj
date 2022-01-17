@@ -68,6 +68,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\DrasticMaui.DragAndDropOverlay\DrasticMaui.DragAndDropOverlay.csproj" />
+	  <ProjectReference Include="..\DrasticMaui.Helpers\DrasticMaui.Helpers.csproj" />
+	  <ProjectReference Include="..\DrasticMaui.PageOverlay\DrasticMaui.PageOverlay.csproj" />
+	  <ProjectReference Include="..\DrasticMaui.SidebarNavigationWindow\DrasticMaui.SidebarNavigationWindow.csproj" />
+	  <ProjectReference Include="..\DrasticMaui.TrayIcon\DrasticMaui.TrayIcon.csproj" />
+	  <ProjectReference Include="..\DrasticMaui.Window\DrasticMaui.MauiWindow.csproj" />
 	  <ProjectReference Include="..\DrasticMaui\DrasticMaui.csproj" />
 	</ItemGroup>
 

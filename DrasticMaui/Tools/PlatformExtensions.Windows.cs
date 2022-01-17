@@ -2,12 +2,10 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using DrasticMaui.Models;
 using Microsoft.Maui.Platform;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Windows.Storage.Streams;
 using WinPoint = Windows.Foundation.Point;
 
@@ -71,17 +69,6 @@ namespace DrasticMaui.Tools
             var y1 = new[] { topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y }.Min();
             var y2 = new[] { topLeft.Y, topRight.Y, bottomLeft.Y, bottomRight.Y }.Max();
             return new Microsoft.Maui.Graphics.Rectangle(x1, y1, x2 - x1, y2 - y1);
-        }
-
-        public static Microsoft.UI.Xaml.Controls.NavigationViewItem ToNavigationViewItem(this NavigationSidebarItem item)
-        {
-            if (item.Image is not null)
-            {
-                var imageIcon = new ImageIcon() { Source = item.Image };
-                return new Microsoft.UI.Xaml.Controls.NavigationViewItem() { Tag = item.Id, Content = item.Title, Icon = imageIcon };
-            }
-
-            return new Microsoft.UI.Xaml.Controls.NavigationViewItem() { Tag = item.Id, Content = item.Title };
         }
 
         public static IRandomAccessStream ToRandomAccessStream(this Stream stream)

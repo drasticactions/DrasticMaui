@@ -3,7 +3,6 @@
 // </copyright>
 
 using DrasticMaui.Models;
-using DrasticMaui.Overlays;
 using DrasticMaui.Tools;
 using Microsoft.Maui.Handlers;
 using System.Reflection;
@@ -22,8 +21,8 @@ namespace DrasticMaui.Sample
         public DrasticMauiSampleWindow(SidebarMenuOptions options, IServiceProvider services)
             : base(options, services)
         {
-            this.DragAndDropOverlay = new DragAndDropOverlay(this);
-            this.PageOverlay = new PageOverlay(this);
+            this.DragAndDropOverlay = new DrasticMaui.Overlays.DragAndDropOverlay(this);
+            this.PageOverlay = new Overlays.PageOverlay(this);
         }
 
         /// <summary>
@@ -34,12 +33,12 @@ namespace DrasticMaui.Sample
         /// <summary>
         /// Gets the drag and drop overlay.
         /// </summary>
-        internal DragAndDropOverlay DragAndDropOverlay { get; }
+        internal Overlays.DragAndDropOverlay DragAndDropOverlay { get; }
 
         /// <summary>
         /// Gets the page overlay.
         /// </summary>
-        internal PageOverlay PageOverlay { get; }
+        internal Overlays.PageOverlay PageOverlay { get; }
 
         /// <inheritdoc/>
         protected override void OnCreated()

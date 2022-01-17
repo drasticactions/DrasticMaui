@@ -2,12 +2,6 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace DrasticMaui.Events
 {
     /// <summary>
@@ -21,7 +15,7 @@ namespace DrasticMaui.Events
         /// Initializes a new instance of the <see cref="DrasticErrorHandlerEventArgs"/> class.
         /// </summary>
         /// <param name="ex">Exception.</param>
-        internal DrasticErrorHandlerEventArgs(Exception ex)
+        public DrasticErrorHandlerEventArgs(Exception ex)
         {
             this.exception = ex;
         }

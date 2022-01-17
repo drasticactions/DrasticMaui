@@ -440,7 +440,6 @@ namespace DrasticMaui.Tools
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern void void_objc_msgSend_bool(IntPtr receiver, IntPtr selector, bool arg1);
 
-
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern void void_objc_msgSend_ulong(IntPtr receiver, IntPtr selector, ulong arg1);
 #endif

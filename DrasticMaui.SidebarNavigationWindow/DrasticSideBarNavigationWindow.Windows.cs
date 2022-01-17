@@ -3,7 +3,6 @@
 // </copyright>
 
 using DrasticMaui.Models;
-using DrasticMaui.Tools;
 using Microsoft.Maui.Platform;
 
 namespace DrasticMaui
@@ -185,6 +184,20 @@ namespace DrasticMaui
             {
                 this.navigationView.IsBackButtonVisible = frame.BackStackDepth >= 1 ? Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Visible : Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed;
             }
+        }
+    }
+
+    public static class Extensions
+    {
+        public static Microsoft.UI.Xaml.Controls.NavigationViewItem ToNavigationViewItem(this NavigationSidebarItem item)
+        {
+            if (item.Image is not null)
+            {
+                var imageIcon = new Microsoft.UI.Xaml.Controls.ImageIcon() { Source = item.Image };
+                return new Microsoft.UI.Xaml.Controls.NavigationViewItem() { Tag = item.Id, Content = item.Title, Icon = imageIcon };
+            }
+
+            return new Microsoft.UI.Xaml.Controls.NavigationViewItem() { Tag = item.Id, Content = item.Title };
         }
     }
 }
