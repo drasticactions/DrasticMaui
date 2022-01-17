@@ -24,9 +24,9 @@ public partial class App : DrasticApp
         this.InitializeComponent();
         var icon = MauiProgram.GetResourceFileContent("Icon.favicon.ico");
         var menuList = new List<NavigationSidebarItem>();
+        menuList.Add(new NavigationSidebarItem("Main Page", imageStream: icon, page: new NavigationPage(new MainPage(provider))));
         menuList.Add(new NavigationSidebarItem("Test 1", imageStream: icon, page: new NavigationPage(new MauiTestPage())));
         menuList.Add(new NavigationSidebarItem("Test 2", imageStream: icon, page: new MauiTestPage()));
-        menuList.Add(new NavigationSidebarItem("Test 3", imageStream: icon, page: new MainPage(provider)));
         this.sidebarMenuOptions = new SidebarMenuOptions("DrasticMaui", menuList, true);
     }
 
@@ -47,5 +47,5 @@ public partial class App : DrasticApp
 
     /// <inheritdoc/>
     protected override Window CreateWindow(IActivationState? activationState)
-        => new DrasticSideBarNavigationWindow(this.sidebarMenuOptions, this.Services);
+        => new DrasticMauiSampleWindow(this.sidebarMenuOptions, this.Services);
 }

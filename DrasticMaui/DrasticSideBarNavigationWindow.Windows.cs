@@ -13,6 +13,8 @@ namespace DrasticMaui
         private Microsoft.UI.Xaml.FrameworkElement? page;
         private MauiNavigationView? navigationView;
         private NavigationRootView? navigationRootView;
+        private Page? selectedPage;
+        private IMauiContext? context;
 
         private Microsoft.Maui.Graphics.Rectangle backButton = new Microsoft.Maui.Graphics.Rectangle(0, 0, 100, 100);
 
@@ -39,6 +41,8 @@ namespace DrasticMaui
             {
                 return;
             }
+
+            this.context = handler.MauiContext;
 
             if (handler?.NativeView is not Microsoft.UI.Xaml.Window window)
             {
@@ -83,7 +87,7 @@ namespace DrasticMaui
             this.navigationView.IsBackEnabled = true;
             this.navigationView.SelectedItem = this.navigationView.MenuItems.FirstOrDefault();
             this.navigationView.BackRequested += NavigationView_BackRequested;
-            this.navigationView.PaneDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Auto;
+            this.navigationView.PaneDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.LeftCompact;
             this.navigationView.IsPaneToggleButtonVisible = true;
 
             this.isInitialized = true;
@@ -91,9 +95,9 @@ namespace DrasticMaui
 
         private void NavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
-            if (sender.Content is Microsoft.UI.Xaml.Controls.Frame frame)
+            if (this.selectedPage is not null && this.context is not null)
             {
-                frame.GoBack();
+                this.selectedPage.SendBackButtonPressed();
             }
         }
 
@@ -125,6 +129,10 @@ namespace DrasticMaui
                 {
                     return;
                 }
+
+                this.selectedPage = selectedItem.Page;
+
+                this.selectedPage.Parent = this;
 
                 if (this.Handler.MauiContext is null)
                 {

@@ -2,30 +2,25 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using DrasticMaui.Models;
 using DrasticMaui.Overlays;
 using DrasticMaui.Tools;
 using Microsoft.Maui.Handlers;
+using System.Reflection;
 
 namespace DrasticMaui.Sample
 {
     /// <summary>
     /// Drastic Maui Window.
     /// </summary>
-    public class DrasticMauiSampleWindow : DrasticMauiWindow
+    public class DrasticMauiSampleWindow : DrasticSideBarNavigationWindow
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DrasticMauiSampleWindow"/> class.
         /// </summary>
         /// <param name="services">Service Provider.</param>
-        public DrasticMauiSampleWindow(IServiceProvider services)
-            : base(services)
+        public DrasticMauiSampleWindow(SidebarMenuOptions options, IServiceProvider services)
+            : base(options, services)
         {
             this.DragAndDropOverlay = new DragAndDropOverlay(this);
             this.PageOverlay = new PageOverlay(this);
@@ -56,7 +51,7 @@ namespace DrasticMaui.Sample
         public async Task TestTrayIcon()
         {
 #if __MACCATALYST__
-          if (this.Handler is WindowHandler handler)
+            if (this.Handler is WindowHandler handler)
             {
                 await handler.NativeView.SetFrameForUIWindow(new CoreGraphics.CGRect(0, 0, 100, 100));
             }
