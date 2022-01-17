@@ -2,16 +2,14 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Runtime;
 using Android.Views;
 using AndroidX.CoordinatorLayout.Widget;
 using DrasticMaui.Tools;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Graphics.Native;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 
 namespace DrasticMaui.Overlays
 {
@@ -33,14 +31,14 @@ namespace DrasticMaui.Overlays
 
             base.Initialize();
 
-            var nativeWindow = this.Window?.Content?.GetNative(true);
-            if (nativeWindow is null)
+            var handler = this.Window?.Handler as WindowHandler;
+            if (handler?.MauiContext is null)
             {
                 return false;
             }
 
-            var handler = this.Window?.Handler as WindowHandler;
-            if (handler?.MauiContext is null)
+            var nativeWindow = this.Window?.Content?.ToNative(handler.MauiContext);
+            if (nativeWindow is null)
             {
                 return false;
             }

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="PlatformExtensions.iOS.cs" company="Drastic Actions">
+// Copyright (c) Drastic Actions. All rights reserved.
+// </copyright>
+
 using CoreAnimation;
 using CoreGraphics;
 using Foundation;
+using Microsoft.Maui.Platform;
 using ObjCRuntime;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using UIKit;
 
 namespace DrasticMaui.Tools
@@ -19,29 +19,13 @@ namespace DrasticMaui.Tools
     public static class PlatformExtensions
     {
         /// <summary>
-        /// Get Native.
-        /// </summary>
-        /// <param name="view">IView.</param>
-        /// <param name="returnWrappedIfPresent">Return wrapped if present.</param>
-        /// <returns>UIView.</returns>
-        public static UIView? GetNative(this IElement view, bool returnWrappedIfPresent)
-        {
-            if (view.Handler is INativeViewHandler nativeHandler && nativeHandler.NativeView != null)
-            {
-                return nativeHandler.NativeView;
-            }
-
-            return view.Handler?.NativeView as UIView;
-        }
-
-        /// <summary>
         /// Get View Transform.
         /// </summary>
         /// <param name="view">IView.</param>
         /// <returns>Matrix4x4.</returns>
-        public static System.Numerics.Matrix4x4 GetViewTransform(this IView view)
+        public static System.Numerics.Matrix4x4 GetViewTransform(this IView view, IMauiContext context)
         {
-            var nativeView = view?.GetNative(true);
+            var nativeView = view?.ToNative(context);
             if (nativeView == null)
             {
                 return default(System.Numerics.Matrix4x4);
@@ -63,8 +47,8 @@ namespace DrasticMaui.Tools
         /// </summary>
         /// <param name="view">IView.</param>
         /// <returns>Rectangle.</returns>
-        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view)
-            => view.GetNative(true).GetBoundingBox();
+        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view, IMauiContext context)
+            => view.ToNative(context).GetBoundingBox();
 
         /// <summary>
         /// Get Bounding Box.
@@ -99,9 +83,9 @@ namespace DrasticMaui.Tools
         /// </summary>
         /// <param name="view">IView.</param>
         /// <returns>Rectangle.</returns>
-        public static Rectangle GetNativeViewBounds(this IView view)
+        public static Rectangle GetNativeViewBounds(this IView view, IMauiContext context)
         {
-            var nativeView = view?.GetNative(true);
+            var nativeView = view?.ToNative(context);
             if (nativeView == null)
             {
                 return default(Rectangle);
@@ -146,20 +130,20 @@ namespace DrasticMaui.Tools
         public static Matrix4x4 ToViewTransform(this CATransform3D transform) =>
            new Matrix4x4
            {
-               M11 = (float)transform.m11,
-               M12 = (float)transform.m12,
-               M13 = (float)transform.m13,
-               M14 = (float)transform.m14,
-               M21 = (float)transform.m21,
-               M22 = (float)transform.m22,
-               M23 = (float)transform.m23,
-               M24 = (float)transform.m24,
-               M31 = (float)transform.m31,
-               M32 = (float)transform.m32,
-               M33 = (float)transform.m33,
-               M34 = (float)transform.m34,
-               Translation = new Vector3((float)transform.m41, (float)transform.m42, (float)transform.m43),
-               M44 = (float)transform.m44,
+               M11 = (float)transform.M11,
+               M12 = (float)transform.M12,
+               M13 = (float)transform.M13,
+               M14 = (float)transform.M14,
+               M21 = (float)transform.M21,
+               M22 = (float)transform.M22,
+               M23 = (float)transform.M23,
+               M24 = (float)transform.M24,
+               M31 = (float)transform.M31,
+               M32 = (float)transform.M32,
+               M33 = (float)transform.M33,
+               M34 = (float)transform.M34,
+               Translation = new Vector3((float)transform.M41, (float)transform.M42, (float)transform.M43),
+               M44 = (float)transform.M44,
            };
 
         /// <summary>

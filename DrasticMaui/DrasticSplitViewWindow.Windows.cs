@@ -2,12 +2,7 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DrasticMaui.Tools;
+using Microsoft.Maui.Platform;
 
 namespace DrasticMaui
 {
@@ -45,10 +40,10 @@ namespace DrasticMaui
             {
                 var testing = this.menu.ToHandler(this.Handler.MauiContext);
                 this.splitView.Pane = testing.NativeView;
-            }
 
-            this.splitView.DisplayMode = Microsoft.UI.Xaml.Controls.SplitViewDisplayMode.Inline;
-            this.splitView.Content = this.Page.GetNative(true);
+                this.splitView.DisplayMode = Microsoft.UI.Xaml.Controls.SplitViewDisplayMode.Inline;
+                this.splitView.Content = this.Page.ToNative(this.Handler.MauiContext);
+            }
 
             // TODO: Keep existing overlays.
             panel.Children.Clear();

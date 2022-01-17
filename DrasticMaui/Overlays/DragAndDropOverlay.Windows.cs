@@ -2,15 +2,9 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DrasticMaui.Tools;
+using Microsoft.Maui.Platform;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
-using Windows.Storage.Streams;
 
 namespace DrasticMaui.Overlays
 {
@@ -31,7 +25,12 @@ namespace DrasticMaui.Overlays
 
             base.Initialize();
 
-            var nativeElement = this.Window.Content.GetNative(true);
+            if (this.Window?.Handler?.MauiContext is null)
+            {
+                return false;
+            }
+
+            var nativeElement = this.Window.Content.ToNative(this.Window.Handler.MauiContext);
             if (nativeElement == null)
             {
                 return false;

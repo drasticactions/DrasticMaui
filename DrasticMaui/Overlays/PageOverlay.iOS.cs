@@ -2,11 +2,9 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
 using CoreGraphics;
 using DrasticMaui.Tools;
 using Microsoft.Maui.Platform;
-using ObjCRuntime;
 using UIKit;
 
 namespace DrasticMaui.Overlays
@@ -36,8 +34,12 @@ namespace DrasticMaui.Overlays
             }
 
             this.context = handler.MauiContext;
+            if (this.context is null)
+            {
+                return false;
+            }
 
-            var nativeLayer = this.Window?.GetNative(true);
+            var nativeLayer = this.Window?.ToNative(this.context);
             if (nativeLayer is not UIWindow nativeWindow)
             {
                 return false;
@@ -118,10 +120,20 @@ namespace DrasticMaui.Overlays
 
             public override bool PointInside(CGPoint point, UIEvent? uievent)
             {
+                if (this.overlay.context is null)
+                {
+                    return false;
+                }
+
                 foreach (var element in this.overlay.HitTestElements)
                 {
-                    var boundingBox = element.GetBoundingBox();
-                    if (boundingBox.Contains(point.X, point.Y))
+                    var boundingBox = element?.GetBoundingBox(this.overlay.context);
+                    if (boundingBox is null)
+                    {
+                        return false;
+                    }
+
+                    if (boundingBox.Value.Contains(point.X, point.Y))
                     {
                         return true;
                     }

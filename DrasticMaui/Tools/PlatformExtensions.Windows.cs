@@ -3,6 +3,7 @@
 // </copyright>
 
 using DrasticMaui.Models;
+using Microsoft.Maui.Platform;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -30,22 +31,6 @@ namespace DrasticMaui.Tools
     /// </summary>
     public static class PlatformExtensions
     {
-        /// <summary>
-        /// Get Native View.
-        /// </summary>
-        /// <param name="view">IElement.</param>
-        /// <param name="returnWrappedIfPresent">Return wrapped if present.</param>
-        /// <returns>FrameworkElement.</returns>
-        public static FrameworkElement? GetNative(this IElement view, bool returnWrappedIfPresent)
-        {
-            if (view.Handler is INativeViewHandler nativeHandler && nativeHandler.NativeView != null)
-            {
-                return nativeHandler.NativeView;
-            }
-
-            return view.Handler?.NativeView as FrameworkElement;
-        }
-
         public static AppWindow GetAppWindowForWinUI(this Microsoft.UI.Xaml.Window window)
         {
             var windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(window);
@@ -59,8 +44,8 @@ namespace DrasticMaui.Tools
             return AppWindow.GetFromWindowId(windowId);
         }
 
-        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view)
-            => view.GetNative(true).GetBoundingBox();
+        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view, IMauiContext context)
+            => view.ToNative(context).GetBoundingBox();
 
         public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this FrameworkElement? nativeView)
         {

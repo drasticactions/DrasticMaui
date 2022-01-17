@@ -2,12 +2,9 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
 using CoreGraphics;
-using DrasticMaui.Tools;
 using Foundation;
-using MobileCoreServices;
-using ObjCRuntime;
+using Microsoft.Maui.Platform;
 using UIKit;
 
 namespace DrasticMaui.Overlays
@@ -29,7 +26,12 @@ namespace DrasticMaui.Overlays
 
             base.Initialize();
 
-            var nativeLayer = this.Window?.GetNative(true);
+            if (this.Window?.Handler?.MauiContext is null)
+            {
+                return false;
+            }
+
+            var nativeLayer = this.Window.ToNative(this.Window.Handler.MauiContext);
             if (nativeLayer is not UIWindow nativeWindow)
             {
                 return false;

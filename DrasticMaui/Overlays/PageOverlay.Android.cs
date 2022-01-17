@@ -2,11 +2,6 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Android.App;
 using Android.Views;
 using AndroidX.CoordinatorLayout.Widget;
@@ -37,7 +32,12 @@ namespace DrasticMaui.Overlays
                 return false;
             }
 
-            var nativeWindow = this.Window?.Content?.GetNative(true);
+            if (this.Window?.Handler?.MauiContext is null)
+            {
+                return false;
+            }
+
+            var nativeWindow = this.Window?.Content?.ToNative(this.Window.Handler.MauiContext);
             if (nativeWindow == null)
             {
                 return false;
@@ -130,6 +130,11 @@ namespace DrasticMaui.Overlays
 
         private void Element_Touch(object? sender, Android.Views.View.TouchEventArgs e)
         {
+            if (this.context is null)
+            {
+                return;
+            }
+
             if (e?.Event == null)
             {
                 return;
@@ -141,7 +146,7 @@ namespace DrasticMaui.Overlays
             }
 
             var point = new Point(e.Event.RawX, e.Event.RawY);
-            e.Handled = this.HitTestElements.Any(n => n.GetBoundingBox().Contains(point));
+            e.Handled = this.HitTestElements.Any(n => n.GetBoundingBox(this.context).Contains(point));
         }
     }
 }

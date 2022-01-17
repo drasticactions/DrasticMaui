@@ -2,20 +2,7 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System.Numerics;
-using System.Threading.Tasks;
-using Android.Graphics.Drawables;
-using Android.Views;
-using Android.Widget;
-using AndroidX.Core.View;
-using Microsoft.Maui.Essentials;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
-using ALayoutDirection = Android.Views.LayoutDirection;
-using ATextDirection = Android.Views.TextDirection;
-using AView = Android.Views.View;
-using GL = Android.Opengl;
 
 namespace DrasticMaui.Tools
 {
@@ -24,22 +11,6 @@ namespace DrasticMaui.Tools
     /// </summary>
     public static class PlatformExtensions
     {
-        /// <summary>
-        /// Get native element..
-        /// </summary>
-        /// <param name="view">IElement.</param>
-        /// <param name="returnWrappedIfPresent">Return wrapped if present.</param>
-        /// <returns>AView.</returns>
-        public static AView? GetNative(this IElement view, bool returnWrappedIfPresent)
-        {
-            if (view.Handler is INativeViewHandler nativeHandler && nativeHandler.NativeView != null)
-            {
-                return nativeHandler.NativeView;
-            }
-
-            return view.Handler?.NativeView as AView;
-        }
-
         /// <summary>
         /// Gets Navigation Root Manager.
         /// </summary>
@@ -75,8 +46,8 @@ namespace DrasticMaui.Tools
         /// </summary>
         /// <param name="view">MAUI IView.</param>
         /// <returns>Rectangle.</returns>
-        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view)
-            => view.GetNative(true).GetBoundingBox();
+        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view, IMauiContext context)
+            => view.ToNative(context).GetBoundingBox();
 
         /// <summary>
         /// Get the bounding box for an Android View.

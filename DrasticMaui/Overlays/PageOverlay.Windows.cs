@@ -25,12 +25,6 @@ namespace DrasticMaui.Overlays
                 return true;
             }
 
-            var nativeElement = this.Window.Content.GetNative(true);
-            if (nativeElement is null)
-            {
-                return false;
-            }
-
             var handler = this.Window.Handler as Microsoft.Maui.Handlers.WindowHandler;
             if (handler?.NativeView is not Microsoft.UI.Xaml.Window window)
             {
@@ -43,6 +37,12 @@ namespace DrasticMaui.Overlays
             }
 
             this.context = handler.MauiContext;
+
+            var nativeElement = this.Window.Content.ToNative(this.context);
+            if (nativeElement is null)
+            {
+                return false;
+            }
 
             this.panel = window.Content as Microsoft.UI.Xaml.Controls.Panel;
             if (this.panel is null)
@@ -121,6 +121,11 @@ namespace DrasticMaui.Overlays
 
         private void Panel_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            if (this.context is null)
+            {
+                return;
+            }
+
             if (!this.HitTestElements.Any() || this.context is null)
             {
                 return;
@@ -135,7 +140,7 @@ namespace DrasticMaui.Overlays
             foreach (var view in this.Views)
             {
                 var nativeView = (view as Microsoft.Maui.Controls.Page)?.ToNative(this.context);
-                var hitTests = view.HitTestViews.Any(n => n.GetBoundingBox().Contains(new Microsoft.Maui.Graphics.Point(pointerPoint.Position.X, pointerPoint.Position.Y)));
+                var hitTests = view.HitTestViews.Any(n => n.GetBoundingBox(this.context).Contains(new Microsoft.Maui.Graphics.Point(pointerPoint.Position.X, pointerPoint.Position.Y)));
                 if (nativeView is not null)
                 {
                     nativeView.IsHitTestVisible = hitTests;
