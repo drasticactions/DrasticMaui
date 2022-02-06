@@ -83,9 +83,6 @@ namespace DrasticMaui.Overlays
 
         private async void Panel_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
         {
-            // We're gonna cheat and only take the first item dragged in by the user.
-            // In the real world, you would probably want to handle multiple drops and figure
-            // Out what to do for your app.
             if (e.DataView.Contains(StandardDataFormats.StorageItems))
             {
                 var items = await e.DataView.GetStorageItemsAsync();
