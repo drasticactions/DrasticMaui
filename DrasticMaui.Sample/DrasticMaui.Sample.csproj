@@ -69,6 +69,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\DrasticMaui.DragAndDropOverlay\DrasticMaui.DragAndDropOverlay.csproj" />
+	  <ProjectReference Include="..\DrasticMaui.Effects\DrasticMaui.Effects.csproj" />
 	  <ProjectReference Include="..\DrasticMaui.Helpers\DrasticMaui.Helpers.csproj" />
 	  <ProjectReference Include="..\DrasticMaui.PageOverlay\DrasticMaui.PageOverlay.csproj" />
 	  <ProjectReference Include="..\DrasticMaui.SidebarNavigationWindow\DrasticMaui.SidebarNavigationWindow.csproj" />

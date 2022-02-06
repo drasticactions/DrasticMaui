@@ -139,7 +139,7 @@ namespace DrasticMaui
                 }
 
                 var testing = selectedItem.Page.ToHandler(this.Handler.MauiContext);
-                var page = testing.ContainerView;
+                var page = testing.NativeView;
 
                 bool addNavigationHandlers = false;
                 if (page != this.page)
