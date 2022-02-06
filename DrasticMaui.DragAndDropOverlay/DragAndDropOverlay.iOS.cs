@@ -31,7 +31,7 @@ namespace DrasticMaui.Overlays
                 return false;
             }
 
-            var nativeLayer = this.Window.ToNative(this.Window.Handler.MauiContext);
+            var nativeLayer = this.Window.ToPlatform(this.Window.Handler.MauiContext);
             if (nativeLayer is not UIWindow nativeWindow)
             {
                 return false;

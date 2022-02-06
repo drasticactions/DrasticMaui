@@ -2,14 +2,6 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DrasticMaui.Tools;
-using Microsoft.Maui.Platform;
-
 namespace DrasticMaui.Overlays
 {
     /// <summary>
@@ -67,7 +59,7 @@ namespace DrasticMaui.Overlays
                 this.hitTestElements.Add(hitTestView, hittestView.HitTestViews);
             }
 
-            Microsoft.Maui.Controls.Xaml.Diagnostics.VisualDiagnostics.OnChildAdded(this, view, 0);
+            VisualDiagnostics.OnChildAdded(this, view, 0);
             return true;
         }
 
@@ -94,7 +86,7 @@ namespace DrasticMaui.Overlays
             this.RemoveNativeElements(view);
 #endif
 
-            Microsoft.Maui.Controls.Xaml.Diagnostics.VisualDiagnostics.OnChildRemoved(this, view, 0);
+            VisualDiagnostics.OnChildRemoved(this, view, 0);
             return this.hitTestElements.Remove(hitTestView);
         }
 

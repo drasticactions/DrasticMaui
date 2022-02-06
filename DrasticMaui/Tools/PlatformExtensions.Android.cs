@@ -47,7 +47,7 @@ namespace DrasticMaui.Tools
         /// <param name="view">MAUI IView.</param>
         /// <returns>Rectangle.</returns>
         public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view, IMauiContext context)
-            => view.ToNative(context).GetBoundingBox();
+            => view.ToPlatform(context).GetBoundingBox();
 
         /// <summary>
         /// Get the bounding box for an Android View.

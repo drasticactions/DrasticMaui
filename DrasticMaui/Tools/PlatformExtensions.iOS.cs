@@ -25,7 +25,7 @@ namespace DrasticMaui.Tools
         /// <returns>Matrix4x4.</returns>
         public static System.Numerics.Matrix4x4 GetViewTransform(this IView view, IMauiContext context)
         {
-            var nativeView = view?.ToNative(context);
+            var nativeView = view?.ToPlatform(context);
             if (nativeView == null)
             {
                 return default(System.Numerics.Matrix4x4);
@@ -48,7 +48,7 @@ namespace DrasticMaui.Tools
         /// <param name="view">IView.</param>
         /// <returns>Rectangle.</returns>
         public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view, IMauiContext context)
-            => view.ToNative(context).GetBoundingBox();
+            => view.ToPlatform(context).GetBoundingBox();
 
         /// <summary>
         /// Get Bounding Box.
@@ -85,7 +85,7 @@ namespace DrasticMaui.Tools
         /// <returns>Rectangle.</returns>
         public static Rectangle GetNativeViewBounds(this IView view, IMauiContext context)
         {
-            var nativeView = view?.ToNative(context);
+            var nativeView = view?.ToPlatform(context);
             if (nativeView == null)
             {
                 return default(Rectangle);
@@ -310,8 +310,6 @@ namespace DrasticMaui.Tools
             {
                 return;
             }
-
-            var testFrame = window.GetFrame();
 
             var attachedWindow = nsWindow.ValueForKey(new NSString("attachedWindow"));
 

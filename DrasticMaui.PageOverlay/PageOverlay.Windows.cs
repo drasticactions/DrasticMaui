@@ -38,7 +38,7 @@ namespace DrasticMaui.Overlays
 
             this.context = handler.MauiContext;
 
-            var nativeElement = this.Window.Content.ToNative(this.context);
+            var nativeElement = this.Window.Content.ToPlatform(this.context);
             if (nativeElement is null)
             {
                 return false;
@@ -82,7 +82,7 @@ namespace DrasticMaui.Overlays
                 return;
             }
 
-            var element = page.ToNative(this.context);
+            var element = page.ToPlatform(this.context);
 
             var zindex = 100 + this.Views.Count();
             if (element is null)
@@ -110,7 +110,7 @@ namespace DrasticMaui.Overlays
                 return;
             }
 
-            var element = page.ToNative(this.context);
+            var element = page.ToPlatform(this.context);
             if (element is null)
             {
                 return;
@@ -139,7 +139,7 @@ namespace DrasticMaui.Overlays
 
             foreach (var view in this.Views)
             {
-                var nativeView = (view as Microsoft.Maui.Controls.Page)?.ToNative(this.context);
+                var nativeView = (view as Microsoft.Maui.Controls.Page)?.ToPlatform(this.context);
                 var hitTests = view.HitTestViews.Any(n => n.GetBoundingBox(this.context).Contains(new Microsoft.Maui.Graphics.Point(pointerPoint.Position.X, pointerPoint.Position.Y)));
                 if (nativeView is not null)
                 {

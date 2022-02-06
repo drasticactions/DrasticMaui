@@ -11,7 +11,7 @@ namespace DrasticMaui
     {
         private Microsoft.UI.Xaml.FrameworkElement? page;
         private MauiNavigationView? navigationView;
-        private NavigationRootView? navigationRootView;
+        private WindowRootView? navigationRootView;
         private Page? selectedPage;
         private IMauiContext? context;
 
@@ -53,7 +53,7 @@ namespace DrasticMaui
                 return;
             }
 
-            if (panel.Children[0] is not NavigationRootView rootView)
+            if (panel.Children[0] is not WindowRootView rootView)
             {
                 return;
             }
@@ -64,7 +64,7 @@ namespace DrasticMaui
 
         private void NavigationRootView_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            if (sender is not NavigationRootView view)
+            if (sender is not WindowRootView view)
             {
                 return;
             }
@@ -139,7 +139,7 @@ namespace DrasticMaui
                 }
 
                 var testing = selectedItem.Page.ToHandler(this.Handler.MauiContext);
-                var page = testing.GetWrappedNativeView();
+                var page = testing.ContainerView;
 
                 bool addNavigationHandlers = false;
                 if (page != this.page)
