@@ -41,7 +41,7 @@ public partial class MainPage : BasePage
 
     private async void OnPageNavigate(object sender, EventArgs e)
     {
-       await this.Navigation.PushAsync(new DrasticMainMenu());
+        await this.Navigation.PushAsync(new DrasticMainMenu());
     }
 
     private void OnFullScreen(object sender, EventArgs e)

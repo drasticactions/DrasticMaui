@@ -2,12 +2,6 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DrasticMaui.Services;
 using DrasticMaui.Tools;
 using DrasticMaui.ViewModels;
 
@@ -27,6 +21,7 @@ namespace DrasticMaui.Sample.ViewModels
         private AsyncCommand? newTrayAppCommand;
         private AsyncCommand? setupTrayIconCommand;
         private AsyncCommand? navigatePageCommand;
+        private AsyncCommand? enableTransparencyCommand;
 
         private PageOverlaySample? sample;
 
@@ -39,6 +34,17 @@ namespace DrasticMaui.Sample.ViewModels
             : base(services, originalPage)
         {
             this.Title = "DrasticMaui";
+        }
+
+        /// <summary>
+        /// Gets the enable transparency command.
+        /// </summary>
+        public AsyncCommand EnableTransparencyCommand
+        {
+            get
+            {
+                return this.enableTransparencyCommand ??= new AsyncCommand(this.EnableTransparency, null, this.Error);
+            }
         }
 
         /// <summary>
@@ -133,6 +139,16 @@ namespace DrasticMaui.Sample.ViewModels
 
             this.sample ??= new PageOverlaySample(window, this.Services);
             window.PageOverlay.AddView(this.sample);
+        }
+
+        private async Task EnableTransparency()
+        {
+            if (this.HostedWindow is not DrasticMauiSampleWindow window)
+            {
+                return;
+            }
+
+            window.EnableTransparency();
         }
 
         private async Task ShowFullScreen()

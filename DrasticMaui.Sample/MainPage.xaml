@@ -3,8 +3,9 @@
              xmlns:local="clr-namespace:DrasticMaui;assembly=DrasticMaui"
              Title="{Binding Title}"
              x:Class="DrasticMaui.Sample.MainPage">
-    <VerticalStackLayout Spacing="10" VerticalOptions="Center">
+    <VerticalStackLayout x:Name="MenuLayout" Spacing="10" VerticalOptions="Center">
         <Button Text="Toggle Full Screen" Command="{Binding ShowFullScreenCommand}"></Button>
+        <Button Text="Enable Window Transparency" Command="{Binding EnableTransparencyCommand}"></Button>
         <Button Text="Setup Tray Icon" Command="{Binding SetupTrayIconCommand}"></Button>
         <Button Text="Try Get Status Icon Frame Location" Command="{Binding TestTrayIconCommand}"></Button>
         <Button Text="New Window" Command="{Binding AddNewWindowCommand}"></Button>

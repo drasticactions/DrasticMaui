@@ -2,6 +2,7 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
+using DrasticMaui.Effects;
 using DrasticMaui.Models;
 using DrasticMaui.Tools;
 using Microsoft.Maui.Handlers;
@@ -55,6 +56,14 @@ namespace DrasticMaui.Sample
                 await handler.NativeView.SetFrameForUIWindow(new CoreGraphics.CGRect(0, 0, 100, 100));
             }
 #endif
+        }
+
+        public async Task EnableTransparency()
+        {
+            if (this.Handler is WindowHandler handler)
+            {
+                handler.ToTransparent();
+            }
         }
 
         public async Task EnableTrayApp()

@@ -31,9 +31,25 @@ namespace DrasticMaui.Effects
             panel.Background = MauiWinUIApplication.Current.Resources["SystemControlAcrylicElementBrush"] as Microsoft.UI.Xaml.Media.Brush;
         }
 
+        public static void ApplyAcrlyic(this Microsoft.UI.Xaml.Window window)
+        {
+            if (window.Content is Microsoft.UI.Xaml.Controls.Panel panel)
+            {
+                panel.ApplyAcrlyic();
+            }
+        }
+
         public static void RemoveAcrylic(this Microsoft.UI.Xaml.Controls.Panel panel)
         {
             panel.Background = null;
+        }
+
+        public static void RemoveAcrylic(this Microsoft.UI.Xaml.Window window)
+        {
+            if (window.Content is Microsoft.UI.Xaml.Controls.Panel panel)
+            {
+                panel.RemoveAcrylic();
+            }
         }
     }
 }
