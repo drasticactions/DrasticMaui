@@ -53,7 +53,7 @@ namespace DrasticMaui.Sample
 #if __MACCATALYST__
             if (this.Handler is WindowHandler handler)
             {
-                await handler.NativeView.SetFrameForUIWindow(new CoreGraphics.CGRect(0, 0, 100, 100));
+                await handler.PlatformView.SetFrameForUIWindow(new CoreGraphics.CGRect(0, 0, 100, 100));
             }
 #endif
         }

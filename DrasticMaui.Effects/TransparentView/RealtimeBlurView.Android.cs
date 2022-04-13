@@ -116,7 +116,7 @@ namespace DrasticMaui.Effects
             }
         }
 
-        private readonly Rect mRectSrc = new Rect(), mRectDst = new Rect();
+        private readonly Android.Graphics.Rect mRectSrc = new Android.Graphics.Rect(), mRectDst = new Android.Graphics.Rect();
 
         // mDecorView should be the root view of the activity (even if you are on a different window like a dialog)
         // private View mDecorView;
@@ -712,7 +712,7 @@ namespace DrasticMaui.Effects
                 //InternalLogger.Debug(
                    // $"BlurView@{GetHashCode()}", $"DrawRoundedBlurredBitmap( mCornerRadius: {mCornerRadius}, mOverlayColor: {mOverlayColor} )");
 
-                var mRectF = new RectF { Right = Width, Bottom = Height };
+                var mRectF = new Android.Graphics.RectF { Right = Width, Bottom = Height };
 
                 mPaint.Reset();
                 mPaint.AntiAlias = true;

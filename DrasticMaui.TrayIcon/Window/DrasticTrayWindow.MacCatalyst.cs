@@ -38,7 +38,7 @@ namespace DrasticMaui
         private async void SetupWindow()
         {
             var handler = this.Handler as Microsoft.Maui.Handlers.WindowHandler;
-            if (handler?.NativeView is not UIKit.UIWindow uiWindow)
+            if (handler?.PlatformView is not UIKit.UIWindow uiWindow)
             {
                 return;
             }

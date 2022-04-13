@@ -43,7 +43,7 @@ namespace DrasticMaui
 
             this.context = handler.MauiContext;
 
-            if (handler?.NativeView is not Microsoft.UI.Xaml.Window window)
+            if (handler?.PlatformView is not Microsoft.UI.Xaml.Window window)
             {
                 return;
             }
@@ -139,7 +139,7 @@ namespace DrasticMaui
                 }
 
                 var testing = selectedItem.Page.ToHandler(this.Handler.MauiContext);
-                var page = testing.NativeView;
+                var page = testing.PlatformView;
 
                 bool addNavigationHandlers = false;
                 if (page != this.page)

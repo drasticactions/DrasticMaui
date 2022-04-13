@@ -41,6 +41,9 @@ namespace DrasticMaui.Overlays
         public bool IsVisible { get; set; }
 
         /// <inheritdoc/>
+        public bool IsPlatformViewInitialized { get; set; }
+
+        /// <inheritdoc/>
         public IWindow Window { get; }
 
         /// <inheritdoc/>
@@ -66,7 +69,7 @@ namespace DrasticMaui.Overlays
         }
 
         /// <inheritdoc/>
-        public virtual void Draw(ICanvas canvas, Microsoft.Maui.Graphics.RectangleF dirtyRect)
+        public virtual void Draw(ICanvas canvas, Microsoft.Maui.Graphics.RectF dirtyRect)
         {
         }
 

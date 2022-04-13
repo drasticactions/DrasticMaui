@@ -69,7 +69,7 @@ namespace DrasticMaui.Overlays
             // We're gonna set if it's invoked externally.
             public bool Contains(Microsoft.Maui.Graphics.Point point) => false;
 
-            public void Draw(ICanvas canvas, Microsoft.Maui.Graphics.RectangleF dirtyRect)
+            public void Draw(ICanvas canvas, Microsoft.Maui.Graphics.RectF dirtyRect)
             {
                 if (!this.IsDragging)
                 {

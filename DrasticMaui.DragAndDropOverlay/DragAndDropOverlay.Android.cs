@@ -49,7 +49,7 @@ namespace DrasticMaui.Overlays
                 return false;
             }
 
-            if (handler.NativeView is not Activity activity)
+            if (handler.PlatformView is not Activity activity)
             {
                 return false;
             }
