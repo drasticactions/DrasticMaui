@@ -70,15 +70,15 @@ namespace DrasticMaui.Overlays
             }
 
             var element = page.ToHandler(this.context);
-            if (element.NativeView is null || this.passthroughView is null || this.window?.RootViewController?.View is null)
+            if (element.PlatformView is null || this.passthroughView is null || this.window?.RootViewController?.View is null)
             {
                 return;
             }
 
-            element.NativeView.Frame = this.passthroughView.Frame;
-            element.NativeView.AutoresizingMask = UIViewAutoresizing.All;
-            this.passthroughView.AddSubview(element.NativeView);
-            this.passthroughView.BringSubviewToFront(element.NativeView);
+            element.PlatformView.Frame = this.passthroughView.Frame;
+            element.PlatformView.AutoresizingMask = UIViewAutoresizing.All;
+            this.passthroughView.AddSubview(element.PlatformView);
+            this.passthroughView.BringSubviewToFront(element.PlatformView);
             this.passthroughView.AutoresizingMask = UIViewAutoresizing.All;
             this.window?.RootViewController.View.BringSubviewToFront(this.passthroughView);
         }
@@ -95,12 +95,12 @@ namespace DrasticMaui.Overlays
             }
 
             var element = page.ToHandler(this.context);
-            if (element.NativeView is null || this.passthroughView is null || this.window?.RootViewController?.View is null)
+            if (element.PlatformView is null || this.passthroughView is null || this.window?.RootViewController?.View is null)
             {
                 return;
             }
 
-            element.NativeView.RemoveFromSuperview();
+            element.PlatformView.RemoveFromSuperview();
         }
 
         private class PassthroughView : UIView

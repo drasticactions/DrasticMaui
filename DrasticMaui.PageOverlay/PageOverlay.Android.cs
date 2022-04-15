@@ -57,7 +57,7 @@ namespace DrasticMaui.Overlays
                 return false;
             }
 
-            if (handler.NativeView is not Activity activity)
+            if (handler.PlatformView is not Activity activity)
             {
                 return false;
             }
@@ -97,7 +97,7 @@ namespace DrasticMaui.Overlays
             }
 
             var pageHandler = view.ToHandler(this.context);
-            var element = pageHandler?.NativeView;
+            var element = pageHandler?.PlatformView;
             if (element is Android.Views.View aView)
             {
                 aView.Touch += this.Element_Touch;
@@ -120,7 +120,7 @@ namespace DrasticMaui.Overlays
             }
 
             var pageHandler = view.ToHandler(this.context);
-            var element = pageHandler?.NativeView;
+            var element = pageHandler?.PlatformView;
             if (element is Android.Views.View aView)
             {
                 aView.Touch -= this.Element_Touch;

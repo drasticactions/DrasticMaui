@@ -2,14 +2,16 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
+#pragma warning disable SA1210 // Using directives need to be in a specific order for MAUI
+using System.Numerics;
+using System.Runtime.InteropServices;
+using Microsoft.Maui.Platform;
 using CoreAnimation;
 using CoreGraphics;
 using Foundation;
-using Microsoft.Maui.Platform;
 using ObjCRuntime;
-using System.Numerics;
-using System.Runtime.InteropServices;
 using UIKit;
+#pragma warning restore SA1210 // Using directives can't be ordered alphabetically by namespace
 
 namespace DrasticMaui.Tools
 {
@@ -46,28 +48,28 @@ namespace DrasticMaui.Tools
         /// Get Bounding Box.
         /// </summary>
         /// <param name="view">IView.</param>
-        /// <returns>Rectangle.</returns>
-        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view, IMauiContext context)
+        /// <returns>Rect.</returns>
+        public static Microsoft.Maui.Graphics.Rect GetBoundingBox(this IView view, IMauiContext context)
             => view.ToPlatform(context).GetBoundingBox();
 
         /// <summary>
         /// Get Bounding Box.
         /// </summary>
         /// <param name="nativeView">Native View.</param>
-        /// <returns>Rectangle.</returns>
-        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this UIView? nativeView)
+        /// <returns>Rect.</returns>
+        public static Microsoft.Maui.Graphics.Rect GetBoundingBox(this UIView? nativeView)
         {
             if (nativeView == null)
             {
-                return default(Rectangle);
+                return default(Rect);
             }
 
             var nvb = nativeView.GetNativeViewBounds();
             var transform = nativeView.GetViewTransform();
             var radians = transform.ExtractAngleInRadians();
-            var rotation = CoreGraphics.CGAffineTransform.MakeRotation((nfloat)radians);
+            var rotation = CoreGraphics.CGAffineTransform.MakeRotation((NFloat)radians);
             CGAffineTransform.CGRectApplyAffineTransform(nvb, rotation);
-            return new Rectangle(nvb.X, nvb.Y, nvb.Width, nvb.Height);
+            return new Rect(nvb.X, nvb.Y, nvb.Width, nvb.Height);
         }
 
         /// <summary>
@@ -82,13 +84,13 @@ namespace DrasticMaui.Tools
         /// Get Native View Bounds.
         /// </summary>
         /// <param name="view">IView.</param>
-        /// <returns>Rectangle.</returns>
-        public static Rectangle GetNativeViewBounds(this IView view, IMauiContext context)
+        /// <returns>Rect.</returns>
+        public static Rect GetNativeViewBounds(this IView view, IMauiContext context)
         {
             var nativeView = view?.ToPlatform(context);
             if (nativeView == null)
             {
-                return default(Rectangle);
+                return default(Rect);
             }
 
             return nativeView.GetNativeViewBounds();
@@ -98,12 +100,12 @@ namespace DrasticMaui.Tools
         /// Get Native View Bounds.
         /// </summary>
         /// <param name="nativeView">Native View.</param>
-        /// <returns>Rectangle.</returns>
-        public static Rectangle GetNativeViewBounds(this UIView nativeView)
+        /// <returns>Rect.</returns>
+        public static Rect GetNativeViewBounds(this UIView nativeView)
         {
             if (nativeView == null)
             {
-                return default(Rectangle);
+                return default(Rect);
             }
 
             var superview = nativeView;
@@ -119,7 +121,7 @@ namespace DrasticMaui.Tools
             var width = convertPoint.Width;
             var height = convertPoint.Height;
 
-            return new Rectangle(x, y, width, height);
+            return new Rect(x, y, width, height);
         }
 
         /// <summary>
@@ -412,7 +414,7 @@ namespace DrasticMaui.Tools
         }
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
-        internal static extern IntPtr IntPtr_objc_msgSend_nfloat(IntPtr receiver, IntPtr selector, nfloat arg1);
+        internal static extern IntPtr IntPtr_objc_msgSend_nfloat(IntPtr receiver, IntPtr selector, NFloat arg1);
 
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern IntPtr IntPtr_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);

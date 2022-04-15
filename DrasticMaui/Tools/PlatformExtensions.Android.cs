@@ -46,7 +46,7 @@ namespace DrasticMaui.Tools
         /// </summary>
         /// <param name="view">MAUI IView.</param>
         /// <returns>Rectangle.</returns>
-        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this IView view, IMauiContext context)
+        public static Microsoft.Maui.Graphics.Rect GetBoundingBox(this IView view, IMauiContext context)
             => view.ToPlatform(context).GetBoundingBox();
 
         /// <summary>
@@ -54,16 +54,16 @@ namespace DrasticMaui.Tools
         /// </summary>
         /// <param name="nativeView">Android View.</param>
         /// <returns>Rectangle.</returns>
-        public static Microsoft.Maui.Graphics.Rectangle GetBoundingBox(this Android.Views.View? nativeView)
+        public static Microsoft.Maui.Graphics.Rect GetBoundingBox(this Android.Views.View? nativeView)
         {
             if (nativeView == null)
             {
-                return default(Rectangle);
+                return default(Rect);
             }
 
             var rect = new Android.Graphics.Rect();
             nativeView.GetGlobalVisibleRect(rect);
-            return new Rectangle(rect.ExactCenterX() - (rect.Width() / 2), rect.ExactCenterY() - (rect.Height() / 2), (float)rect.Width(), (float)rect.Height());
+            return new Rect(rect.ExactCenterX() - (rect.Width() / 2), rect.ExactCenterY() - (rect.Height() / 2), (float)rect.Width(), (float)rect.Height());
         }
     }
 }

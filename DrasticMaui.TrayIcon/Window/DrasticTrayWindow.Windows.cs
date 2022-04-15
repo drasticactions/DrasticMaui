@@ -32,7 +32,7 @@ namespace DrasticMaui
         private void SetupWindow()
         {
             var handler = this.Handler as Microsoft.Maui.Handlers.WindowHandler;
-            if (handler?.NativeView is not Microsoft.UI.Xaml.Window window)
+            if (handler?.PlatformView is not Microsoft.UI.Xaml.Window window)
             {
                 return;
             }

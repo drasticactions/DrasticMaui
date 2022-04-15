@@ -36,7 +36,7 @@ namespace DrasticMaui
                 return;
             }
 
-            var window = this.Handler?.NativeView as UIWindow;
+            var window = this.Handler?.PlatformView as UIWindow;
             if (window is null)
             {
                 return;
