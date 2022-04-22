@@ -53,9 +53,6 @@ namespace DrasticMaui.Overlays
         public IReadOnlyCollection<IWindowOverlayElement> WindowElements => this.overlayElements.ToList().AsReadOnly();
 
         /// <inheritdoc/>
-        public bool IsNativeViewInitialized { get; private set; }
-
-        /// <inheritdoc/>
         public virtual bool AddWindowElement(IWindowOverlayElement element)
         {
             return this.overlayElements.Add(element);

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<Import Project="../MultiTargeting.targets" />
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
@@ -7,36 +6,13 @@
 		<UseMaui>true</UseMaui>
 		<WarningsAsErrors>nullable</WarningsAsErrors>
 	</PropertyGroup>
-	<ItemGroup>
-	  <Compile Remove="MacCatalyst\**" />
-	  <EmbeddedResource Remove="MacCatalyst\**" />
-	  <MauiCss Remove="MacCatalyst\**" />
-	  <MauiXaml Remove="MacCatalyst\**" />
-	  <None Remove="MacCatalyst\**" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="Tray\" />
-	  <None Remove="Services\" />
-	  <None Remove="Controls\" />
-	  <None Remove="Events\" />
-	  <None Remove="Models\" />
-	  <None Remove="iOS\" />
-	  <None Remove="MacCatalyst\" />
-	  <None Remove="Sidebar\" />
-	</ItemGroup>
-	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
-		<UseWindowsForms>true</UseWindowsForms>
-		<UseWinUI>true</UseWinUI>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-			<_Parameter1>$(AssemblyName).TrayIcon</_Parameter1>
-		</AssemblyAttribute>
+	<ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
+		<!-- Required - WinUI does not yet have buildTransitive for everything -->
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.3" />
 	</ItemGroup>
 </Project>
