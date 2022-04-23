@@ -19,7 +19,7 @@ public partial class App : Application
 
     /// <inheritdoc/>
     protected override Window CreateWindow(IActivationState? activationState)
-        => new DragAndDropWindow();
+        => new DragAndDropWindow() { Page = new MainPage() };
 
     /// <summary>
     /// Drag And Drop Window.
@@ -32,7 +32,6 @@ public partial class App : Application
         public DragAndDropWindow()
         {
             this.DragAndDropOverlay = new DrasticMaui.Overlays.DragAndDropOverlay(this);
-            this.Page = new MainPage();
         }
 
         /// <summary>

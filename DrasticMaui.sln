@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{085C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrasticMaui.DragAndDropSample", "Samples\DrasticMaui.DragAndDropSample\DrasticMaui.DragAndDropSample.csproj", "{44E8CFBB-5010-46C7-AB6D-B1CAF666C759}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrasticMaui.WindowSample", "Samples\DrasticMaui.WindowSample\DrasticMaui.WindowSample.csproj", "{A5469DF0-8FE2-4905-8C45-3C0D131B9162}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,12 +27,19 @@ Global
 		{44E8CFBB-5010-46C7-AB6D-B1CAF666C759}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44E8CFBB-5010-46C7-AB6D-B1CAF666C759}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44E8CFBB-5010-46C7-AB6D-B1CAF666C759}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A5469DF0-8FE2-4905-8C45-3C0D131B9162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5469DF0-8FE2-4905-8C45-3C0D131B9162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5469DF0-8FE2-4905-8C45-3C0D131B9162}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A5469DF0-8FE2-4905-8C45-3C0D131B9162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5469DF0-8FE2-4905-8C45-3C0D131B9162}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5469DF0-8FE2-4905-8C45-3C0D131B9162}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{44E8CFBB-5010-46C7-AB6D-B1CAF666C759} = {085C4D81-8EEF-4612-9E08-ADC6CEBCD84B}
+		{A5469DF0-8FE2-4905-8C45-3C0D131B9162} = {085C4D81-8EEF-4612-9E08-ADC6CEBCD84B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {90358B20-D7D8-4446-9643-E4F4BA422805}

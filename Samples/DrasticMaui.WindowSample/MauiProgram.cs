@@ -2,7 +2,7 @@
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
-namespace DrasticMaui.DragAndDropSample;
+namespace DrasticMaui.WindowSample;
 
 /// <summary>
 /// Maui Program.
