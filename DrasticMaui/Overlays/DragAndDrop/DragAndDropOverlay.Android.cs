@@ -24,7 +24,7 @@ namespace DrasticMaui.Overlays
         /// <inheritdoc/>
         public override bool Initialize()
         {
-            if (this.dragAndDropOverlayNativeElementsInitialized)
+            if (this.dragAndDropOverlayPlatformElementsInitialized)
             {
                 return true;
             }
@@ -70,7 +70,7 @@ namespace DrasticMaui.Overlays
             this.dragAndDropView = new DragAndDropView(context);
             this.nativeLayer.AddView(this.dragAndDropView, 0, new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MatchParent, CoordinatorLayout.LayoutParams.MatchParent));
             this.dragAndDropView.BringToFront();
-            return this.dragAndDropOverlayNativeElementsInitialized = true;
+            return this.dragAndDropOverlayPlatformElementsInitialized = true;
         }
 
         private class DragAndDropView : Android.Views.View, IOnReceiveContentListener

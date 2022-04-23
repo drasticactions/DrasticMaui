@@ -1,4 +1,4 @@
-﻿// <copyright file="DragAndDropOverlayTappedEventArgs.cs" company="Drastic Actions">
+﻿// <copyright file="DragAndDropOverlayDroppedEventArgs.cs" company="Drastic Actions">
 // Copyright (c) Drastic Actions. All rights reserved.
 // </copyright>
 
@@ -7,13 +7,13 @@ namespace DrasticMaui.Overlays
     /// <summary>
     /// Drag and Drop Overlay Tapped Event Args.
     /// </summary>
-    public class DragAndDropOverlayTappedEventArgs : EventArgs
+    public class DragAndDropOverlayDroppedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DragAndDropOverlayTappedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="DragAndDropOverlayDroppedEventArgs"/> class.
         /// </summary>
         /// <param name="paths">Paths to files that were dropped.</param>
-        public DragAndDropOverlayTappedEventArgs(List<string> paths)
+        public DragAndDropOverlayDroppedEventArgs(List<string> paths)
         {
             this.Paths = paths;
         }
@@ -21,6 +21,6 @@ namespace DrasticMaui.Overlays
         /// <summary>
         /// Gets the paths to files that were dropped.
         /// </summary>
-        public List<string> Paths { get; private set; }
+        public IReadOnlyList<string> Paths { get; private set; }
     }
 }

@@ -10,7 +10,7 @@ namespace DrasticMaui.Overlays
     public partial class DragAndDropOverlay : BaseOverlay
     {
         private readonly DropElementOverlay dropElement;
-        private bool dragAndDropOverlayNativeElementsInitialized;
+        private bool dragAndDropOverlayPlatformElementsInitialized;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DragAndDropOverlay"/> class.
@@ -36,7 +36,7 @@ namespace DrasticMaui.Overlays
         /// <summary>
         /// Fired when files are dropped on the overlay.
         /// </summary>
-        public event EventHandler<DragAndDropOverlayTappedEventArgs>? Drop;
+        public event EventHandler<DragAndDropOverlayDroppedEventArgs>? Drop;
 
         /// <summary>
         /// Gets or sets a value indicating whether a user is dragging an element over the window.

@@ -32,6 +32,7 @@ public partial class App : Application
         public DragAndDropWindow()
         {
             this.DragAndDropOverlay = new DrasticMaui.Overlays.DragAndDropOverlay(this);
+            this.Page = new MainPage();
         }
 
         /// <summary>

@@ -97,7 +97,7 @@ namespace DrasticMaui.Overlays
                         }
                     }
 
-                    this.Drop?.Invoke(this, new DragAndDropOverlayTappedEventArgs(filePaths));
+                    this.Drop?.Invoke(this, new DragAndDropOverlayDroppedEventArgs(filePaths));
                 }
             }
         }

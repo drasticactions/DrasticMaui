@@ -19,7 +19,7 @@ namespace DrasticMaui.Overlays
         /// <inheritdoc/>
         public override bool Initialize()
         {
-            if (this.dragAndDropOverlayNativeElementsInitialized)
+            if (this.dragAndDropOverlayPlatformElementsInitialized)
             {
                 return true;
             }
@@ -48,7 +48,7 @@ namespace DrasticMaui.Overlays
             this.dragAndDropView.UserInteractionEnabled = true;
             nativeWindow?.RootViewController.View.AddSubview(this.dragAndDropView);
             nativeWindow?.RootViewController.View.BringSubviewToFront(this.dragAndDropView);
-            return this.dragAndDropOverlayNativeElementsInitialized = true;
+            return this.dragAndDropOverlayPlatformElementsInitialized = true;
         }
 
         /// <inheritdoc/>
@@ -117,7 +117,7 @@ namespace DrasticMaui.Overlays
                     }
                 }
 
-                this.overlay.Drop?.Invoke(this, new DragAndDropOverlayTappedEventArgs(filePaths));
+                this.overlay.Drop?.Invoke(this, new DragAndDropOverlayDroppedEventArgs(filePaths));
             }
 
             [Export("dropInteraction:concludeDrop:")]
