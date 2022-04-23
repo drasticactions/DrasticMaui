@@ -104,9 +104,9 @@ namespace DrasticMaui.Tools
                 return false;
             }
 
-            var styleMaskEnum = IntPtr_objc_msgSend(window.Handle, Selector.GetHandle("styleMask:"));
+            var styleMaskEnum = Int_objc_msgSend(nsWindow.Handle, Selector.GetHandle("styleMask"));
 
-            return false;
+            return styleMaskEnum > 0;
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace DrasticMaui.Tools
         /// <param name="selector">The IntPtr Selector.</param>
         /// <returns>IntPtr.</returns>
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
-        internal static extern IntPtr IntPtr_objc_msgSend(IntPtr receiver, IntPtr selector);
+        internal static extern int Int_objc_msgSend(IntPtr receiver, IntPtr selector);
 
         /// <summary>
         /// Send Objective-C Int Command Selector.
