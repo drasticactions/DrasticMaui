@@ -21,6 +21,33 @@ namespace DrasticMaui.Tools
     public static class PlatformExtensions
     {
 #if __MACCATALYST__
+        public static NSObject? GetNSStatusBar()
+          => Runtime.GetNSObject(Class.GetHandle("NSStatusBar"));
+
+        public static void NSApplicationActivateIgnoringOtherApps(bool ignoreSetting = true)
+        {
+            var sharedApplication = GetNSApplicationSharedApplication();
+            if (sharedApplication is null)
+            {
+                return;
+            }
+
+            void_objc_msgSend_bool(sharedApplication.Handle, Selector.GetHandle("activateIgnoringOtherApps:"), ignoreSetting);
+        }
+
+        public static NSObject? GetNSApplicationSharedApplication()
+        {
+            var nsapp = Runtime.GetNSObject(Class.GetHandle("NSApplication"));
+            if (nsapp is null)
+            {
+                return null;
+            }
+
+            var sharedApp = nsapp.PerformSelector(new Selector("sharedApplication"));
+
+            return null;
+        }
+
         /// <summary>
         /// Get NSWindow from UIWindow.
         /// </summary>
@@ -151,29 +178,35 @@ namespace DrasticMaui.Tools
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern int Int_objc_msgSend(IntPtr receiver, IntPtr selector);
 
-        /// <summary>
-        /// Send Objective-C Int Command Selector.
-        /// </summary>
-        /// <param name="receiver">The IntPtr Reciever.</param>
-        /// <param name="selector">The IntPtr Selector.</param>
-        /// <param name="arg1">Argument as IntPtr.</param>
-        /// <returns>IntPtr.</returns>
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
-#pragma warning disable SA1300 // Element should begin with upper-case letter
+        internal static extern IntPtr IntPtr_objc_msgSend_nfloat(IntPtr receiver, IntPtr selector, NFloat arg1);
 
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern IntPtr IntPtr_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
-#pragma warning restore SA1300 // Element should begin with upper-case letter
 
-        /// <summary>
-        /// Send Objective-C Bool Command Selector.
-        /// </summary>
-        /// <param name="receiver">The IntPtr Reciever.</param>
-        /// <param name="selector">The IntPtr Selector.</param>
-        /// <param name="arg1">Argument as Bool.</param>
         [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
-#pragma warning disable SA1300 // Element should begin with upper-case letter
+        internal static extern IntPtr IntPtr_objc_msgSend(IntPtr receiver, IntPtr selector);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_bool_IntPtr(IntPtr receiver, IntPtr selector, bool arg1, IntPtr arg2);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_IntPtr_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1, IntPtr arg2);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_IntPtr_bool(IntPtr receiver, IntPtr selector, IntPtr arg1, bool arg2);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_IntPtr_bool_bool(IntPtr receiver, IntPtr selector, IntPtr arg1, bool arg2, bool arg3);
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
         internal static extern void void_objc_msgSend_bool(IntPtr receiver, IntPtr selector, bool arg1);
-#pragma warning restore SA1300 // Element should begin with upper-case letter
+
+        [DllImport("/usr/lib/libobjc.dylib", EntryPoint = "objc_msgSend")]
+        internal static extern void void_objc_msgSend_ulong(IntPtr receiver, IntPtr selector, ulong arg1);
 
 #endif
     }
