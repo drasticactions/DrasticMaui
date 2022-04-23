@@ -18,7 +18,7 @@ namespace DrasticMaui.Overlays
         /// <inheritdoc/>
         public override bool Initialize()
         {
-            if (this.dragAndDropOverlayNativeElementsInitialized)
+            if (this.dragAndDropOverlayPlatformElementsInitialized)
             {
                 return true;
             }
@@ -53,7 +53,7 @@ namespace DrasticMaui.Overlays
             this.panel.Drop += this.Panel_Drop;
             this.panel.DragLeave += this.Panel_DragLeave;
             this.panel.DropCompleted += this.Panel_DropCompleted;
-            return this.dragAndDropOverlayNativeElementsInitialized = true;
+            return this.dragAndDropOverlayPlatformElementsInitialized = true;
         }
 
         /// <inheritdoc/>
