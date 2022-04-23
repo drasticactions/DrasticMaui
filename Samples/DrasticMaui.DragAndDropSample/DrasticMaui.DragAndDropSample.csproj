@@ -12,7 +12,6 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<!-- Display name -->
 		<ApplicationTitle>DrasticMaui.DragAndDropSample</ApplicationTitle>
-		<AppxGeneratePriEnabled>false</AppxGeneratePriEnabled>
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.drasticmaui.draganddropsample</ApplicationId>
 		<ApplicationIdGuid>780a2a18-1bfc-4a20-b18a-ac49535b4362</ApplicationIdGuid>
